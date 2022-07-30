@@ -1,0 +1,32 @@
+#pragma once
+
+// Window
+#define WINDOW_WIDTH 1280
+#define	WINDOW_HEIGHT 940
+
+
+// Moveobj
+#define MOVEOBJ_SPEED 500
+
+
+
+
+// TEST - PLAYER
+#define PLAYER_SIZE_STAND_X 50
+#define PLAYER_SIZE_STAND_Y 50
+#define PLAYER_SIZE_DOWN_X 50
+#define PLAYER_SIZE_DOWN_Y 50
+#define PLAYER_POS_X 500
+#define PLAYER_POS_Y 500
+
+// TEST - PROJECILE
+
+
+#define PROJECILE_SIZE_X 20
+#define PROJECILE_SIZE_Y 20
+#define PROJECILE_POS_X 800
+#define PROJECILE_POS_Y 500
+
+
+
+
