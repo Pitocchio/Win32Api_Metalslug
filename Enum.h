@@ -18,6 +18,7 @@ enum class OBJECT_TYPE {
 	// CMapCollider
 	C_CAMERACOLLIDER,
 	C_ENEMYCOLLIDER,
+	C_LINECOLLIDER,
 
 	// CMoveobj
 	// Projectile
@@ -93,16 +94,12 @@ enum class COLLIDER_TYPE {
 enum class OBJECT_STATE
 {
 	IDLE,
-	
-	MOVE_LEFT,
-	MOVE_RIGHT,
-	JUMP,
-	DOWN,
-
+	WALK,
 	ATTACK,
 	DEAD,
 	TYPEEND_OBJECT_STATE
 };
+
 
 // ====================== Key ======================== // 
 enum class KEY_STATE {

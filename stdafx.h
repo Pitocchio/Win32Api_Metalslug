@@ -55,6 +55,7 @@
 #include "Transform2D.h"
 #include "Collider2D.h"
 #include "BoxCollider2D.h"
+#include "Rigidbody2D.h"
 
 
 // 08.Module

@@ -336,6 +336,9 @@
     <ClInclude Include="Moveobj.h">
       <Filter>소스 파일\04.Object\01.Moveobj\00.Moveobj\00.Moveobj</Filter>
     </ClInclude>
+    <ClInclude Include="Rigidbody2D.h">
+      <Filter>소스 파일\07.Component\03.Rigidbody2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Win32Api_MetalSlug.rc">
@@ -467,6 +470,9 @@
     </ClCompile>
     <ClCompile Include="Moveobj.cpp">
       <Filter>소스 파일\04.Object\01.Moveobj\00.Moveobj\00.Moveobj</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody2D.cpp">
+      <Filter>소스 파일\07.Component\03.Rigidbody2D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

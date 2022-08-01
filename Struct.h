@@ -16,11 +16,17 @@ typedef struct MyVector2
 
 	void operator += (MyVector2 rbs) { x += rbs.x; y += rbs.y; };
 	void operator -= (MyVector2 rbs) { x -= rbs.x; y -= rbs.y; };
+	void operator += (float rbs) { x += rbs; y += rbs; };
+	void operator -= (float rbs) { x -= rbs; y -= rbs; };
 	void operator *= (float mul) { x *= mul; y *= mul; };
 	void operator /= (float div) { x /= div; y /= div; };
 
-	float Distance() { return float(sqrt(pow(x, 2) + pow(y, 2))); } // ∫§≈Õ ±Ê¿Ã
-	void Normalize() { x /= Distance(); y /= Distance(); }
+
+
+	MyVector2 operator - () { return MyVector2(-x, -y); };
+
+	float Length() { return float(sqrt(pow(x, 2) + pow(y, 2))); } // ∫§≈Õ ±Ê¿Ã
+	void Normalize() { x /= Length(); y /= Length(); }
 	float DotProduct(MyVector2 rbs) { return (x * rbs.x) + (y * rbs.y); };
 
 	/*

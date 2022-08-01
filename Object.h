@@ -20,10 +20,9 @@ public: // Lifecycle
 
 public: // Methods
 
-
 	bool AddComponent(COMPONENT_TYPE componenttype, CComponent* component);
 	map <COMPONENT_TYPE, CComponent*>* GetmapComponent();
-
+	bool IsComponent(COMPONENT_TYPE componenttype);
 
 
 	void SetObjectType(OBJECT_TYPE type) { m_ObjectType = type; }
@@ -32,43 +31,6 @@ public: // Methods
 	void SetObjectState(OBJECT_STATE type) { m_ObjectState = type; }
 	OBJECT_STATE GetObjectState() const { return m_ObjectState; }
 
-
-
-	// Transform
-	void SetTransformOwnerObj(CObject* obj);
-
-	CTransform2D* GetTransform() { return m_pTransform; }
-	
-	void SetTransformPos(Vector2 vec);
-	Vector2 GetTransformPos() const;
-
-	void SetTransformSize(Vector2 vec);
-	Vector2 GetTransformSize() const;
-
-	void SetTransformAngle(float angle);
-	float GetTransformAngle() const;
-
-	// Collider - Parents
-
-	void SetColliderOwnerObj(CObject* obj);
-
-	CBoxCollider2D* GetCollider() { return m_pCollider; }
-
-	void SetColliderOffset(Vector2 vec);
-	Vector2 GetColliderOffset() const;
-
-	bool GetColliderIscollision() const;
-
-	// Collider - Children
-	void SetColliderRect();
-	RECT GetColliderRect() const;
-
-	void SetColliderSize(Vector2 vec);
-	Vector2 GetColliderSize() const;
-
-
-
-	// Collision
 
 
 
