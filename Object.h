@@ -31,13 +31,24 @@ public: // Methods
 	void SetObjectState(OBJECT_STATE type) { m_ObjectState = type; }
 	OBJECT_STATE GetObjectState() const { return m_ObjectState; }
 
+	CBoxCollider2D* GetCollider();
 
+	void SetPos(Vector2 pos);
+	Vector2 GetPos();
+	void SetSize(Vector2 pos);
+	Vector2 GetSize();
 
 
 protected: // Variables
 	map<COMPONENT_TYPE, CComponent*> m_mapComponent;
 	OBJECT_TYPE m_ObjectType;
+
+	// 이거 안쓰고
 	OBJECT_STATE m_ObjectState;
+
+	// 이거 쓴다
+	OBJECT_STATE m_eCurState;
+	OBJECT_STATE m_ePrevState;
 
 	CTransform2D* m_pTransform;
 	CBoxCollider2D* m_pCollider;

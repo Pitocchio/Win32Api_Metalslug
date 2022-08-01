@@ -10,6 +10,9 @@ CObject::~CObject()
 {
 	for (map<COMPONENT_TYPE, CComponent*>::iterator iter = m_mapComponent.begin(); iter != m_mapComponent.end(); ++iter)
 	{
+		if ((*iter).second == nullptr)
+			continue;
+
 		delete (*iter).second;
 	}
 }
@@ -94,4 +97,65 @@ bool CObject::IsComponent(COMPONENT_TYPE componenttype)
 		return true;
 	else
 		return false;
+}
+
+CBoxCollider2D* CObject::GetCollider()
+{
+	map<COMPONENT_TYPE, CComponent*>::iterator iter;
+	iter = m_mapComponent.find(COMPONENT_TYPE::BOXCOLLIDER2D);
+
+	if (iter != m_mapComponent.end())
+	{
+		return dynamic_cast<CBoxCollider2D*>((*iter).second);
+	}
+	else
+	{
+		return nullptr;
+	}
+
+}
+
+void CObject::SetPos(Vector2 pos)
+{
+	map<COMPONENT_TYPE, CComponent*>::iterator iter;
+	iter = m_mapComponent.find(COMPONENT_TYPE::TRANSFORM2D);
+
+	if (iter == m_mapComponent.end())
+		return;
+
+	dynamic_cast<CTransform2D*>((*iter).second)->SetPos(pos);
+	
+}
+
+Vector2 CObject::GetPos() 
+{
+	map<COMPONENT_TYPE, CComponent*>::iterator iter;
+	iter = m_mapComponent.find(COMPONENT_TYPE::TRANSFORM2D);
+
+	/*if (iter == m_mapComponent.end())
+		return;*/
+
+	return dynamic_cast<CTransform2D*>((*iter).second)->GetPos();
+}
+
+void CObject::SetSize(Vector2 pos)
+{
+	map<COMPONENT_TYPE, CComponent*>::iterator iter;
+	iter = m_mapComponent.find(COMPONENT_TYPE::TRANSFORM2D);
+
+	if (iter == m_mapComponent.end())
+		return;
+
+	dynamic_cast<CTransform2D*>((*iter).second)->SetSize(pos);
+}
+
+Vector2 CObject::GetSize()
+{
+	map<COMPONENT_TYPE, CComponent*>::iterator iter;
+	iter = m_mapComponent.find(COMPONENT_TYPE::TRANSFORM2D);
+
+	/*if (iter == m_mapComponent.end())
+		return;*/
+
+	return dynamic_cast<CTransform2D*>((*iter).second)->GetSize();
 }

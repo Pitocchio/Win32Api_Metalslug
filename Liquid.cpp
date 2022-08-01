@@ -24,7 +24,8 @@ void CLiquid::Init()
 	m_pCollider->SetSize(Vector2(PROJECILE_SIZE_X - int(PROJECILE_SIZE_X * 0.2f), PROJECILE_SIZE_Y - int(PROJECILE_SIZE_Y * 0.2f)));
 	m_pCollider->SetIsActive(true);
 
-	m_vLook = { -1, 0 };
+	m_iPrevDir = -1;
+	m_iCurDir = -1;
 	m_fSpeed = MOVEOBJ_SPEED;
 
 	m_ObjectType = OBJECT_TYPE::M_ZOMBIE_LIQUID;

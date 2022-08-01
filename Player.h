@@ -15,7 +15,10 @@ public: // Lifecycle
 	virtual void LateUpdate() override;
 
 public: // Methods
-	virtual void Move() override;
+	virtual void Move() override; // 업데이트 무브로 바꾸어야함
+	void Update_state(); // 이거 나중에 가상함수 전부 다 바꾸자 (for Animation)
+	void Update_animation();
+
 	virtual void Attack() override;
 
 

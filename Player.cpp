@@ -30,13 +30,17 @@ void CPlayer::Init()
 
 	// Component - Rigidbody
 	m_pRigidbody->SetMass(1.f);
+	m_pRigidbody->SetGround(false);
 
-
-	m_vLook = { 0, 0 };
+	m_iPrevDir = 1;
+	m_iCurDir = 1;
 	m_fSpeed = MOVEOBJ_SPEED;
 
-	m_ObjectState = OBJECT_STATE::IDLE;
+	m_ObjectState = OBJECT_STATE::IDLE; // 이거 안쓴다
 	m_ObjectType = OBJECT_TYPE::M_PLAYER;
+
+	m_eCurState = OBJECT_STATE::IDLE; // 이거 두개 쓴다
+	m_ePrevState = OBJECT_STATE::IDLE;
 
 	m_curWeapon = ATTACKOBJ_WEAPON_TYPE::BASICGUN;
 	m_iLife = 3;
@@ -52,28 +56,52 @@ void CPlayer::LateInit()
 
 void CPlayer::Update()
 {
-	m_pRigidbody->CalVelocity();
 
 	Move();
 
-	// 어떤 어택인지 어택 타입 값 받아서 그에 맞는 어택 구현 ex 칼, 총, 수류탄
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::Z) == KEY_STATE::KEY_HOLD)
-		Attack();
+	Update_state();
+	Update_animation();
+
+	
+
+	//// 어떤 어택인지 어택 타입 값 받아서 그에 맞는 어택 구현 ex 칼, 총, 수류탄
+	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::Z) == KEY_STATE::KEY_HOLD)
+	//	Attack();
 }
 
 void CPlayer::LateUpdate()
 {
-
-
-
 	if (m_pCollider->IsCollision())
 	{
-		switch (m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetObjectType())
+		// 충돌한 상대 오브젝트의 오브젝트 타입을 가져온다
+		switch (m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetObjectType()) 
 		{
-		// 사망 처리
 
 		// LineCollider
+		case OBJECT_TYPE::C_CAMERACOLLIDER:
+		{
+			m_pRigidbody->SetGround(true);
 
+			Vector2 vVel = m_pRigidbody->GetVelocity();
+			m_pRigidbody->InitForce();
+
+			Vector2 vObjPos = m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetPos();
+			Vector2 vObjSize = m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetSize();
+
+			Vector2 vPos = m_pTransform->GetPos();
+			Vector2 vSize = m_pTransform->GetSize();
+
+			float fLen = abs(vObjPos.y - vPos.y);
+			float fValue = (vObjSize.y * 0.5f + vSize.y * 0.5f) - fLen;
+
+			Vector2 vOffset = m_pCollider->GetOffset();
+
+			m_pTransform->SetPos(Vector2(vPos.x, vPos.y - fValue - 1.f));
+			m_pCollider->SetOffset(Vector2(vOffset.x, vOffset.y - fValue - 1.f));
+
+
+		}
+			break;
 
 
 		// MoveObj
@@ -88,47 +116,116 @@ void CPlayer::LateUpdate()
 		}
 	}
 
-
-
 	m_pRigidbody->InitForce(); 
+	m_pRigidbody->InitAccelAlpha();
+	m_pRigidbody->InitAccel();
+	m_ePrevState = m_eCurState;
+	m_iPrevDir = m_iCurDir;
 }
 
 void CPlayer::Move()
 {
-	//Vector2 vTemp = m_pTransform->GetPos();
-
+	// 키 입력에 따른 힘이나 속도 부여
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
 	{
-		//m_vLook = { -1, 0 };
-		//vTemp.x += (m_vLook.x * m_fSpeed) * DT;
 		m_pRigidbody->AddForce(MyVector2(-200.f, 0.f));
 	}
-	else if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
 	{
 		m_pRigidbody->AddForce(MyVector2(200.f, 0.f));
-
-		//m_vLook = { 1, 0 };
-		//vTemp.x += (m_vLook.x * m_fSpeed) * DT;
 	}
-	
-	// 이동 방향
-	Vector2 vDir = m_pRigidbody->GetVelocity();
-	vDir.Normalize();
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_DOWN)
+	{
+		m_pRigidbody->AddVelocity(MyVector2(-200.f, 0.f));
+	}
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_DOWN)
+	{
+		m_pRigidbody->AddVelocity(MyVector2(200.f, 0.f));
+	}
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_UP)
+	{
+		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
+	}
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_UP)
+	{
+		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
+	}
+
+	// 중력 반영 
+	m_pRigidbody->ApplyGravity();
+
+	// 현재 속도 계산 (물리적 이동에 있어 핵심적인 부분)
+	m_pRigidbody->CalVelocity();
+
+
 
 	// 이동 속력
 	float fSpeed = m_pRigidbody->GetVelocity().Length();
 
-	// 다른 컴포넌트 적용
-	Vector2 vPos = m_pTransform->GetPos();
-	vPos += vDir * fSpeed * DT;
+	if (fSpeed != 0.f)
+	{
+		// 이동 방향
+		Vector2 vDir = m_pRigidbody->GetVelocity();
+		vDir.Normalize();
 
-	m_pTransform->SetPos(vPos);
-	m_pCollider->SetOffset(vPos);
+		// 컴포넌트 적용 (현재 플레이어 위치 = 이동방향 * 이동속력 * DT)
+		Vector2 vPos = m_pTransform->GetPos();
+		vPos += vDir * fSpeed * DT;
 
-	//m_pTransform->SetPos(vTemp);
-	//m_pCollider->SetOffset(vTemp);
+		m_pTransform->SetPos(vPos);
+		m_pCollider->SetOffset(vPos);
+	}
+}
 
-	// 트랜스폼 포지션과 콜라이더 오프셋은 어차피 같은 값이니 같은 값을 넣어준다
+void CPlayer::Update_state() // for Animaion change
+{
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_DOWN)
+	{
+		m_iCurDir = -1;
+		m_eCurState = OBJECT_STATE::WALK;
+	}
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_DOWN)
+	{
+		m_iCurDir = 1;
+		m_eCurState = OBJECT_STATE::WALK;
+	}
+	if(m_pRigidbody->GetSpeed() == 0.f)
+	{
+		m_eCurState = OBJECT_STATE::IDLE;
+	}
+}
+
+void CPlayer::Update_animation()
+{
+	// 어소트락 68화
+	if (m_ePrevState == m_eCurState && m_iPrevDir == m_iCurDir)
+		return;
+
+	switch (m_eCurState)
+	{
+	case OBJECT_STATE::IDLE:
+	{
+		// 방향에 따라 애니메이션 실행
+		//if(m_iDir == -1)
+		//	//
+		//else if (m_iDIr == 1)
+		//	//
+	}
+		break;
+	case OBJECT_STATE::WALK:
+
+		break;
+	case OBJECT_STATE::ATTACK:
+
+		break;
+	case OBJECT_STATE::DEAD:
+
+		break;
+	default:
+		break;
+
+	}
+
 }
 
 void CPlayer::Attack()

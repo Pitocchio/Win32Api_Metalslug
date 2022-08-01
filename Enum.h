@@ -97,8 +97,23 @@ enum class OBJECT_STATE
 	WALK,
 	ATTACK,
 	DEAD,
+	JUMP,
 	TYPEEND_OBJECT_STATE
 };
+
+enum class PLAYER_STATE
+{
+	IDLE,
+	WALK,
+	ATTACK,
+	DEAD,
+	TYPEEND_PLAYER_STATE
+
+};
+
+
+
+
 
 
 // ====================== Key ======================== // 

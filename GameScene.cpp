@@ -15,12 +15,12 @@ void CGameScene::Update()
 		CScene::Update(); // 부모가 갖고 있는 멤버함수 사용
 
 		// 스페이스 누를 시 Scene 변환
-		if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
-		{
-			//CSceneMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
+		//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
+		//{
+		//	//CSceneMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
 
-			CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::TOOL);
-		}
+		//	CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::TOOL);
+		//}
 	}
 }
 
@@ -33,11 +33,17 @@ void CGameScene::Enter()
 	CProjectile* pLiquid = new CLiquid();
 	CEventMgr::GetInst()->CreateObject(pLiquid, OBJECT_TYPE::M_ZOMBIE_LIQUID);
 
+	CCameracollider* Cameracollider = new CCameracollider();
+	CEventMgr::GetInst()->CreateObject(Cameracollider, OBJECT_TYPE::C_CAMERACOLLIDER);
+
 
 
 
 	// 충돌 지정 설정 (현재 씬에서 충돌 검사를 진행할 오브젝트 타입들)
 	CCollisionMgr::GetInst()->CheckObjectType(OBJECT_TYPE::M_PLAYER, OBJECT_TYPE::M_ZOMBIE_LIQUID);
+
+	CCollisionMgr::GetInst()->CheckObjectType(OBJECT_TYPE::M_PLAYER, OBJECT_TYPE::C_CAMERACOLLIDER);
+
 }
 
 void CGameScene::Exit()

@@ -19,7 +19,8 @@ public: // Methods
 
 
 protected: // Variables
-	Vector2 m_vLook;
+	int m_iPrevDir;
+	int m_iCurDir;
 	float m_fSpeed;
 
 	CRigidbody2D* m_pRigidbody;
