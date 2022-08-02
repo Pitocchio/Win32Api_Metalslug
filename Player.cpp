@@ -8,6 +8,7 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+	
 }
 
 void CPlayer::Init()
@@ -25,7 +26,7 @@ void CPlayer::Init()
 	m_pCollider->SetOwnerObj(this);
 	m_pCollider->SetIsColliderType(COLLIDER_TYPE::BOX2D);
 	m_pCollider->SetOffset(Vector2(PLAYER_POS_X, PLAYER_POS_Y));
-	m_pCollider->SetSize(Vector2(PLAYER_SIZE_STAND_X-int(PLAYER_SIZE_STAND_X * 0.2f), PLAYER_SIZE_STAND_Y- int(PLAYER_SIZE_STAND_Y * 0.2f)));
+	dynamic_cast<CBoxCollider2D*>(m_pCollider)->SetSize(Vector2(PLAYER_SIZE_STAND_X-int(PLAYER_SIZE_STAND_X * 0.2f), PLAYER_SIZE_STAND_Y- int(PLAYER_SIZE_STAND_Y * 0.2f)));
 	m_pCollider->SetIsActive(true);
 
 	// Component - Rigidbody
@@ -48,6 +49,9 @@ void CPlayer::Init()
 	m_iBulletCount = 1000;
 	m_iGrenadeCount = 10;
 
+
+	// temp (텍스처 로딩)
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp");
 }
 
 void CPlayer::LateInit()
@@ -123,6 +127,38 @@ void CPlayer::LateUpdate()
 	m_iPrevDir = m_iCurDir;
 }
 
+void CPlayer::Render(HDC hdc)
+{
+	// Temp
+	int iWidth = (int)m_pTex->Width();
+	int iHeight = (int)m_pTex->Height();
+
+	Vector2 vPos = m_pTransform->GetPos();
+	//Vector2 vSize = m_pTransform->GetSize();
+
+	
+	//BitBlt(hdc,
+	//	int(vPos.x - (float)(iWidth * 0.5f)),
+	//	int(vPos.y - (float)(iHeight * 0.5f)),
+	//	iWidth,
+	//	iHeight,
+	//	m_pTex->GetDC(),
+	//	0, 0, SRCCOPY);
+
+	TransparentBlt(hdc,
+		int(vPos.x - (float)(iWidth * 0.5f)),
+		int(vPos.y - (float)(iHeight * 0.5f)),
+		iWidth, iHeight,
+		m_pTex->GetDC(),
+		0, 0, iWidth, iHeight,
+		RGB(255, 0, 255));
+
+	/*Rectangle(hdc, int(vTempPos.x - int(vTempSize.x * 0.5f)),
+		int(vTempPos.y - int(vTempSize.y * 0.5f)),
+		int(vTempPos.x + int(vTempSize.x * 0.5f)),
+		int(vTempPos.y + int(vTempSize.y * 0.5f)));*/
+}
+
 void CPlayer::Move()
 {
 	// 키 입력에 따른 힘이나 속도 부여
@@ -152,7 +188,7 @@ void CPlayer::Move()
 	}
 
 	// 중력 반영 
-	m_pRigidbody->ApplyGravity();
+	//m_pRigidbody->ApplyGravity();
 
 	// 현재 속도 계산 (물리적 이동에 있어 핵심적인 부분)
 	m_pRigidbody->CalVelocity();

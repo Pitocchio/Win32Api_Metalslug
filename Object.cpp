@@ -22,24 +22,23 @@ void CObject::Init()
 	m_pTransform = new CTransform2D();
 	AddComponent(COMPONENT_TYPE::TRANSFORM2D, m_pTransform);
 
-	m_pCollider = new CBoxCollider2D();
-	AddComponent(COMPONENT_TYPE::BOXCOLLIDER2D, m_pCollider);
+	
 }
 
 void CObject::Render(HDC hdc)
 {
 	// 실제 플레이어
-	Vector2 vTempPos = m_pTransform->GetPos();
-	Vector2 vTempSize = m_pTransform->GetSize();
+	//Vector2 vTempPos = m_pTransform->GetPos();
+	//Vector2 vTempSize = m_pTransform->GetSize();
 
-	Rectangle(hdc, int(vTempPos.x - int(vTempSize.x * 0.5f)),
-		int(vTempPos.y - int(vTempSize.y * 0.5f)),
-		int(vTempPos.x + int(vTempSize.x * 0.5f)),
-		int(vTempPos.y + int(vTempSize.y * 0.5f)));
+	//Rectangle(hdc, int(vTempPos.x - int(vTempSize.x * 0.5f)),
+	//	int(vTempPos.y - int(vTempSize.y * 0.5f)),
+	//	int(vTempPos.x + int(vTempSize.x * 0.5f)),
+	//	int(vTempPos.y + int(vTempSize.y * 0.5f)));
 
 
-	// 컴포트 렌더러 (충돌체, 좌표, 텍스트 등 디버그 용)
-	ComponentRender(hdc);
+	//// 컴포트 렌더러 (충돌체, 좌표, 텍스트 등 디버그 용)
+	//ComponentRender(hdc);
 }
 
 void CObject::ComponentRender(HDC hdc)
@@ -51,7 +50,7 @@ void CObject::ComponentRender(HDC hdc)
 			return;
 
 		Vector2 vTempPos = m_pCollider->GetOffset();
-		Vector2 vTempSize = m_pCollider->GetSize();
+		Vector2 vTempSize = dynamic_cast<CBoxCollider2D*>(m_pCollider)->GetSize();
 
 		PEN_TYPE ePen = PEN_TYPE::GREEN; 
 		if (m_pCollider->IsCollision())
@@ -64,6 +63,24 @@ void CObject::ComponentRender(HDC hdc)
 			int(vTempPos.y - int(vTempSize.y * 0.5f)),
 			int(vTempPos.x + int(vTempSize.x * 0.5f)),
 			int(vTempPos.y + int(vTempSize.y * 0.5f)));
+	}
+
+	if (IsComponent(COMPONENT_TYPE::LINECOLLIDER2D))
+	{
+		if (!m_pCollider->IsActive())
+			return;
+
+		Vector2 vStart = dynamic_cast<CLineCollider2D*>(m_pCollider)->GetStartPoint();
+		Vector2 vEnd = dynamic_cast<CLineCollider2D*>(m_pCollider)->GetEndPoint();
+
+		PEN_TYPE ePen = PEN_TYPE::BLUE;
+		SelectGDI pen(hdc, ePen);
+
+
+		MoveToEx(hdc, int(vStart.x), int(vStart.y), NULL);
+		LineTo(hdc, int(vEnd.x), int(vEnd.y));
+
+
 	}
 }	
 

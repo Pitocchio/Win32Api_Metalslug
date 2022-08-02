@@ -19,6 +19,8 @@
 #include "ObjectMgr.h"
 #include "EventMgr.h"
 #include "CollisionMgr.h"
+#include "PathMgr.h"
+#include "ResMgr.h"
 
 // 04.Object
 #include "Object.h"
@@ -43,11 +45,16 @@
 #include "Cameracollider.h"
 #include "CGrenadei.h"
 #include "Liquid.h"
+#include "GroundCollider.h"
 
 // 05.Scene
 #include "Scene.h"
 #include "ToolScene.h"
 #include "GameScene.h"
+
+// 06. Res
+#include "Res.h"
+#include "Texture.h"
 
 
 // 07.Component
@@ -56,6 +63,8 @@
 #include "Collider2D.h"
 #include "BoxCollider2D.h"
 #include "Rigidbody2D.h"
+#include "LineCollider2D.h"
+
 
 
 // 08.Module

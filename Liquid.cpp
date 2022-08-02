@@ -11,25 +11,25 @@ CLiquid::~CLiquid()
 
 void CLiquid::Init()
 {
-	CObject::Init(); // 부모, 즉 CObject Init()먼저 호출해서 transform이랑 collider 넣어줌 
+	//CObject::Init(); // 부모, 즉 CObject Init()먼저 호출해서 transform이랑 collider 넣어줌 
 
-	m_pTransform->SetOwnerObj(this);
-	m_pTransform->SetPos(Vector2(PROJECILE_POS_X, PROJECILE_POS_Y));
-	m_pTransform->SetSize(Vector2(PROJECILE_SIZE_X, PROJECILE_SIZE_Y));
-	m_pTransform->SetAngle(NULL);
+	//m_pTransform->SetOwnerObj(this);
+	//m_pTransform->SetPos(Vector2(PROJECILE_POS_X, PROJECILE_POS_Y));
+	//m_pTransform->SetSize(Vector2(PROJECILE_SIZE_X, PROJECILE_SIZE_Y));
+	//m_pTransform->SetAngle(NULL);
 
-	m_pCollider->SetOwnerObj(this);
-	m_pCollider->SetIsColliderType(COLLIDER_TYPE::BOX2D);
-	m_pCollider->SetOffset(Vector2(PROJECILE_POS_X, PROJECILE_POS_Y));
-	m_pCollider->SetSize(Vector2(PROJECILE_SIZE_X - int(PROJECILE_SIZE_X * 0.2f), PROJECILE_SIZE_Y - int(PROJECILE_SIZE_Y * 0.2f)));
-	m_pCollider->SetIsActive(true);
+	//m_pCollider->SetOwnerObj(this);
+	//m_pCollider->SetIsColliderType(COLLIDER_TYPE::BOX2D);
+	//m_pCollider->SetOffset(Vector2(PROJECILE_POS_X, PROJECILE_POS_Y));
+	//dynamic_cast<CBoxCollider2D*>(m_pCollider)->SetSize(Vector2(PROJECILE_SIZE_X - int(PROJECILE_SIZE_X * 0.2f), PROJECILE_SIZE_Y - int(PROJECILE_SIZE_Y * 0.2f)));
+	//m_pCollider->SetIsActive(true);
 
-	m_iPrevDir = -1;
-	m_iCurDir = -1;
-	m_fSpeed = MOVEOBJ_SPEED;
+	//m_iPrevDir = -1;
+	//m_iCurDir = -1;
+	//m_fSpeed = MOVEOBJ_SPEED;
 
-	m_ObjectType = OBJECT_TYPE::M_ZOMBIE_LIQUID;
-	m_ObjectState = OBJECT_STATE::IDLE;
+	//m_ObjectType = OBJECT_TYPE::M_ZOMBIE_LIQUID;
+	//m_ObjectState = OBJECT_STATE::IDLE;
 
 }
 

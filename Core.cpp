@@ -20,6 +20,7 @@ void CCore::Init(HWND hWnd)
 	CreateBrushPen();
 
 	// Manager Init
+	CPathMgr::GetInst()->Init();
 	CTimeMgr::GetInst()->Init();
 	CKeyMgr::GetInst()->Init();
 	CSceneMgr::GetInst()->Init();
@@ -35,7 +36,7 @@ void CCore::Progress()
 	CSceneMgr::GetInst()->Update();
 
 	// Collision Update
-	CCollisionMgr::GetInst()->Update();
+	//CCollisionMgr::GetInst()->Update();
 
 	// Scene LateUpdate
 	CSceneMgr::GetInst()->LateUpdate();
@@ -57,7 +58,7 @@ void CCore::Release()
 	// Release
 	CSceneMgr::GetInst()->Release();
 	CObjectMgr::GetInst()->Release();
-
+	CResMgr::GetInst()->Release();
 
 	// DestroyInst
 	CTimeMgr::GetInst()->DestroyInst();
@@ -66,6 +67,8 @@ void CCore::Release()
 	CObjectMgr::GetInst()->DestroyInst();
 	CEventMgr::GetInst()->DestroyInst();
 	CCollisionMgr::GetInst()->DestroyInst();
+	CResMgr::GetInst()->DestroyInst();
+	CPathMgr::GetInst()->DestroyInst();
 
 	// Delete GDI obj (except Hollow)
 	for (int i = 0; i < (UINT)PEN_TYPE::TYPEEND_PEN; ++i)

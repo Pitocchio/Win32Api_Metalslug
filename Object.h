@@ -3,6 +3,7 @@
 class CComponent;
 class CTransform2D;
 class CBoxCollider2D;
+class CCollider2D;
 
 class CObject
 {
@@ -51,7 +52,7 @@ protected: // Variables
 	OBJECT_STATE m_ePrevState;
 
 	CTransform2D* m_pTransform;
-	CBoxCollider2D* m_pCollider;
+	CCollider2D* m_pCollider;
 	
 	
 

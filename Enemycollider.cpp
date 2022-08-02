@@ -24,7 +24,3 @@ void CEnemycollider::Update()
 void CEnemycollider::LateUpdate()
 {
 }
-
-void CEnemycollider::Render(HDC hdc)
-{
-}

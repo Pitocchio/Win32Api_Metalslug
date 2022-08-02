@@ -9,17 +9,17 @@ public:
 	CCollider2D(const CCollider2D& origin);
 	~CCollider2D();
 
-//public: // Lifecycle
-//	virtual void Init() override;
-//	virtual void Update() override;
-//	virtual void LateUpdate() override;
-//	virtual void Render(HDC hdc) override;
+public: // Lifecycle
+	virtual void Init() override;
+	virtual void Update() override;
+	virtual void LateUpdate() override;
+	virtual void Render(HDC hdc) override;
 
 public: // Methods
 	void SetOwnerObj(CObject* obj);
 	CObject* GetOwnerObj();
 
-	CBoxCollider2D* GetOtherObjCol();
+	CCollider2D* GetOtherObjCol();
 
 	void SetOffset(Vector2 vec);
 	Vector2 GetOffset() const;
@@ -37,15 +37,15 @@ public: // Methods
 	CCollider2D& operator = (CCollider2D& origin) = delete; 
 
 	//충돌 시점 함수
-	void OnCollision(CBoxCollider2D* pOther); // 충돌이 진행중인 시점
-	void OnCollisionEnter(CBoxCollider2D* pOther); // 충돌이 처음 막 시작된 시점
-	void OnCollisionExit(CBoxCollider2D* pOther); // 충돌이 처음 막 종료된 시점
+	void OnCollision(CCollider2D* pOther); // 충돌이 진행중인 시점
+	void OnCollisionEnter(CCollider2D* pOther); // 충돌이 처음 막 시작된 시점
+	void OnCollisionExit(CCollider2D* pOther); // 충돌이 처음 막 종료된 시점
 
 
 protected: // Variables
 	CObject* m_pOwnerObj;
 
-	CBoxCollider2D* m_pOtherObjCol;
+	CCollider2D* m_pOtherObjCol;
 
 	COLLIDER_TYPE m_ColliderType;
 	UINT m_iCollision;

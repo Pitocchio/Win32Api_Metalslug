@@ -78,9 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Output\bin_debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Output\bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -142,6 +144,7 @@
     <ClInclude Include="Attackobj.h" />
     <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Cameracollider.h" />
     <ClInclude Include="CGrenadei.h" />
     <ClInclude Include="Collider2D.h" />
@@ -161,6 +164,8 @@
     <ClInclude Include="Heavymachinegun.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="GroundCollider.h" />
+    <ClInclude Include="LineCollider2D.h" />
     <ClInclude Include="Liquid.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Mapcollider.h" />
@@ -169,10 +174,13 @@
     <ClInclude Include="Npc.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectMgr.h" />
+    <ClInclude Include="PathMgr.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Prisoner.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Rebel.h" />
+    <ClInclude Include="Res.h" />
+    <ClInclude Include="ResMgr.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rigidbody2D.h" />
     <ClInclude Include="Scene.h" />
@@ -181,6 +189,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="Transform2D.h" />
@@ -192,6 +201,7 @@
     <ClCompile Include="Attackobj.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cameracollider.cpp" />
     <ClCompile Include="CGrenadei.cpp" />
     <ClCompile Include="Collider2D.cpp" />
@@ -208,6 +218,8 @@
     <ClCompile Include="Heavymachinegun.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="GroundCollider.cpp" />
+    <ClCompile Include="LineCollider2D.cpp" />
     <ClCompile Include="Liquid.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mapcollider.cpp" />
@@ -216,14 +228,18 @@
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectMgr.cpp" />
+    <ClCompile Include="PathMgr.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Prisoner.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rebel.cpp" />
+    <ClCompile Include="Res.cpp" />
+    <ClCompile Include="ResMgr.cpp" />
     <ClCompile Include="Rigidbody2D.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="ToolScene.cpp" />
     <ClCompile Include="Transform2D.cpp" />

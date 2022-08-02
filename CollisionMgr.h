@@ -1,6 +1,6 @@
 #pragma once
 
-class CCollider;
+class CCollider2D;
 class CBoxCollider2D;
 
 union COLLIDER_ID
@@ -22,10 +22,13 @@ public: // Lifecycle
 public: // Methods
 	void CheckObjectType(OBJECT_TYPE left, OBJECT_TYPE right); // 충돌 지정
 	void ResetObjectType();
+	Vector2 IntersectionPoint(const Vector2* p1, const Vector2* p2, const Vector2* p3, const Vector2* p4);
+
 
 private: // 업데이트 내부에서 돌릴거라 private
 	void CollisionUpdate(OBJECT_TYPE left, OBJECT_TYPE right); // 충돌 검사 반복문
-	bool IsCollision(CBoxCollider2D* pLeftCollider, CBoxCollider2D* pRihtCollider);
+	bool IsCollisionBoxBox(CCollider2D* pLeftCollider, CCollider2D* pRihtCollider);
+	bool IsCollisionBoxLine(CCollider2D* pLeftCollider, CCollider2D* pRihtCollider);
 
 private: // Variables
 	UINT m_arrCheck[(UINT)OBJECT_TYPE::TYPEEND_OBJECT]; // 비트연산자를 이용한 충돌 체크 배열 

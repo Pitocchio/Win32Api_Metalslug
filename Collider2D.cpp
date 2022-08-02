@@ -37,7 +37,7 @@ CObject* CCollider2D::GetOwnerObj()
 	return m_pOwnerObj;
 }
 
-CBoxCollider2D* CCollider2D::GetOtherObjCol()
+CCollider2D* CCollider2D::GetOtherObjCol()
 {
 	return m_pOtherObjCol;
 }
@@ -81,34 +81,34 @@ bool CCollider2D::IsActive()
 	return m_bActive;
 }
 
-void CCollider2D::OnCollision(CBoxCollider2D* pOther)
+void CCollider2D::OnCollision(CCollider2D* pOther)
 {
 }
 
-void CCollider2D::OnCollisionEnter(CBoxCollider2D* pOther)
+void CCollider2D::OnCollisionEnter(CCollider2D* pOther)
 {
 	++m_iCollision;
 	m_pOtherObjCol = pOther;
 
 }
 
-void CCollider2D::OnCollisionExit(CBoxCollider2D* pOther)
+void CCollider2D::OnCollisionExit(CCollider2D* pOther)
 {
 	--m_iCollision;
 }
 
-//void CCollider2D::Init()
-//{
-//}
-//
-//void CCollider2D::Update()
-//{
-//}
-//
-//void CCollider2D::LateUpdate()
-//{
-//}
-//
-//void CCollider2D::Render(HDC hdc)
-//{
-//}
+void CCollider2D::Init()
+{
+}
+
+void CCollider2D::Update()
+{
+}
+
+void CCollider2D::LateUpdate()
+{
+}
+
+void CCollider2D::Render(HDC hdc)
+{
+}

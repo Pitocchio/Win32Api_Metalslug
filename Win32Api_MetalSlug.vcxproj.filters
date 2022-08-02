@@ -193,6 +193,27 @@
     <Filter Include="소스 파일\04.Object\04.Ui">
       <UniqueIdentifier>{8081d6b8-3a33-4746-bf74-198f683f2899}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04.Object\03.MapCollider\03.GroundCollider">
+      <UniqueIdentifier>{1650bede-3c86-4706-8511-2cfeb820b5b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Component\02.Collider2D\02.LIneCollider2D">
+      <UniqueIdentifier>{32486676-40ae-4b3d-85f1-b8bfca104ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\06.Resource\00.Res">
+      <UniqueIdentifier>{f370f1ce-1e2b-4d07-a936-4b79acc243ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\06.Resource\01.Texture">
+      <UniqueIdentifier>{a3c1687f-a94c-4d75-aa24-20e4584f0a4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Manager\06.PathMgr">
+      <UniqueIdentifier>{d5a9f713-d3b7-4e22-a981-a831ba2016cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Manager\07.ResMgr">
+      <UniqueIdentifier>{186d69c9-4805-4c9a-855b-8b09f7ff4500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\09.Camera">
+      <UniqueIdentifier>{bb6f9c83-cdcc-42b2-9596-c287885985fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -339,6 +360,27 @@
     <ClInclude Include="Rigidbody2D.h">
       <Filter>소스 파일\07.Component\03.Rigidbody2D</Filter>
     </ClInclude>
+    <ClInclude Include="GroundCollider.h">
+      <Filter>소스 파일\04.Object\03.MapCollider\03.GroundCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="LineCollider2D.h">
+      <Filter>소스 파일\07.Component\02.Collider2D\02.LIneCollider2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Res.h">
+      <Filter>소스 파일\06.Resource\00.Res</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>소스 파일\06.Resource\01.Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="PathMgr.h">
+      <Filter>소스 파일\03.Manager\06.PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ResMgr.h">
+      <Filter>소스 파일\03.Manager\07.ResMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>소스 파일\09.Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Win32Api_MetalSlug.rc">
@@ -473,6 +515,27 @@
     </ClCompile>
     <ClCompile Include="Rigidbody2D.cpp">
       <Filter>소스 파일\07.Component\03.Rigidbody2D</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundCollider.cpp">
+      <Filter>소스 파일\04.Object\03.MapCollider\03.GroundCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="LineCollider2D.cpp">
+      <Filter>소스 파일\07.Component\02.Collider2D\02.LIneCollider2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Res.cpp">
+      <Filter>소스 파일\06.Resource\00.Res</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일\06.Resource\01.Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="PathMgr.cpp">
+      <Filter>소스 파일\03.Manager\06.PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ResMgr.cpp">
+      <Filter>소스 파일\03.Manager\07.ResMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\09.Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
