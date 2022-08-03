@@ -163,6 +163,57 @@ void CPlayer::Render(HDC hdc)
 
 
 
+
+
+
+
+
+
+
+	// Text
+
+
+	// FPS
+	TCHAR tch1[128] = {};
+	swprintf_s(tch1, L"FPS : %.2f ",
+		float(FPS));
+	//SetBkMode(hdc, TRANSPARENT);
+	Vector2 tPos1 = CCamera::GetInst()->GetRenderPos(Vector2(0, 0));
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos1.x), int(tPos1.y), tch1, _tcslen(tch1));
+
+	// DT
+	TCHAR tch2[128] = {};
+	swprintf_s(tch2, L"DT : %.2f ",
+		DT);
+	//SetBkMode(hdc, TRANSPARENT);
+	Vector2 tPos2 = CCamera::GetInst()->GetRenderPos(Vector2(0, 15));
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos2.x), int(tPos2.y), tch2, _tcslen(tch2));
+
+
+	// Player World Pos
+	TCHAR tch3[128] = {};
+	swprintf_s(tch3, L"PLAYER RENDER POS : %.2f, %.2f",
+		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).x,
+		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).y);
+	//SetBkMode(hdc, TRANSPARENT);
+	Vector2 tPos3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetPos());
+	Vector2 tSize3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetSize());
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos3.x + (tSize3.x * 0.5f)), int(tPos3.y + (tSize3.y * 0.5f)), tch3, _tcslen(tch3));
+
+	// Player Local Pos
+	TCHAR tch4[128] = {};
+	swprintf_s(tch4, L"PLAYER LOCAL POS : %.2f, %.2f",
+		m_pTransform->GetPos().x,
+		m_pTransform->GetPos().y);
+	//SetBkMode(hdc, TRANSPARENT);
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos3.x + (tSize3.x * 0.5f)), int(tPos3.y + (tSize3.y * 0.5f) +15), tch4, _tcslen(tch4));
+
+
+
 	
 }
 

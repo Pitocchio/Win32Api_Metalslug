@@ -3,8 +3,9 @@
 #define DEGREETORADIAN(t) ((t) * (float)M_PI / (float)180.0f)
 #define RADIANTODEGREE(t) (((float)180.0f / (float)M_PI) * (t))
 
-#define DT CTimeMgr::GetInst()->GetDeltatime()
-
+#define DT CTimeMgr::GetInst()->GetDT()
+#define fDT CTimeMgr::GetInst()->GetfDT()
+#define FPS CTimeMgr::GetInst()->GetFPS()
 
 // 복사생성자 방지
 #define NO_COPY(className)	private :\
