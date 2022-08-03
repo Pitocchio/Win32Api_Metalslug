@@ -60,6 +60,8 @@ void CPlayer::LateInit()
 
 void CPlayer::Update()
 {
+	
+	
 
 	Move();
 
@@ -134,9 +136,17 @@ void CPlayer::Render(HDC hdc)
 	int iHeight = (int)m_pTex->Height();
 
 	Vector2 vPos = m_pTransform->GetPos();
-	//Vector2 vSize = m_pTransform->GetSize();
+	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
 
-	
+	TransparentBlt(hdc,
+		int(vRenderPos.x - (float)(iWidth * 0.5f)),
+		int(vRenderPos.y - (float)(iHeight * 0.5f)),
+		iWidth, iHeight,
+		m_pTex->GetDC(),
+		0, 0, iWidth, iHeight,
+		RGB(255, 0, 255));
+
+	//Vector2 vSize = m_pTransform->GetSize();	
 	//BitBlt(hdc,
 	//	int(vPos.x - (float)(iWidth * 0.5f)),
 	//	int(vPos.y - (float)(iHeight * 0.5f)),
@@ -145,18 +155,11 @@ void CPlayer::Render(HDC hdc)
 	//	m_pTex->GetDC(),
 	//	0, 0, SRCCOPY);
 
-	TransparentBlt(hdc,
-		int(vPos.x - (float)(iWidth * 0.5f)),
-		int(vPos.y - (float)(iHeight * 0.5f)),
-		iWidth, iHeight,
-		m_pTex->GetDC(),
-		0, 0, iWidth, iHeight,
-		RGB(255, 0, 255));
 
-	/*Rectangle(hdc, int(vTempPos.x - int(vTempSize.x * 0.5f)),
-		int(vTempPos.y - int(vTempSize.y * 0.5f)),
-		int(vTempPos.x + int(vTempSize.x * 0.5f)),
-		int(vTempPos.y + int(vTempSize.y * 0.5f)));*/
+	/*Rectangle(hdc, int(vRenderPos.x - int(vRenderPos.x * 0.5f)),
+		int(vRenderPos.y - int(vRenderPos.y * 0.5f)),
+		int(vRenderPos.x + int(vRenderPos.x * 0.5f)),
+		int(vRenderPos.y + int(vRenderPos.y * 0.5f)));*/
 }
 
 void CPlayer::Move()

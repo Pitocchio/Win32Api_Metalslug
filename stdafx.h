@@ -69,3 +69,5 @@
 
 // 08.Module
 #include "SelectGDI.h"
+
+#include "Camera.h"

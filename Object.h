@@ -40,6 +40,8 @@ public: // Methods
 	Vector2 GetSize();
 
 
+	OBJECT_STATE GetObjCurState() { return m_eCurState; }
+
 protected: // Variables
 	map<COMPONENT_TYPE, CComponent*> m_mapComponent;
 	OBJECT_TYPE m_ObjectType;

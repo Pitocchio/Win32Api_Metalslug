@@ -1,12 +1,14 @@
 #pragma once
 
-// Window
-#define WINDOW_WIDTH 1280
-#define	WINDOW_HEIGHT 940
+// Window (21:16) * 60
+#define WINDOW_WIDTH 1260
+#define	WINDOW_HEIGHT 960
 
 
 // Moveobj
 #define MOVEOBJ_SPEED 500
+
+
 
 
 

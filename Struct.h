@@ -25,8 +25,22 @@ typedef struct MyVector2
 
 	MyVector2 operator - () { return MyVector2(-x, -y); };
 
-	float Length() { return float(sqrt(pow(x, 2) + pow(y, 2))); } // ∫§≈Õ ±Ê¿Ã
-	void Normalize() { x /= Length(); y /= Length(); }
+	float Length() // ∫§≈Õ ±Ê¿Ã
+	{
+		return float(sqrt(pow(x, 2) + pow(y, 2))); 
+	}
+
+	void Normalize() 
+	{
+		if (x == 0 && y == 0)
+		{
+			x = 0;
+			y = 0;
+			return;
+		}
+
+		x /= Length(); y /= Length();
+	}
 	float DotProduct(MyVector2 rbs) { return (x * rbs.x) + (y * rbs.y); };
 
 	/*

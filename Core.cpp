@@ -24,6 +24,7 @@ void CCore::Init(HWND hWnd)
 	CTimeMgr::GetInst()->Init();
 	CKeyMgr::GetInst()->Init();
 	CSceneMgr::GetInst()->Init();
+	CCamera::GetInst()->Init();
 }
 
 void CCore::Progress()
@@ -31,9 +32,12 @@ void CCore::Progress()
 	// Manager Update
 	CTimeMgr::GetInst()->Update();
 	CKeyMgr::GetInst()->Update();
+	CCamera::GetInst()->Update();
 
 	// Scene Update
 	CSceneMgr::GetInst()->Update();
+
+	
 
 	// Collision Update
 	//CCollisionMgr::GetInst()->Update();
@@ -41,6 +45,11 @@ void CCore::Progress()
 	// Scene LateUpdate
 	CSceneMgr::GetInst()->LateUpdate();
 
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
+	{
+		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, PLAYER_POS_Y));
+		CCamera::GetInst()->SetLookAt(Pos);
+	}
 
 	// Render
 	Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);
@@ -59,6 +68,7 @@ void CCore::Release()
 	CSceneMgr::GetInst()->Release();
 	CObjectMgr::GetInst()->Release();
 	CResMgr::GetInst()->Release();
+	CCamera::GetInst()->Release();
 
 	// DestroyInst
 	CTimeMgr::GetInst()->DestroyInst();
@@ -69,6 +79,7 @@ void CCore::Release()
 	CCollisionMgr::GetInst()->DestroyInst();
 	CResMgr::GetInst()->DestroyInst();
 	CPathMgr::GetInst()->DestroyInst();
+	CCamera::GetInst()->DestroyInst();
 
 	// Delete GDI obj (except Hollow)
 	for (int i = 0; i < (UINT)PEN_TYPE::TYPEEND_PEN; ++i)

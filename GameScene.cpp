@@ -30,18 +30,20 @@ void CGameScene::Enter()
 	CPlayer* pPlayer = new CPlayer();
 	CEventMgr::GetInst()->CreateObject(pPlayer, OBJECT_TYPE::M_PLAYER);
 
-	////CProjectile* pLiquid = new CLiquid();
-	////CEventMgr::GetInst()->CreateObject(pLiquid, OBJECT_TYPE::M_ZOMBIE_LIQUID);
+	/*CProjectile* pLiquid = new CLiquid();
+	CEventMgr::GetInst()->CreateObject(pLiquid, OBJECT_TYPE::M_ZOMBIE_LIQUID);*/
 
 	//CGroundCollider* pGCol = new CGroundCollider();
 	//CEventMgr::GetInst()->CreateObject(pGCol, OBJECT_TYPE::C_GROUNDCOLLIDER);
 
 
-	//// 충돌 지정 설정 (현재 씬에서 충돌 검사를 진행할 오브젝트 타입들)
-	//
+	// 충돌 지정 설정 (현재 씬에서 충돌 검사를 진행할 오브젝트 타입들)
 
 	//CCollisionMgr::GetInst()->CheckObjectType(OBJECT_TYPE::M_PLAYER, OBJECT_TYPE::C_GROUNDCOLLIDER);
 
+
+	// Camera Look 지정
+	CCamera::GetInst()->SetLookAt(Vector2(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT*0.5f));
 
 }
 
