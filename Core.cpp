@@ -47,7 +47,7 @@ void CCore::Progress()
 
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
 	{
-		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, PLAYER_POS_Y));
+		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));
 		CCamera::GetInst()->SetLookAt(Pos);
 	}
 

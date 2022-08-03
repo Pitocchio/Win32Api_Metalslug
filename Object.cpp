@@ -30,13 +30,13 @@ void CObject::Render(HDC hdc)
 	//실제 플레이어
 
 
-	Vector2 vPos = m_pTransform->GetPos();
+	/*Vector2 vPos = m_pTransform->GetPos();
 	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 	Rectangle(hdc, int(vRenderPos.x - int(vRenderPos.x * 0.5f)),
 		int(vRenderPos.y - int(vRenderPos.y * 0.5f)),
 		int(vRenderPos.x + int(vRenderPos.x * 0.5f)),
-		int(vRenderPos.y + int(vRenderPos.y * 0.5f)));
+		int(vRenderPos.y + int(vRenderPos.y * 0.5f)));*/
 
 
 	//// 컴포트 렌더러 (충돌체, 좌표, 텍스트 등 디버그 용)

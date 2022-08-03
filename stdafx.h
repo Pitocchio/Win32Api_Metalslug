@@ -46,6 +46,7 @@
 #include "CGrenadei.h"
 #include "Liquid.h"
 #include "GroundCollider.h"
+#include "Stage.h"
 
 // 05.Scene
 #include "Scene.h"

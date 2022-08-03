@@ -1,9 +1,13 @@
 #pragma once
 
-// Window (21:16) * 60
-#define WINDOW_WIDTH 1260
-#define	WINDOW_HEIGHT 960
 
+
+// 스테이지 이미지 원본 크기 303 : 223
+
+// Window (21:16) * 40
+#define WINDOW_WIDTH 909
+#define	WINDOW_HEIGHT 665
+//1260 960
 
 // Moveobj
 #define MOVEOBJ_SPEED 500

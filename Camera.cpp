@@ -12,7 +12,7 @@ void CCamera::Init()
 	m_vLookAt = Vector2(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
 	m_vPreLookAt = m_vLookAt;
 	m_vCurLookAt = m_vLookAt;
-
+	m_fSpeed = 0;
 
 }
 
@@ -32,7 +32,7 @@ void CCamera::Update()
 
 
 	// Camera Move by Key
-	/*
+	
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_HOLD)
 		m_vLookAt.y -= 500.f * DT;
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_HOLD)
@@ -41,13 +41,15 @@ void CCamera::Update()
 		m_vLookAt.x -= 500.f * DT;
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
 		m_vLookAt.x += 500.f * DT;
-	*/
+	
 
 	CalDiff();
 }
 
 void CCamera::Release()
 {
+	delete m_pTargetObj;
+
 	m_pTargetObj = nullptr;
 }
 

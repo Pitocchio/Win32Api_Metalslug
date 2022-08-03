@@ -15,6 +15,10 @@ enum class SCENE_TYPE {
 // ====================== Object ======================== // 
 enum class OBJECT_TYPE {
 
+	// CStage
+	S_LANDSCAPE,
+	S_GROUND,
+
 	// CMapCollider
 	C_CAMERACOLLIDER,
 	C_ENEMYCOLLIDER,

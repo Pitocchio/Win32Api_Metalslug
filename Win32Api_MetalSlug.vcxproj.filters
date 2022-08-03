@@ -214,6 +214,9 @@
     <Filter Include="소스 파일\01.Header">
       <UniqueIdentifier>{531fc382-2941-4aa7-a7d8-14793296e0ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04.Object\05.Stage">
+      <UniqueIdentifier>{c0ebb142-f109-49db-b8ae-4352d0e6ae97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="Camera.h">
       <Filter>소스 파일\09.Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>소스 파일\04.Object\05.Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Win32Api_MetalSlug.rc">
@@ -536,6 +542,9 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일\09.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>소스 파일\04.Object\05.Stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

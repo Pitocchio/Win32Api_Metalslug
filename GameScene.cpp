@@ -27,6 +27,10 @@ void CGameScene::Update()
 void CGameScene::Enter()
 {
 	//// 오브젝트 추가
+
+	CStage* pStage = new CStage(OBJECT_TYPE::S_GROUND);
+	CEventMgr::GetInst()->CreateObject(pStage, OBJECT_TYPE::S_GROUND);
+
 	CPlayer* pPlayer = new CPlayer();
 	CEventMgr::GetInst()->CreateObject(pPlayer, OBJECT_TYPE::M_PLAYER);
 

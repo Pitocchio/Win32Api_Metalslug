@@ -27,15 +27,19 @@ typedef struct MyVector2
 
 	float Length() // ∫§≈Õ ±Ê¿Ã
 	{
+		if (x == 0.f && y == 0.f)
+			return 0.f;
+		
+
 		return float(sqrt(pow(x, 2) + pow(y, 2))); 
 	}
 
 	void Normalize() 
 	{
-		if (x == 0 && y == 0)
+		if (x == 0.f && y == 0.f)
 		{
-			x = 0;
-			y = 0;
+			x = 0.f;
+			y = 0.f;
 			return;
 		}
 

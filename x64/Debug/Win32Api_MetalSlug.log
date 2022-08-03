@@ -1,32 +1,4 @@
-﻿  Camera.cpp
-  KeyMgr.cpp
-  LineCollider2D.cpp
-  Liquid.cpp
-  Main.cpp
-  Mapcollider.cpp
-  Middleboss.cpp
-  Npc.cpp
-  Object.cpp
-  ObjectMgr.cpp
-  PathMgr.cpp
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\PathMgr.cpp(11,36): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Player.cpp
-  Prisoner.cpp
-  Projectile.cpp
-  Rebel.cpp
-  Res.cpp
-  ResMgr.cpp
-  Rigidbody2D.cpp
-  Scene.cpp
-  SceneMgr.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  SelectGDI.cpp
-  Texture.cpp
-  TimeMgr.cpp
-  ToolScene.cpp
-  Transform2D.cpp
-  Weapon.cpp
-  Zombie.cpp
-  코드를 생성하고 있습니다...
-  Win32Api_MetalSlug.vcxproj -> C:\Users\chanjun\Documents\Win32Api_MetalSlug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  Stage.cpp
+D:\Win32Api_Metalslug\Stage.cpp(25,63): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Win32Api_Metalslug\Stage.cpp(25,34): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Win32Api_MetalSlug.vcxproj -> D:\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe

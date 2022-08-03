@@ -63,7 +63,7 @@ void CPlayer::Update()
 	
 	
 
-	Move();
+	//Move();
 
 	Update_state();
 	Update_animation();
@@ -144,7 +144,7 @@ void CPlayer::Render(HDC hdc)
 		iWidth, iHeight,
 		m_pTex->GetDC(),
 		0, 0, iWidth, iHeight,
-		RGB(255, 0, 255));
+		RGB(255, 255, 255));
 
 	//Vector2 vSize = m_pTransform->GetSize();	
 	//BitBlt(hdc,
@@ -160,6 +160,10 @@ void CPlayer::Render(HDC hdc)
 		int(vRenderPos.y - int(vRenderPos.y * 0.5f)),
 		int(vRenderPos.x + int(vRenderPos.x * 0.5f)),
 		int(vRenderPos.y + int(vRenderPos.y * 0.5f)));*/
+
+
+
+	
 }
 
 void CPlayer::Move()
