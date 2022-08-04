@@ -26,7 +26,7 @@ void CPlayer::Init()
 	m_pCollider->SetOwnerObj(this);
 	m_pCollider->SetIsColliderType(COLLIDER_TYPE::BOX2D);
 	m_pCollider->SetOffset(Vector2(PLAYER_POS_X, PLAYER_POS_Y));
-	dynamic_cast<CBoxCollider2D*>(m_pCollider)->SetSize(Vector2(PLAYER_SIZE_STAND_X-int(PLAYER_SIZE_STAND_X * 0.2f), PLAYER_SIZE_STAND_Y- int(PLAYER_SIZE_STAND_Y * 0.2f)));
+	dynamic_cast<CBoxCollider2D*>(m_pCollider)->SetSize(Vector2(PLAYER_SIZE_STAND_X - int(PLAYER_SIZE_STAND_X * 0.2f), PLAYER_SIZE_STAND_Y - int(PLAYER_SIZE_STAND_Y * 0.2f)));
 	m_pCollider->SetIsActive(true);
 
 	// Component - Rigidbody
@@ -57,6 +57,8 @@ void CPlayer::Init()
 
 
 	m_bGravity = true;
+	m_bPrevCollision = false;
+	m_bCurCollision = false;
 }
 
 void CPlayer::LateInit()
@@ -107,8 +109,8 @@ void CPlayer::LateUpdate()
 
 			Vector2 vOffset = m_pCollider->GetOffset();
 
-			m_pTransform->SetPos(Vector2(vPos.x, vPos.y - fValue - 1.f));
-			m_pCollider->SetOffset(Vector2(vOffset.x, vOffset.y - fValue - 1.f));
+			m_pTransform->SetPos(Vector2(vPos.x, vPos.y - fValue));
+			m_pCollider->SetOffset(Vector2(vOffset.x, vOffset.y - fValue));
 
 
 		}
@@ -187,25 +189,6 @@ void CPlayer::Render(HDC hdc)
 	// Text
 
 
-	// FPS
-	TCHAR tch1[128] = {};
-	swprintf_s(tch1, L"FPS : %.2f ",
-		float(FPS));
-	//SetBkMode(hdc, TRANSPARENT);
-	Vector2 tPos1 = CCamera::GetInst()->GetRenderPos(Vector2(0, 0));
-	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos1.x), int(tPos1.y), tch1, _tcslen(tch1));
-
-	// DT
-	TCHAR tch2[128] = {};
-	swprintf_s(tch2, L"DT : %f ",
-		DT);
-	//SetBkMode(hdc, TRANSPARENT);
-	Vector2 tPos2 = CCamera::GetInst()->GetRenderPos(Vector2(0, 15));
-	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos2.x), int(tPos2.y), tch2, _tcslen(tch2));
-
-
 	// Player Local Pos
 	TCHAR tch3[128] = {};
 	swprintf_s(tch3, L"LOCAL POS : %.2f, %.2f",
@@ -227,6 +210,23 @@ void CPlayer::Render(HDC hdc)
 	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight +15), tch4, _tcslen(tch4));
 
 
+	// FPS
+	TCHAR tch1[128] = {};
+	swprintf_s(tch1, L"FPS : %.2f ",
+		float(FPS));
+	//SetBkMode(hdc, TRANSPARENT);
+	Vector2 tPos1 = CCamera::GetInst()->GetRenderPos(Vector2(0, 0));
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos3.x - WINDOW_WIDTH * 0.5f), int(tPos3.y - WINDOW_HEIGHT * 0.5f), tch1, _tcslen(tch1));
+
+	// DT
+	TCHAR tch2[128] = {};
+	swprintf_s(tch2, L"DT : %f ",
+		DT);
+	//SetBkMode(hdc, TRANSPARENT);
+	Vector2 tPos2 = CCamera::GetInst()->GetRenderPos(Vector2(0, 15));
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos3.x - WINDOW_WIDTH * 0.5f), int(tPos3.y - WINDOW_HEIGHT * 0.5f + 15.f), tch2, _tcslen(tch2));
 
 	
 }
@@ -236,19 +236,31 @@ void CPlayer::Move()
 	// 키 입력에 따른 힘이나 속도 부여
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
 	{
-		m_pRigidbody->AddForce(MyVector2(-200.f, 0.f));
+		//m_pRigidbody->AddForce(MyVector2(-200.f, 0.f));
+
+		Vector2 Look = { -1, 0 };
+		Vector2 Pos = GetPos();
+		Pos.x += Look.x * 200.f * DT;
+
+		SetPos(Pos);
 	}
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
 	{
-		m_pRigidbody->AddForce(MyVector2(200.f, 0.f));
+		//m_pRigidbody->AddForce(MyVector2(200.f, 0.f));
+		Vector2 Look = { 1, 0 };
+		Vector2 Pos = GetPos();
+		Pos.x += Look.x * 200.f * DT;
+
+		SetPos(Pos);
+	
 	}
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_DOWN)
 	{
-		m_pRigidbody->AddVelocity(MyVector2(-200.f, 0.f));
+		//m_pRigidbody->AddVelocity(MyVector2(-200.f, 0.f));
 	}
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_DOWN)
 	{
-		m_pRigidbody->AddVelocity(MyVector2(200.f, 0.f));
+		//m_pRigidbody->AddVelocity(MyVector2(200.f, 0.f));
 	}
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_UP)
 	{
@@ -281,32 +293,34 @@ void CPlayer::Move()
 
 
 	// 중력 반영 
-	if (m_bGravity)
-	{
-		m_pRigidbody->ApplyGravity();
-	}
-
-	// 현재 속도 계산 (물리적 이동에 있어 핵심적인 부분)
-	m_pRigidbody->CalVelocity();
+	//if (m_bGravity)
+	//{
+	//	m_pRigidbody->ApplyGravity();
+	//}
+	////m_pRigidbody->ApplyGravity();
 
 
+	//// 현재 속도 계산 (물리적 이동에 있어 핵심적인 부분)
+	//m_pRigidbody->CalVelocity();
 
-	// 이동 속력
-	float fSpeed = m_pRigidbody->GetVelocity().Length();
 
-	if (fSpeed != 0.f)
-	{
-		// 이동 방향
-		Vector2 vDir = m_pRigidbody->GetVelocity();
-		vDir.Normalize();
 
-		// 컴포넌트 적용 (현재 플레이어 위치 = 이동방향 * 이동속력 * DT)
-		Vector2 vPos = m_pTransform->GetPos();
-		vPos += vDir * fSpeed * DT;
+	//// 이동 속력
+	//float fSpeed = m_pRigidbody->GetVelocity().Length();
 
-		m_pTransform->SetPos(vPos);
-		m_pCollider->SetOffset(vPos);
-	}
+	//if (fSpeed != 0.f)
+	//{
+	//	// 이동 방향
+	//	Vector2 vDir = m_pRigidbody->GetVelocity();
+	//	vDir.Normalize();
+
+	//	// 컴포넌트 적용 (현재 플레이어 위치 = 이동방향 * 이동속력 * DT)
+	//	Vector2 vPos = m_pTransform->GetPos();
+	//	vPos += vDir * fSpeed * DT;
+
+	//	m_pTransform->SetPos(vPos);
+	//	m_pCollider->SetOffset(vPos);
+	//}
 
 
 
@@ -321,25 +335,137 @@ void CPlayer::Move()
 	BYTE b = GetBValue(PixRGB);
 
 	if (GetRValue(PixRGB) == 0 && GetGValue(PixRGB) == 255 && GetBValue(PixRGB) == 0)
+		m_bCurCollision = true;
+	else
+		m_bCurCollision = false;
+
+
+	if (m_bCurCollision) // 현재 충돌 O
 	{
-		cout << "========================================\n";
+		if (!m_bPrevCollision)
+		{
+			// OnCollisionEnter
 
-		cout << "PointCollider Pos : " << m_PointCollider.x << ", " << m_PointCollider.y << endl;
-		cout << "Obj Pos           : " << GetPos().x << ", " << GetPos().y << endl;
+			//cout << "========================================\n";
+			//printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
+			//printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+			//float Ygap = abs(m_PrevColliderPos.y - m_PointCollider.y);
+			//printf("Gap               - %f\n", Ygap);
+			//SetPos(Vector2(GetPos().x, GetPos().y));
+			//printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+			////printf("평지 충돌!\n\n");
+			//printf("충돌 시작!\n\n");
 
-		float Ygap = abs(m_PrevColliderPos.y - m_PointCollider.y);
-		cout << "Gap : " << Ygap << endl;
-		SetPos(Vector2(GetPos().x, GetPos().y - Ygap));
-		cout << "Obj Pos           : " << GetPos().x << " " << GetPos().y << "\n\n";
+			//m_bGravity = false;
 
+			/*m_pRigidbody->InitForce();
+			m_pRigidbody->InitVelocity();
+			m_pRigidbody->InitAccel();
+			m_pRigidbody->InitAccelAlpha();*/
 
-		m_bGravity = false;
-		m_pRigidbody->InitForce();
-		m_pRigidbody->InitVelocity();
-		m_pRigidbody->InitAccel();
-		m_pRigidbody->InitAccelAlpha();
+			m_fGraviytime = 0.f;
+
+			cout << "충돌 시작!\n";
+		}
+		else if (m_bPrevCollision)
+		{
+			// OnCollisionStay
+			//cout << "========================================\n";
+			//printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
+			//printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+			//float Ygap = abs(m_PrevColliderPos.y - m_PointCollider.y);
+			//printf("Gap               - %f\n", Ygap);
+			//SetPos(Vector2(GetPos().x, GetPos().y - Ygap));
+			//printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+			////printf("평지 충돌!\n\n");
+			//printf("충돌중!\n\n");
+
+			//m_bGravity = false;
+
+			m_fGraviytime = 0.f;
+			cout << "충돌 중!\n";
+
+		}
 	}
+	else  // 현재 충돌 X
+	{
+		m_fGraviytime += DT;
+		cout << "충돌 종료!\n";
+
+
+		//if (m_bPrevCollision)
+		//{
+		//	// OnCollisionExit
+		//	m_bCurCollision = false;
+		//	cout << "========================================\n";
+		///*	printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
+		//	printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+		//	SetPos(Vector2(GetPos().x, GetPos().y + 1.f));
+		//	printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);*/
+		//	printf("충돌 종료!\n\n");
+		//}
+	}
+
+	Vector2 Position = GetPos();
+	SetPos(Vector2(Position.x, Position.y + 40.f * m_fGraviytime * DT));
+
+	m_bPrevCollision = m_bCurCollision;
+
+
+
+
+
+
+
+
 	m_PrevColliderPos = m_PointCollider;
+
+
+	//if (GetRValue(PixRGB) == 0 && GetGValue(PixRGB) == 255 && GetBValue(PixRGB) == 0)
+	//{
+
+	//	if (m_PrevColliderPos.y < m_PointCollider.y)
+	//	{
+	//		cout << "========================================\n";
+	//		printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
+	//		printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+	//		float Ygap = abs(m_PrevColliderPos.y - m_PointCollider.y);
+	//		printf("Gap               - %f\n", Ygap);
+	//		SetPos(Vector2(GetPos().x, GetPos().y - Ygap));
+	//		printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+	//		printf("평지 충돌!\n\n");
+
+	//		m_bGravity = false;
+	//		m_pRigidbody->InitForce();
+	//		m_pRigidbody->InitVelocity();
+	//		m_pRigidbody->InitAccel();
+	//		m_pRigidbody->InitAccelAlpha();
+
+	//	}
+	//	/*else if (m_PrevColliderPos.x < m_PointCollider.x)
+	//	{
+	//		cout << "========================================\n";
+	//		printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
+	//		printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+	//		float Xgap = abs(m_PrevColliderPos.x - m_PointCollider.x);
+	//		printf("Gap               - %f\n", Xgap);
+	//		SetPos(Vector2(GetPos().x, GetPos().y - Xgap));
+	//		printf("Obj Pos           - X : %f, Y : %f\n\n", GetPos().x, GetPos().y);
+	//		printf("오르막 충돌!\n\n");
+	//		m_bGravity = false;
+
+
+	//	}*/
+	//	
+	//}
+	//else
+	//{
+	//	m_bGravity = true;
+	//}
+	//m_PrevColliderPos = m_PointCollider;
+
+
+	//cout << GetPos().x << endl;
 }
 
 void CPlayer::Update_state() // for Animaion change

@@ -32,7 +32,6 @@ void CCore::Progress()
 	// Manager Update
 	CTimeMgr::GetInst()->Update();
 	CKeyMgr::GetInst()->Update();
-	CCamera::GetInst()->Update();
 
 	// Scene Update
 	CSceneMgr::GetInst()->Update();
@@ -45,6 +44,7 @@ void CCore::Progress()
 	// Scene LateUpdate
 	CSceneMgr::GetInst()->LateUpdate();
 
+	CCamera::GetInst()->Update();
 	/*if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
 	{
 		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));

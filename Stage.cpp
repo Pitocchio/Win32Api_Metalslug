@@ -7,6 +7,9 @@ CStage::CStage()
 
 CStage::~CStage()
 {
+	
+	//delete m_pTex;
+	
 }
 
 CStage::CStage(OBJECT_TYPE objtype)

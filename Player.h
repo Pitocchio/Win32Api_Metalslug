@@ -43,5 +43,9 @@ private:
 
 	bool m_bGravity;
 
+	bool m_bPrevCollision;
+	bool m_bCurCollision;
+
+	float m_fGraviytime;
 };
 
