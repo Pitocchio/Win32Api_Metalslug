@@ -36,6 +36,7 @@ public: // Methods
 	bool IsGround();
 
 	void InitAccel();
+	void InitVelocity() { m_vVelocity = Vector2(0.f, 0.f); }
 
 	void InitAccelAlpha();
 	void SetAccelAlpha(Vector2 accel);

@@ -36,5 +36,12 @@ private: // Variables
 //temp
 private:
 	CTexture* m_pTex;
+
+	Vector2 m_PointCollider;
+
+	Vector2 m_PrevColliderPos;
+
+	bool m_bGravity;
+
 };
 

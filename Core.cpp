@@ -45,11 +45,11 @@ void CCore::Progress()
 	// Scene LateUpdate
 	CSceneMgr::GetInst()->LateUpdate();
 
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
+	/*if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
 	{
 		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));
 		CCamera::GetInst()->SetLookAt(Pos);
-	}
+	}*/
 
 	// Render
 	Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);

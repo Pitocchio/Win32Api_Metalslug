@@ -18,7 +18,7 @@ void CStage::Init()
 {
 	CObject::Init();
 
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\MapMax.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\MapPixelTest.bmp");
 
 	// Component - Transform
 	m_pTransform->SetOwnerObj(this);
@@ -29,6 +29,7 @@ void CStage::Init()
 	// Component - Collider
 	//m_pCollider->SetOwnerObj(this);
 	
+
 
 }
 
@@ -54,12 +55,21 @@ void CStage::Render(HDC hdc)
 	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
 
 	TransparentBlt(hdc,
-		int(vRenderPos.x * 0.8f - (float)(iWidth * 0.5f)),
-		int(vRenderPos.y * 0.8f - (float)(iHeight * 0.5f)),
+		int(vRenderPos.x - (float)(iWidth * 0.5f)),
+		int(vRenderPos.y - (float)(iHeight * 0.5f)),
 		iWidth, iHeight,
 		m_pTex->GetDC(),
 		0, 0, iWidth, iHeight,
 		RGB(255, 0, 255));
+
+
+	//TransparentBlt(hdc,
+	//	int(vRenderPos.x * 0.8f - (float)(iWidth * 0.5f)),
+	//	int(vRenderPos.y * 0.8f - (float)(iHeight * 0.5f)),
+	//	iWidth, iHeight,
+	//	m_pTex->GetDC(),
+	//	0, 0, iWidth, iHeight,
+	//	RGB(255, 0, 255));
 }
 
 

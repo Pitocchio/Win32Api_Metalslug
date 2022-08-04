@@ -52,6 +52,11 @@ void CPlayer::Init()
 
 	// temp (텍스처 로딩)
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp");
+
+	CCamera::GetInst()->SetTargetObj(this);
+
+
+	m_bGravity = true;
 }
 
 void CPlayer::LateInit()
@@ -63,7 +68,7 @@ void CPlayer::Update()
 	
 	
 
-	//Move();
+	Move();
 
 	Update_state();
 	Update_animation();
@@ -156,10 +161,19 @@ void CPlayer::Render(HDC hdc)
 	//	0, 0, SRCCOPY);
 
 
-	/*Rectangle(hdc, int(vRenderPos.x - int(vRenderPos.x * 0.5f)),
-		int(vRenderPos.y - int(vRenderPos.y * 0.5f)),
-		int(vRenderPos.x + int(vRenderPos.x * 0.5f)),
-		int(vRenderPos.y + int(vRenderPos.y * 0.5f)));*/
+
+
+	// Point Collider
+	Vector2 Temp = CCamera::GetInst()->GetRenderPos(m_PointCollider);
+	PEN_TYPE ePen = PEN_TYPE::RED;
+
+	SelectGDI pen(hdc, ePen);
+	SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW); // 임시객체(지역변수)기 때문에 나갈때 자동으로 소멸자 호출, 그때 다시 셀렉
+
+	Rectangle(hdc, int(Temp.x - 5),
+		int(Temp.y - 5),
+		int(Temp.x + 5),
+		int(Temp.y + 5));
 
 
 
@@ -184,7 +198,7 @@ void CPlayer::Render(HDC hdc)
 
 	// DT
 	TCHAR tch2[128] = {};
-	swprintf_s(tch2, L"DT : %.2f ",
+	swprintf_s(tch2, L"DT : %f ",
 		DT);
 	//SetBkMode(hdc, TRANSPARENT);
 	Vector2 tPos2 = CCamera::GetInst()->GetRenderPos(Vector2(0, 15));
@@ -192,25 +206,25 @@ void CPlayer::Render(HDC hdc)
 	TextOut(hdc, int(tPos2.x), int(tPos2.y), tch2, _tcslen(tch2));
 
 
-	// Player World Pos
+	// Player Local Pos
 	TCHAR tch3[128] = {};
-	swprintf_s(tch3, L"PLAYER RENDER POS : %.2f, %.2f",
+	swprintf_s(tch3, L"LOCAL POS : %.2f, %.2f",
 		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).x,
 		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).y);
 	//SetBkMode(hdc, TRANSPARENT);
 	Vector2 tPos3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetPos());
-	Vector2 tSize3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetSize());
+	Vector2 tSize3 =GetSize();
 	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos3.x + (tSize3.x * 0.5f)), int(tPos3.y + (tSize3.y * 0.5f)), tch3, _tcslen(tch3));
+	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight), tch3, _tcslen(tch3));
 
-	// Player Local Pos
+	// Player World Pos
 	TCHAR tch4[128] = {};
-	swprintf_s(tch4, L"PLAYER LOCAL POS : %.2f, %.2f",
+	swprintf_s(tch4, L"WORLD POS : %.2f, %.2f",
 		m_pTransform->GetPos().x,
 		m_pTransform->GetPos().y);
 	//SetBkMode(hdc, TRANSPARENT);
 	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos3.x + (tSize3.x * 0.5f)), int(tPos3.y + (tSize3.y * 0.5f) +15), tch4, _tcslen(tch4));
+	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight +15), tch4, _tcslen(tch4));
 
 
 
@@ -245,8 +259,32 @@ void CPlayer::Move()
 		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
 	}
 
+
+
+	//// Temp Up Down
+	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_HOLD)
+	//{
+	//	m_pRigidbody->AddForce(MyVector2(0.f, -200.f));
+	//}
+	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_HOLD)
+	//{
+	//	m_pRigidbody->AddForce(MyVector2(0.f, 200.f));
+	//}
+	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_DOWN)
+	//{
+	//	m_pRigidbody->AddVelocity(MyVector2(0.f, -200.f));
+	//}
+	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_DOWN)
+	//{
+	//	m_pRigidbody->AddVelocity(MyVector2(0.f, 200.f));
+	//}
+
+
 	// 중력 반영 
-	//m_pRigidbody->ApplyGravity();
+	if (m_bGravity)
+	{
+		m_pRigidbody->ApplyGravity();
+	}
 
 	// 현재 속도 계산 (물리적 이동에 있어 핵심적인 부분)
 	m_pRigidbody->CalVelocity();
@@ -269,6 +307,39 @@ void CPlayer::Move()
 		m_pTransform->SetPos(vPos);
 		m_pCollider->SetOffset(vPos);
 	}
+
+
+
+	// Pixel Collision Test
+	m_PointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y *0.5f));
+
+	Vector2 TempColliderPos = CCamera::GetInst()->GetRenderPos(m_PointCollider);
+	COLORREF PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
+	
+	BYTE r = GetRValue(PixRGB);
+	BYTE g = GetGValue(PixRGB);
+	BYTE b = GetBValue(PixRGB);
+
+	if (GetRValue(PixRGB) == 0 && GetGValue(PixRGB) == 255 && GetBValue(PixRGB) == 0)
+	{
+		cout << "========================================\n";
+
+		cout << "PointCollider Pos : " << m_PointCollider.x << ", " << m_PointCollider.y << endl;
+		cout << "Obj Pos           : " << GetPos().x << ", " << GetPos().y << endl;
+
+		float Ygap = abs(m_PrevColliderPos.y - m_PointCollider.y);
+		cout << "Gap : " << Ygap << endl;
+		SetPos(Vector2(GetPos().x, GetPos().y - Ygap));
+		cout << "Obj Pos           : " << GetPos().x << " " << GetPos().y << "\n\n";
+
+
+		m_bGravity = false;
+		m_pRigidbody->InitForce();
+		m_pRigidbody->InitVelocity();
+		m_pRigidbody->InitAccel();
+		m_pRigidbody->InitAccelAlpha();
+	}
+	m_PrevColliderPos = m_PointCollider;
 }
 
 void CPlayer::Update_state() // for Animaion change

@@ -9,7 +9,7 @@ void CCamera::Init()
 
 	m_fTime = 2.f;
 
-	m_vLookAt = Vector2(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
+	m_vLookAt = Vector2(PLAYER_POS_X, PLAYER_POS_Y);
 	m_vPreLookAt = m_vLookAt;
 	m_vCurLookAt = m_vLookAt;
 	m_fSpeed = 0;
@@ -18,7 +18,7 @@ void CCamera::Init()
 
 void CCamera::Update()
 {
-	/*if (m_pTargetObj)
+	if (m_pTargetObj)
 	{
 		if (m_pTargetObj->GetObjCurState() == OBJECT_STATE::DEAD)
 		{
@@ -28,19 +28,19 @@ void CCamera::Update()
 		{
 			m_vLookAt = m_pTargetObj->GetPos();
 		}
-	}*/
+	}
 
 
 	// Camera Move by Key
 	
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_HOLD)
+	/*if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_HOLD)
 		m_vLookAt.y -= 500.f * DT;
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_HOLD)
 		m_vLookAt.y += 500.f * DT;
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
 		m_vLookAt.x -= 500.f * DT;
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
-		m_vLookAt.x += 500.f * DT;
+		m_vLookAt.x += 500.f * DT;*/
 	
 
 	CalDiff();
@@ -48,9 +48,12 @@ void CCamera::Update()
 
 void CCamera::Release()
 {
-	delete m_pTargetObj;
+	/*if (m_pTargetObj != nullptr)
+	{
+		delete m_pTargetObj;
 
-	m_pTargetObj = nullptr;
+		m_pTargetObj = nullptr;
+	}*/
 }
 
 void CCamera::SetLookAt(Vector2 vec)

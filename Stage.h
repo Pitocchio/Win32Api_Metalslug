@@ -18,5 +18,6 @@ public:
 private:
 	CTexture* m_pTex;
 
+
 };
 

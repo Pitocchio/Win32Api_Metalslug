@@ -14,6 +14,7 @@ public:
 	UINT Height() { return m_bitInfo.bmHeight; }
 	HDC GetDC() { return m_dc; }
 
+	BITMAP GetInfo() { return m_bitInfo; }
 private:
 	HDC m_dc;
 	HBITMAP m_hBit;
