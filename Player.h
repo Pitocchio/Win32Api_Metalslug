@@ -42,10 +42,11 @@ private:
 	Vector2 m_PrevColliderPos;
 
 	bool m_bGravity;
+	bool m_bGround;
 
 	bool m_bPrevCollision;
 	bool m_bCurCollision;
 
-	float m_fGraviytime;
+	float m_fGravitytime;
 };
 

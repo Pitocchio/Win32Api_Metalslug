@@ -14,7 +14,7 @@
 
 
 
-
+#define GRAVITY  400
 
 
 // TEST - PLAYER
@@ -23,7 +23,7 @@
 #define PLAYER_SIZE_DOWN_X 50
 #define PLAYER_SIZE_DOWN_Y 50
 #define PLAYER_POS_X 100
-#define PLAYER_POS_Y 700
+#define PLAYER_POS_Y 1000
 
 // TEST - PROJECILE
 

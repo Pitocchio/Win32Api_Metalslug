@@ -42,9 +42,10 @@ void CCore::Progress()
 	//CCollisionMgr::GetInst()->Update();
 
 	// Scene LateUpdate
+	CCamera::GetInst()->Update();
+
 	CSceneMgr::GetInst()->LateUpdate();
 
-	CCamera::GetInst()->Update();
 	/*if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
 	{
 		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));

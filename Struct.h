@@ -21,6 +21,7 @@ typedef struct MyVector2
 	void operator *= (float mul) { x *= mul; y *= mul; };
 	void operator /= (float div) { x /= div; y /= div; };
 
+		
 
 
 	MyVector2 operator - () { return MyVector2(-x, -y); };
