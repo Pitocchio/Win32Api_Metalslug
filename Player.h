@@ -37,16 +37,16 @@ private: // Variables
 private:
 	CTexture* m_pTex;
 
-	Vector2 m_PointCollider;
-
-	Vector2 m_PrevColliderPos;
-
 	bool m_bGravity;
-	bool m_bGround;
 
-	bool m_bPrevCollision;
+
+	Vector2 m_CurPointCollider;
+	Vector2 m_PrevPointCollider;
 	bool m_bCurCollision;
+	bool m_bPrevCollision;
 
+	bool m_bGround;
 	float m_fGravitytime;
+
 };
 

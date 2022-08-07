@@ -59,7 +59,14 @@ void CPlayer::Init()
 	m_bGravity = true;
 	m_bPrevCollision = false;
 	m_bCurCollision = false;
+
+	m_CurPointCollider = {};
+	m_PrevPointCollider = {};
+	m_bPrevCollision = false;
+	m_bCurCollision = false;
+
 	m_bGround = false;
+	m_fGravitytime = 0.f;
 }
 
 void CPlayer::LateInit()
@@ -167,7 +174,7 @@ void CPlayer::Render(HDC hdc)
 
 
 	// Point Collider
-	Vector2 Temp = CCamera::GetInst()->GetRenderPos(m_PointCollider);
+	Vector2 Temp = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
 	PEN_TYPE ePen = PEN_TYPE::RED;
 
 	SelectGDI pen(hdc, ePen);
@@ -342,10 +349,22 @@ void CPlayer::Move()
 
 
 
-	// Pixel Collision Test
-	m_PointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
 
-	Vector2 TempColliderPos = CCamera::GetInst()->GetRenderPos(m_PointCollider);
+
+
+	//  Not Ground => Apply Gravity
+	if (!m_bGround)
+	{
+		m_fGravitytime += fDT;
+		float m_Temp = GRAVITY * m_fGravitytime * fDT;
+		SetPos(Vector2(GetPos().x, GetPos().y + m_Temp));
+	}
+
+
+	// Pixel Collision
+	m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
+
+	Vector2 TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
 	COLORREF PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
 	
 	BYTE r = GetRValue(PixRGB);
@@ -358,48 +377,116 @@ void CPlayer::Move()
 		m_bCurCollision = false;
 
 
-	if (m_bCurCollision) 
+	if (m_bCurCollision)
 	{
+		m_bGround = true;
+		m_fGravitytime = 0.f;
+
 		if (!m_bPrevCollision) // OnCollision_Enter
 		{
-			printf("\n\n[OnCollisionEnter]\n\n");
-			m_fGravitytime = 0.f;
+			if (m_CurPointCollider.y != m_PrevPointCollider.y)
+				printf("OnCollision_Enter\n\n");
 
-			float Ygap = abs(m_PointCollider.y - m_PrevColliderPos.y);
-			SetPos(Vector2(GetPos().x, int(GetPos().y - Ygap + 3)));
-
+			float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y) * fDT;
+			SetPos(Vector2(GetPos().x, GetPos().y - fYgap+1));
 		}
 		else if (m_bPrevCollision) // OnCollision_Stay
 		{
-			m_fGravitytime = 0.f;
-			printf("\n\n[OnCollisionStay]\n\n");
-
-			float Ygap = abs(m_PointCollider.y - m_PrevColliderPos.y);
-			SetPos(Vector2(GetPos().x, int(GetPos().y - Ygap)));
+			if (m_CurPointCollider.y != m_PrevPointCollider.y)
+				printf("OnCollision_Stay\n\n");
 		}
 	}
-	else
+	else if (!m_bCurCollision)
 	{
-		printf("\n\n[NO COLLISION]\n\n");
-		m_fGravitytime += fDT;
+		m_bGround = false;
 
-		SetPos(Vector2(GetPos().x, int(GetPos().y + GRAVITY * m_fGravitytime * fDT)));
-
-		if (m_bPrevCollision) // OnCollision_Exit
+		if (!m_bPrevCollision) // No Cillision
 		{
+			if (m_CurPointCollider.y != m_PrevPointCollider.y)
+				printf("NoCollision\n\n");
 		}
-
+		else if (m_bPrevCollision) // OnCollision_Exit
+		{
+			if (m_CurPointCollider.y != m_PrevPointCollider.y)
+				printf("OnCollision_Exit\n\n");
+		}
 	}
 
-	printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
 
-	
-
-
-
+	m_PrevPointCollider = m_CurPointCollider;
 	m_bPrevCollision = m_bCurCollision;
 
-	m_PrevColliderPos = m_PointCollider;
+	//if (m_PointCollider.y != m_PrevColliderPos.y)
+	//{
+	//	printf("===============================================\n");
+	//	printf("Prev OBJ Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
+	//}
+
+	//if (m_bCurCollision) 
+	//{
+	//	if (!m_bPrevCollision) // OnCollision_Enter
+	//	{
+	//		if (m_PointCollider.y != m_PrevColliderPos.y)
+	//		{
+	//			printf("\n[OnCollision_Enter]\n");
+	//		}
+	//		m_fGravitytime = 0.f;
+
+	//		//float Ygap = abs(m_PointCollider.y - m_PrevColliderPos.y);
+	//		SetPos(Vector2(GetPos().x, GetPos().y  - m_Temp)); // + 3
+	//	}
+	//	else if (m_bPrevCollision) // OnCollision_Stay
+	//	{
+	//		if (m_PointCollider.y != m_PrevColliderPos.y)
+	//		{
+	//			printf("\n[OnCollision_Stay]\n");
+	//		}
+	//		m_fGravitytime = 0.f;
+
+	//		//float Ygap = abs(m_PointCollider.y - m_PrevColliderPos.y);
+	//		SetPos(Vector2(GetPos().x, GetPos().y - m_Temp)); // + 3
+
+	//	}
+	//}
+	//else
+	//{
+	//	if (!m_bPrevCollision)
+	//	{
+	//		if (m_PointCollider.y != m_PrevColliderPos.y)
+	//		{
+	//			printf("\n[NO_COLLISION]\n");
+	//		}
+	//	}
+	//	else if (m_bPrevCollision) // OnCollision_Exit
+	//	{
+	//		if (m_PointCollider.y != m_PrevColliderPos.y)
+	//		{
+	//			printf("\n[OnCollision_Exit]\n");
+	//		}
+	//	}
+
+	//	m_fGravitytime += fDT;
+	//	m_Temp = GRAVITY * m_fGravitytime * fDT;
+	//	SetPos(Vector2(GetPos().x, GetPos().y + m_Temp));
+	//	
+	//	if (m_PointCollider.y != m_PrevColliderPos.y)
+	//	{
+	//		printf("\n%f\n",m_Temp);
+	//	}
+	//	
+	//}
+
+	//if (m_PointCollider.y != m_PrevColliderPos.y)
+	//{
+	//	
+	//	printf("\nCur OBJ Pos           - X : %f, Y : %f\n\n", GetPos().x, GetPos().y);
+	//}
+
+
+
+	//m_bPrevCollision = m_bCurCollision;
+
+	//m_PrevColliderPos = m_PointCollider;
 
 
 	//if (GetRValue(PixRGB) == 0 && GetGValue(PixRGB) == 255 && GetBValue(PixRGB) == 0)
