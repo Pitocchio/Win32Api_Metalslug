@@ -46,9 +46,61 @@ private:
 	bool m_bPrevCollision;
 
 	bool m_bGround;
-	bool m_bJump;
+	//bool m_bJump;
 	float m_fGravitytime;
 
 	bool m_bTest;
+
+	Vector2 m_vLook;
+
+
+
+
+
+
+private:
+	// OBJ
+	bool m_bInit;
+	INFO m_tInfo;
+	RECT m_tRect;
+	float m_fSpeed;
+	bool m_bIsDead;
+	float m_fAngle;
+	float m_fGrav;
+	float m_fFall;
+	float CheckSpeed;
+	int m_iCheckLine;
+	float m_fSlope;
+
+	//Player
+	float m_fJumpSpeed;
+	bool m_bJump;
+	float fJumpStart;
+
+public:
+	// OBJ
+	INFO& Get_Info() { return m_tInfo; }
+	const RECT& Get_Rect() const { return m_tRect; }
+	void Set_Dead() { m_bIsDead = true; }
+	void Set_Pos(float fX, float fY) { m_tInfo.fX = fX; m_tInfo.fY = fY; }
+	void Check_Line(int bCheck) { m_iCheckLine = bCheck; }
+	void Set_Dist(float fDist) { m_fSlope = fDist; }
+	void UpdateRect()
+	{
+		// 왼쪽 : 중점 - (가로 크기 / 2);
+		m_tRect.left = LONG(m_tInfo.fX - (m_tInfo.fCX / 2));
+		m_tRect.right = LONG(m_tInfo.fX + (m_tInfo.fCX / 2));
+		m_tRect.top = LONG(m_tInfo.fY - (m_tInfo.fCY / 2));
+		m_tRect.bottom = LONG(m_tInfo.fY + (m_tInfo.fCY / 2));
+	}
+
+
+	Vector2 GetPOS_Test() { return Vector2(m_tInfo.fX, m_tInfo.fY); }
+
+
+
+
+
+
 };
 

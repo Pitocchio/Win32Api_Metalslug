@@ -51,7 +51,7 @@ void CPlayer::Init()
 
 
 	// temp (텍스처 로딩)
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoMax.bmp");
 
 	CCamera::GetInst()->SetTargetObj(this);
 
@@ -67,8 +67,40 @@ void CPlayer::Init()
 
 	m_bGround = false;
 	m_fGravitytime = 0.f;
-	m_bJump = false;
+	//m_bJump = false;
 	m_bTest = false;
+
+	m_vLook = { 0.f, 0.f };
+
+
+
+
+
+
+
+
+
+
+
+
+	// 용하형 라인 충돌 
+	m_fSpeed = 0.f;
+	m_bIsDead = false;
+	m_fAngle = 0.f;
+	m_bInit = false;
+	m_iCheckLine = 0;
+	m_fSlope = 0.f;
+	m_tInfo.fX = 100.f;
+	m_tInfo.fY = 300.f;
+	m_tInfo.fCX = 100.f;
+	m_tInfo.fCY = 100.f;
+	m_fSpeed = 15.f;
+	m_fFall = 0.f;
+	m_fGrav = 100.f;
+	CheckSpeed = 0.f;
+	m_fJumpSpeed = 10.f;
+	fJumpStart = 0.f;
+	m_bJump = false;
 }
 
 void CPlayer::LateInit()
@@ -79,11 +111,61 @@ void CPlayer::Update()
 {
 	
 	
+	if (m_iCheckLine)
+	{
+		m_fFall = 0;
+		m_bJump = false;
+	}
+	else if (m_bJump || m_iCheckLine == 0)
+	{
+		m_fFall += (100.f - m_fFall) / (m_fGrav);
+		m_tInfo.fY += m_fFall;
+	}
 
-	Move();
+	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	{
+		m_tInfo.fX -= m_fSpeed;
+		if (!m_bJump)
+			m_tInfo.fY -= m_fSlope * m_fSpeed;
+	}
 
-	Update_state();
-	Update_animation();
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	{
+		m_tInfo.fX += m_fSpeed;
+		if (!m_bJump)
+			m_tInfo.fY += m_fSlope * m_fSpeed;
+	}
+	else if (GetAsyncKeyState(VK_RIGHT) == 0 && GetAsyncKeyState(VK_LEFT) == 0)
+		m_fSpeed = 10.f;
+
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
+	{
+		m_fJumpSpeed = 20.f;
+		fJumpStart = m_tInfo.fY;
+		m_bJump = true;
+	}
+
+	if (m_bJump)
+	{
+		m_fJumpSpeed -= (m_fJumpSpeed - 0.f) / m_fGrav;
+		m_tInfo.fY -= m_fJumpSpeed;
+	}
+
+	for (auto& iter : CLineMgr::GetInst()->GetVecLine())
+	{
+		if (iter->IsInLine(Get_Info()))
+		{
+			Check_Line(iter->LineCheck(Get_Info()));
+			Set_Dist(iter->Get_Dist());
+			break;
+		}
+	}
+
+
+	//Move();
+
+	//Update_state();
+	//Update_animation();
 
 	
 
@@ -148,12 +230,21 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render(HDC hdc)
 {
+	UpdateRect();
+
+	//float diffX = CCamera::GetInst()->GetDiff().x;
+	//float diffY = CCamera::GetInst()->GetDiff().y;
+	//Rectangle(hdc, m_tRect.left - diffX, m_tRect.top - diffY, m_tRect.right - diffX, m_tRect.bottom - diffY);
+
+	//CLineMgr::GetInst()->Render(hdc);
+
+
 	// Temp
 	int iWidth = (int)m_pTex->Width();
 	int iHeight = (int)m_pTex->Height();
 
 	Vector2 vPos = m_pTransform->GetPos();
-	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
+	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(Vector2(m_tInfo.fX, m_tInfo.fY));
 
 	TransparentBlt(hdc,
 		int(vRenderPos.x - (float)(iWidth * 0.5f)),
@@ -203,33 +294,24 @@ void CPlayer::Render(HDC hdc)
 	// Player Local Pos
 	TCHAR tch3[128] = {};
 	swprintf_s(tch3, L"Local Pos : %f, %f",
-		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).x,
-		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).y);
+		CCamera::GetInst()->GetRenderPos(GetPOS_Test()).x,
+		CCamera::GetInst()->GetRenderPos(GetPOS_Test()).y);
 	//SetBkMode(hdc, TRANSPARENT);
-	Vector2 tPos3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetPos());
-	Vector2 tSize3 =GetSize();
+	Vector2 tPos3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetPOS_Test());
 	SetTextAlign(hdc, TA_LEFT);
 	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight), tch3, _tcslen(tch3));
 
 	// Player World Pos
 	TCHAR tch4[128] = {};
 	swprintf_s(tch4, L"World Pos : %f, %f",
-		m_pTransform->GetPos().x,
-		m_pTransform->GetPos().y);
+		GetPOS_Test().x,
+		GetPOS_Test().y);
 	//SetBkMode(hdc, TRANSPARENT);
 	SetTextAlign(hdc, TA_LEFT);
 	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight +15), tch4, _tcslen(tch4));
 
 
-	// m_bGround
-	TCHAR tch11[128] = {};
-	if (m_bGround)
-		swprintf_s(tch11, L"IsGround : TRUE");
-	else
-		swprintf_s(tch11, L"IsGround : FALSE");
-	//SetBkMode(hdc, TRANSPARENT);
-	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 30), tch11, _tcslen(tch11));
+	
 
 
 	// m_bJump
@@ -240,7 +322,7 @@ void CPlayer::Render(HDC hdc)
 		swprintf_s(tch12, L"IsJump : FALSE");
 	//SetBkMode(hdc, TRANSPARENT);
 	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 45), tch12, _tcslen(tch12));
+	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 30), tch12, _tcslen(tch12));
 
 
 
@@ -288,21 +370,14 @@ void CPlayer::Move()
 	{
 		//m_pRigidbody->AddForce(MyVector2(-200.f, 0.f));
 
-		Vector2 Look = { -1, 0 };
-		Vector2 Pos = GetPos();
-		Pos.x += Look.x * 200.f * fDT;
-
-		SetPos(Pos);
+		m_vLook = { -1, 0 };
+		SetPos(Vector2(GetPos().x + (m_vLook.x * MOVESPEED * fDT), GetPos().y));
 	}
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
 	{
 		//m_pRigidbody->AddForce(MyVector2(200.f, 0.f));
-		Vector2 Look = { 1, 0 };
-		Vector2 Pos = GetPos();
-		Pos.x += Look.x * 200.f * fDT;
-
-		SetPos(Pos);
-	
+		m_vLook = { 1, 0 };
+		SetPos(Vector2(GetPos().x + (m_vLook.x * MOVESPEED * fDT), GetPos().y));
 	}
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_DOWN)
 	{
@@ -483,7 +558,7 @@ void CPlayer::Move()
 				g = GetGValue(PixRGB);
 				b = GetBValue(PixRGB);
 
-
+				//cout << "K\n";
 				if ((r != 0 || g != 255 || b != 0))
 				{
 					SetPos(Vector2(GetPos().x, GetPos().y + 1));

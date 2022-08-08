@@ -217,6 +217,12 @@
     <Filter Include="소스 파일\04.Object\05.Stage">
       <UniqueIdentifier>{c0ebb142-f109-49db-b8ae-4352d0e6ae97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\03.Manager\08.LineMgr">
+      <UniqueIdentifier>{5ec2185a-e858-43a5-9c2d-cbd603da2654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\10.LineTemp">
+      <UniqueIdentifier>{b9bd951e-e389-4ee7-bcc4-c38cbb2e6634}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -387,6 +393,12 @@
     <ClInclude Include="Stage.h">
       <Filter>소스 파일\04.Object\05.Stage</Filter>
     </ClInclude>
+    <ClInclude Include="LineMgr.h">
+      <Filter>소스 파일\03.Manager\08.LineMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>소스 파일\10.LineTemp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Win32Api_MetalSlug.rc">
@@ -545,6 +557,12 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>소스 파일\04.Object\05.Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="LineMgr.cpp">
+      <Filter>소스 파일\03.Manager\08.LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>소스 파일\10.LineTemp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

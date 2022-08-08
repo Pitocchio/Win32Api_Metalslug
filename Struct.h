@@ -72,3 +72,11 @@ typedef struct MyEvent
 	DWORD_PTR lParam;
 	DWORD_PTR wParam;
 }Event;
+
+
+
+typedef struct tagInfo
+{
+	float fX, fY; // 중점
+	float fCX, fCY; // 가로 세로 크기 (/2 X)
+}INFO;

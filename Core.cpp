@@ -25,6 +25,7 @@ void CCore::Init(HWND hWnd)
 	CKeyMgr::GetInst()->Init();
 	CSceneMgr::GetInst()->Init();
 	CCamera::GetInst()->Init();
+	CLineMgr::GetInst()->Init();
 }
 
 void CCore::Progress()
@@ -55,6 +56,8 @@ void CCore::Progress()
 	// Render
 	Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);
 	CSceneMgr::GetInst()->Render(m_Hbitdc);
+	CLineMgr::GetInst()->Render(m_Hbitdc);
+
 	BitBlt(m_Hdc, 0, 0, m_RC.right, m_RC.bottom, m_Hbitdc, 0, 0, SRCCOPY);
 
 	// Event
@@ -70,6 +73,7 @@ void CCore::Release()
 	CObjectMgr::GetInst()->Release();
 	CResMgr::GetInst()->Release();
 	CCamera::GetInst()->Release();
+	CLineMgr::GetInst()->Release();
 
 	// DestroyInst
 	CTimeMgr::GetInst()->DestroyInst();
@@ -81,6 +85,7 @@ void CCore::Release()
 	CResMgr::GetInst()->DestroyInst();
 	CPathMgr::GetInst()->DestroyInst();
 	CCamera::GetInst()->DestroyInst();
+	CLineMgr::GetInst()->DestroyInst();
 
 	// Delete GDI obj (except Hollow)
 	for (int i = 0; i < (UINT)PEN_TYPE::TYPEEND_PEN; ++i)

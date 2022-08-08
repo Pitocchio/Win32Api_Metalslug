@@ -1,9 +1,2 @@
-﻿  Player.cpp
-D:\Win32Api_Metalslug\Player.cpp(212,81): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Win32Api_Metalslug\Player.cpp(221,85): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Win32Api_Metalslug\Player.cpp(232,88): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Win32Api_Metalslug\Player.cpp(243,88): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Win32Api_Metalslug\Player.cpp(254,107): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Win32Api_Metalslug\Player.cpp(263,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Win32Api_Metalslug\Player.cpp(273,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Win32Api_MetalSlug.vcxproj -> D:\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  LineMgr.cpp
+  Win32Api_MetalSlug.vcxproj -> C:\Users\chanjun\Documents\Win32Api_MetalSlug\Output\bin_debug\Win32Api_MetalSlug.exe

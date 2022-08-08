@@ -26,7 +26,8 @@ void CCamera::Update()
 		}
 		else
 		{
-			m_vLookAt = m_pTargetObj->GetPos();
+			//m_vLookAt = m_pTargetObj->GetPos();
+			m_vLookAt = dynamic_cast<CPlayer*>(m_pTargetObj)->GetPOS_Test();
 		}
 	}
 

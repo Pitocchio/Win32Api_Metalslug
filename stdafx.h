@@ -21,6 +21,7 @@
 #include "CollisionMgr.h"
 #include "PathMgr.h"
 #include "ResMgr.h"
+#include "LineMgr.h"
 
 // 04.Object
 #include "Object.h"
@@ -72,3 +73,8 @@
 #include "SelectGDI.h"
 
 #include "Camera.h"
+
+
+
+
+#include "Line.h"
