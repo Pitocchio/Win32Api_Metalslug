@@ -14,7 +14,7 @@
 
 
 
-#define GRAVITY  200
+#define GRAVITY  400
 
 
 // TEST - PLAYER

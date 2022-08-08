@@ -46,7 +46,9 @@ private:
 	bool m_bPrevCollision;
 
 	bool m_bGround;
+	bool m_bJump;
 	float m_fGravitytime;
 
+	bool m_bTest;
 };
 

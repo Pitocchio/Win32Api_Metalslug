@@ -67,6 +67,8 @@ void CPlayer::Init()
 
 	m_bGround = false;
 	m_fGravitytime = 0.f;
+	m_bJump = false;
+	m_bTest = false;
 }
 
 void CPlayer::LateInit()
@@ -161,6 +163,7 @@ void CPlayer::Render(HDC hdc)
 		0, 0, iWidth, iHeight,
 		RGB(255, 255, 255));
 
+
 	//Vector2 vSize = m_pTransform->GetSize();	
 	//BitBlt(hdc,
 	//	int(vPos.x - (float)(iWidth * 0.5f)),
@@ -174,16 +177,16 @@ void CPlayer::Render(HDC hdc)
 
 
 	// Point Collider
-	Vector2 Temp = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
-	PEN_TYPE ePen = PEN_TYPE::RED;
+	//Vector2 Temp = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
+	//PEN_TYPE ePen = PEN_TYPE::RED;
 
-	SelectGDI pen(hdc, ePen);
-	SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW); // 임시객체(지역변수)기 때문에 나갈때 자동으로 소멸자 호출, 그때 다시 셀렉
+	//SelectGDI pen(hdc, ePen);
+	//SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW); // 임시객체(지역변수)기 때문에 나갈때 자동으로 소멸자 호출, 그때 다시 셀렉
 
-	Rectangle(hdc, int(Temp.x - 5),
-		int(Temp.y - 5),
-		int(Temp.x + 5),
-		int(Temp.y + 5));
+	//Rectangle(hdc, int(Temp.x - 5),
+	//	int(Temp.y - 5),
+	//	int(Temp.x + 5),
+	//	int(Temp.y + 5));
 
 
 
@@ -199,7 +202,7 @@ void CPlayer::Render(HDC hdc)
 
 	// Player Local Pos
 	TCHAR tch3[128] = {};
-	swprintf_s(tch3, L"LOCAL POS : %f, %f",
+	swprintf_s(tch3, L"Local Pos : %f, %f",
 		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).x,
 		CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos()).y);
 	//SetBkMode(hdc, TRANSPARENT);
@@ -210,12 +213,35 @@ void CPlayer::Render(HDC hdc)
 
 	// Player World Pos
 	TCHAR tch4[128] = {};
-	swprintf_s(tch4, L"WORLD POS : %f, %f",
+	swprintf_s(tch4, L"World Pos : %f, %f",
 		m_pTransform->GetPos().x,
 		m_pTransform->GetPos().y);
 	//SetBkMode(hdc, TRANSPARENT);
 	SetTextAlign(hdc, TA_LEFT);
 	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight +15), tch4, _tcslen(tch4));
+
+
+	// m_bGround
+	TCHAR tch11[128] = {};
+	if (m_bGround)
+		swprintf_s(tch11, L"IsGround : TRUE");
+	else
+		swprintf_s(tch11, L"IsGround : FALSE");
+	//SetBkMode(hdc, TRANSPARENT);
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 30), tch11, _tcslen(tch11));
+
+
+	// m_bJump
+	TCHAR tch12[128] = {};
+	if (m_bJump)
+		swprintf_s(tch12, L"IsJump : TRUE");
+	else
+		swprintf_s(tch12, L"IsJump : FALSE");
+	//SetBkMode(hdc, TRANSPARENT);
+	SetTextAlign(hdc, TA_LEFT);
+	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 45), tch12, _tcslen(tch12));
+
 
 
 	// FPS
@@ -247,7 +273,6 @@ void CPlayer::Render(HDC hdc)
 	TextOut(hdc, int(tPos3.x - WINDOW_WIDTH * 0.5f), int(tPos3.y - WINDOW_HEIGHT * 0.5f + 30.f), tch5, _tcslen(tch5));
 
 
-	
 	
 
 
@@ -350,57 +375,129 @@ void CPlayer::Move()
 
 
 
-
-
-	//  Not Ground => Apply Gravity
+	// 중력 적용
 	if (!m_bGround)
-	{
+	{	
 		m_fGravitytime += fDT;
 		float m_Temp = GRAVITY * m_fGravitytime * fDT;
 		SetPos(Vector2(GetPos().x, GetPos().y + m_Temp));
 	}
 
-
-	// Pixel Collision
+	// 충돌 판정
 	m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
 
 	Vector2 TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
 	COLORREF PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
-	
+
 	BYTE r = GetRValue(PixRGB);
 	BYTE g = GetGValue(PixRGB);
 	BYTE b = GetBValue(PixRGB);
 
-	if (GetRValue(PixRGB) == 0 && GetGValue(PixRGB) == 255 && GetBValue(PixRGB) == 0)
+	if (r == 0 && g == 255 && b == 0)
 		m_bCurCollision = true;
 	else
 		m_bCurCollision = false;
 
+	
 
+	// 땅으로 내려 끌기
+
+	/*if (!m_bJump && !m_bGround && m_bTest)
+	{
+		while (1)
+		{
+			SetPos(Vector2(GetPos().x, GetPos().y + 1.f));
+			m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
+
+			TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
+			PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
+
+			r = GetRValue(PixRGB);
+			g = GetGValue(PixRGB);
+			b = GetBValue(PixRGB);
+
+			if ((r == 0 && g == 255 && b == 0))
+			{
+				SetPos(Vector2(GetPos().x, GetPos().y + 1.f));
+				break;
+			}
+
+			cout << m_CurPointCollider.y << endl;
+		}
+	}*/
+
+
+	// 충돌 판정 후 처리 (위로 밀어주기)
 	if (m_bCurCollision)
 	{
 		m_bGround = true;
 		m_fGravitytime = 0.f;
+		m_bTest = true;
 
 		if (!m_bPrevCollision) // OnCollision_Enter
 		{
 			if (m_CurPointCollider.y != m_PrevPointCollider.y)
 				printf("OnCollision_Enter\n\n");
 
-			float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y) * fDT;
-			SetPos(Vector2(GetPos().x, GetPos().y - fYgap+1));
+			//float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y) * fDT;   // 이전 Pixel Collider의 y값과 현재 Pixel Collider의 y값의 차
+			//SetPos(Vector2(GetPos().x, GetPos().y - fYgap));
+
+			while (1)
+			{
+				SetPos(Vector2(GetPos().x, GetPos().y - 1.f));
+				m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
+				
+				TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
+				PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
+
+				r = GetRValue(PixRGB);
+				g = GetGValue(PixRGB);
+				b = GetBValue(PixRGB);
+
+
+				if ((r != 0 || g != 255 || b != 0))
+				{
+					SetPos(Vector2(GetPos().x, GetPos().y + 1));
+					break;
+				}
+			}
+
 		}
 		else if (m_bPrevCollision) // OnCollision_Stay
 		{
 			if (m_CurPointCollider.y != m_PrevPointCollider.y)
 				printf("OnCollision_Stay\n\n");
+			
+		/*	float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y ) * fDT;
+			SetPos(Vector2(GetPos().x, GetPos().y - fYgap));*/
+
+			while (1)
+			{
+				SetPos(Vector2(GetPos().x, GetPos().y - 1.f));
+				m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
+
+				TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
+				PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
+
+				r = GetRValue(PixRGB);
+				g = GetGValue(PixRGB);
+				b = GetBValue(PixRGB);
+
+
+				if ((r != 0 || g != 255 || b != 0))
+				{
+					SetPos(Vector2(GetPos().x, GetPos().y + 1));
+					break;
+				}
+			}
+
 		}
 	}
 	else if (!m_bCurCollision)
 	{
 		m_bGround = false;
 
-		if (!m_bPrevCollision) // No Cillision
+		if (!m_bPrevCollision) // No Collision
 		{
 			if (m_CurPointCollider.y != m_PrevPointCollider.y)
 				printf("NoCollision\n\n");
@@ -411,7 +508,6 @@ void CPlayer::Move()
 				printf("OnCollision_Exit\n\n");
 		}
 	}
-
 
 	m_PrevPointCollider = m_CurPointCollider;
 	m_bPrevCollision = m_bCurCollision;

@@ -21,7 +21,7 @@ void CStage::Init()
 {
 	CObject::Init();
 
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\MapPixelTest.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\Slope_Speed_Test.bmp");
 
 	// Component - Transform
 	m_pTransform->SetOwnerObj(this);
@@ -63,7 +63,7 @@ void CStage::Render(HDC hdc)
 		iWidth, iHeight,
 		m_pTex->GetDC(),
 		0, 0, iWidth, iHeight,
-		RGB(255, 0, 255));
+		RGB(255, 0, 0));
 
 
 	//TransparentBlt(hdc,
