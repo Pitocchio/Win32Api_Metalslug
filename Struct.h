@@ -80,3 +80,9 @@ typedef struct tagInfo
 	float fX, fY; // 중점
 	float fCX, fCY; // 가로 세로 크기 (/2 X)
 }INFO;
+
+typedef struct MyLine
+{
+	POINT Src;
+	POINT Dst;
+}LINE;

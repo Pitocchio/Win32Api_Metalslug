@@ -16,8 +16,12 @@ private: // Variables
 
 	int m_arrVK[(int)KEY_TYPE::TYPEEND_KEY] =
 	{
-		VK_LEFT, VK_RIGHT, VK_UP, VK_DOWN, VK_SPACE, VK_ESCAPE,
-		'Z', 'X', 'S', 'P', 'L'
+		VK_LEFT, VK_RIGHT, VK_UP, VK_DOWN, 
+		VK_SPACE, VK_ESCAPE, VK_RETURN,
+		'Q', 'W', 'E', 'R',
+		'A', 'S', 'D', 'F',
+		'Z', 'X', 'C', 'V',
+		'U', 'I', 'O', 'P',
 	};
 };
 

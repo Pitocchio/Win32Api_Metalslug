@@ -14,13 +14,13 @@ void CGameScene::Update()
 	{
 		CScene::Update(); // 부모가 갖고 있는 멤버함수 사용
 
-		// 스페이스 누를 시 Scene 변환
-		//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
-		//{
-		//	//CSceneMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
+		//스페이스 누를 시 Scene 변환
+		if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::KEY_DOWN)
+		{
+			//CSceneMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
 
-		//	CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::TOOL);
-		//}
+			CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::TOOL);
+		}
 	}
 }
 
@@ -57,4 +57,10 @@ void CGameScene::Exit()
 	CCollisionMgr::GetInst()->ResetObjectType();
 
 	CObjectMgr::GetInst()->Release();
+}
+
+void CGameScene::Render(HDC hdc)
+{
+	CObjectMgr::GetInst()->Render(hdc);
+	CLineMgr::GetInst()->Render(hdc);
 }

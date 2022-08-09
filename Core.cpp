@@ -56,7 +56,7 @@ void CCore::Progress()
 	// Render
 	Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);
 	CSceneMgr::GetInst()->Render(m_Hbitdc);
-	CLineMgr::GetInst()->Render(m_Hbitdc);
+	//CLineMgr::GetInst()->Render(m_Hbitdc);
 
 	BitBlt(m_Hdc, 0, 0, m_RC.right, m_RC.bottom, m_Hbitdc, 0, 0, SRCCOPY);
 

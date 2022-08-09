@@ -136,12 +136,25 @@ enum class KEY_TYPE {
 	UP,
 	DOWN,
 	SPACE,
-	Z, // Jump
-	X, // 공격
-	S, // 수류탄
-	P, // 동전
-	L, // 개발자 모드
-	ESC, // pause
+	ESC,
+	ENTER,
+
+	Q,
+	W,
+	E,
+	R,
+	A,
+	S,
+	D,
+	F,
+	Z,
+	X,
+	C,
+	V,
+	U,
+	I,
+	O,
+	P,
 	TYPEEND_KEY
 };
 

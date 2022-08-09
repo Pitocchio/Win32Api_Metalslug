@@ -3,12 +3,12 @@
 
 CPlayer::CPlayer()
 {
-	
+
 }
 
 CPlayer::~CPlayer()
 {
-	
+
 }
 
 void CPlayer::Init()
@@ -94,7 +94,7 @@ void CPlayer::Init()
 	m_tInfo.fY = 300.f;
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 100.f;
-	m_fSpeed = 15.f;
+	m_fSpeed = 20.f;
 	m_fFall = 0.f;
 	m_fGrav = 100.f;
 	CheckSpeed = 0.f;
@@ -109,8 +109,6 @@ void CPlayer::LateInit()
 
 void CPlayer::Update()
 {
-	
-	
 	if (m_iCheckLine)
 	{
 		m_fFall = 0;
@@ -122,21 +120,20 @@ void CPlayer::Update()
 		m_tInfo.fY += m_fFall;
 	}
 
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
+	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
 		m_tInfo.fX -= m_fSpeed;
 		if (!m_bJump)
 			m_tInfo.fY -= m_fSlope * m_fSpeed;
 	}
 
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
 		m_tInfo.fX += m_fSpeed;
 		if (!m_bJump)
 			m_tInfo.fY += m_fSlope * m_fSpeed;
 	}
-	else if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_NONE && 
-		CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_NONE)
+	else if (GetAsyncKeyState(VK_RIGHT) == 0 && GetAsyncKeyState(VK_LEFT) == 0)
 		m_fSpeed = 10.f;
 
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
@@ -151,6 +148,7 @@ void CPlayer::Update()
 		m_fJumpSpeed -= (m_fJumpSpeed - 0.f) / m_fGrav;
 		m_tInfo.fY -= m_fJumpSpeed;
 	}
+
 
 	for (auto& iter : CLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
 	{
@@ -168,7 +166,7 @@ void CPlayer::Update()
 	//Update_state();
 	//Update_animation();
 
-	
+
 
 	//// 어떤 어택인지 어택 타입 값 받아서 그에 맞는 어택 구현 ex 칼, 총, 수류탄
 	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::Z) == KEY_STATE::KEY_HOLD)
@@ -180,10 +178,10 @@ void CPlayer::LateUpdate()
 	if (m_pCollider->IsCollision())
 	{
 		// 충돌한 상대 오브젝트의 오브젝트 타입을 가져온다
-		switch (m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetObjectType()) 
+		switch (m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetObjectType())
 		{
 
-		// LineCollider
+			// LineCollider
 		case OBJECT_TYPE::C_CAMERACOLLIDER:
 		{
 			m_pRigidbody->SetGround(true);
@@ -207,7 +205,7 @@ void CPlayer::LateUpdate()
 
 
 		}
-			break;
+		break;
 
 
 		// MoveObj
@@ -218,11 +216,11 @@ void CPlayer::LateUpdate()
 			CEventMgr::GetInst()->DeleteObject(this);
 			break;
 
-		
+
 		}
 	}
 
-	m_pRigidbody->InitForce(); 
+	m_pRigidbody->InitForce();
 	m_pRigidbody->InitAccelAlpha();
 	m_pRigidbody->InitAccel();
 	m_ePrevState = m_eCurState;
@@ -309,10 +307,10 @@ void CPlayer::Render(HDC hdc)
 		GetPOS_Test().y);
 	//SetBkMode(hdc, TRANSPARENT);
 	SetTextAlign(hdc, TA_LEFT);
-	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight +15), tch4, _tcslen(tch4));
+	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 15), tch4, _tcslen(tch4));
 
 
-	
+
 
 
 	// m_bJump
@@ -356,7 +354,7 @@ void CPlayer::Render(HDC hdc)
 	TextOut(hdc, int(tPos3.x - WINDOW_WIDTH * 0.5f), int(tPos3.y - WINDOW_HEIGHT * 0.5f + 30.f), tch5, _tcslen(tch5));
 
 
-	
+
 
 
 
@@ -453,7 +451,7 @@ void CPlayer::Move()
 
 	// 중력 적용
 	if (!m_bGround)
-	{	
+	{
 		m_fGravitytime += fDT;
 		float m_Temp = GRAVITY * m_fGravitytime * fDT;
 		SetPos(Vector2(GetPos().x, GetPos().y + m_Temp));
@@ -474,7 +472,7 @@ void CPlayer::Move()
 	else
 		m_bCurCollision = false;
 
-	
+
 
 	// 땅으로 내려 끌기
 
@@ -522,7 +520,7 @@ void CPlayer::Move()
 			{
 				SetPos(Vector2(GetPos().x, GetPos().y - 1.f));
 				m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
-				
+
 				TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
 				PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
 
@@ -543,9 +541,9 @@ void CPlayer::Move()
 		{
 			if (m_CurPointCollider.y != m_PrevPointCollider.y)
 				printf("OnCollision_Stay\n\n");
-			
-		/*	float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y ) * fDT;
-			SetPos(Vector2(GetPos().x, GetPos().y - fYgap));*/
+
+			/*	float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y ) * fDT;
+				SetPos(Vector2(GetPos().x, GetPos().y - fYgap));*/
 
 			while (1)
 			{
@@ -720,7 +718,7 @@ void CPlayer::Update_state() // for Animaion change
 		m_iCurDir = 1;
 		m_eCurState = OBJECT_STATE::WALK;
 	}
-	if(m_pRigidbody->GetSpeed() == 0.f)
+	if (m_pRigidbody->GetSpeed() == 0.f)
 	{
 		m_eCurState = OBJECT_STATE::IDLE;
 	}
@@ -742,7 +740,7 @@ void CPlayer::Update_animation()
 		//else if (m_iDIr == 1)
 		//	//
 	}
-		break;
+	break;
 	case OBJECT_STATE::WALK:
 
 		break;

@@ -16,7 +16,7 @@ void CSceneMgr::Init()
 	m_arrScene[(UINT)SCENE_TYPE::GAME] = new CGameScene;
 	m_arrScene[(UINT)SCENE_TYPE::OUTTRO] = new COuttroScene;*/
 
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::GAME]; // 현재 Scene 지정
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::TOOL]; // 현재 Scene 지정
 	m_pCurScene->Enter();
 }
 
