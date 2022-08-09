@@ -122,20 +122,21 @@ void CPlayer::Update()
 		m_tInfo.fY += m_fFall;
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
 	{
 		m_tInfo.fX -= m_fSpeed;
 		if (!m_bJump)
 			m_tInfo.fY -= m_fSlope * m_fSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
 	{
 		m_tInfo.fX += m_fSpeed;
 		if (!m_bJump)
 			m_tInfo.fY += m_fSlope * m_fSpeed;
 	}
-	else if (GetAsyncKeyState(VK_RIGHT) == 0 && GetAsyncKeyState(VK_LEFT) == 0)
+	else if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_NONE && 
+		CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_NONE)
 		m_fSpeed = 10.f;
 
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
@@ -151,12 +152,12 @@ void CPlayer::Update()
 		m_tInfo.fY -= m_fJumpSpeed;
 	}
 
-	for (auto& iter : CLineMgr::GetInst()->GetVecLine())
+	for (auto& iter : CLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
 	{
-		if (iter->IsInLine(Get_Info()))
+		if (iter->IsInLine(Get_Info())) // 현재 플레이어가 라인에 위치해 있는가
 		{
 			Check_Line(iter->LineCheck(Get_Info()));
-			Set_Dist(iter->Get_Dist());
+			Set_Dist(iter->Get_Dist()); // 라인의 기울기를 받아와 플레이어 슬로프에 저장 
 			break;
 		}
 	}

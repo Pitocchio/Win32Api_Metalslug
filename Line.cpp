@@ -20,8 +20,17 @@ CLine::CLine(POINT _Src, POINT _Dst)
 
 void CLine::Init()
 {
-	m_fDist = ((float)(m_tDst.y - m_tSrc.y) / (float)(m_tDst.x - m_tSrc.x));
-	m_fIntercept = m_tDst.y - (m_tDst.x * m_fDist);
+	// 기울기 (Y증가량 / X증가량) : 양수일 때 오르막, 음수일 때 내리막
+	m_fDist = ((float)(m_tDst.y - m_tSrc.y) / (float)(m_tDst.x - m_tSrc.x)); 
+	
+	// y 절편 (직선이 y축과 만나는 점의 y좌표 혹은 x = 0일 때의 y값)
+	m_fIntercept = m_tDst.y - (m_tDst.x * m_fDist); 
+
+	/*
+		직선의 방정식 : y = mx + n
+		기울기(m) = (y2 - y1) / (x2 - x1)
+		y절편(n) = y - mx
+	*/
 }
 
 
@@ -39,7 +48,8 @@ void CLine::Render(HDC hDC)
 	LineTo(hDC, tempDst.x, tempDst.y);
 }
 
-bool CLine::IsInLine(INFO& _tInfo)
+// 플레이어의 X포지션이 현재 라인에 위치해 있는가
+bool CLine::IsInLine(INFO& _tInfo) 
 {
 	if (m_tSrc.x <= _tInfo.fX && m_tDst.x >= _tInfo.fX)
 		return true;
@@ -47,11 +57,12 @@ bool CLine::IsInLine(INFO& _tInfo)
 	return false;
 }
 
+
 int CLine::LineCheck(INFO& _tInfo)
 {
-	if (m_fDist == 0)
+	if (m_fDist == 0) // 기울기가 0이라면
 	{
-		if (_tInfo.fY >= (m_fDist * _tInfo.fX + m_fIntercept) - 50)
+		if (_tInfo.fY >= (m_fDist * _tInfo.fX + m_fIntercept) - 50) // 현재 플레이어 y포지션이 (y절편 - 50)보다 크거나 같다면
 		{
 			_tInfo.fY = (m_fDist * _tInfo.fX + m_fIntercept) - 50;
 			return 1;

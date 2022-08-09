@@ -26,5 +26,8 @@ private: // Variables
 	double m_dAcc; //1초 체크를 위한 누적 시간
 	UINT m_iCallCount; // 초당 호출 횟수 체크
 	UINT m_iFPS; // 초당 호출 횟수
+
+	
+
 };
 
