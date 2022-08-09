@@ -1,81 +1,16 @@
-﻿  Attackobj.cpp
-  BoxCollider2D.cpp
-  Bullet.cpp
-  CGrenadei.cpp
-  Camera.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Camera.cpp(74,18): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Camera.cpp(85,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Cameracollider.cpp
-  Collider2D.cpp
-  CollisionMgr.cpp
-  Component.cpp
-  Enemy.cpp
-  Enemycollider.cpp
-  EventMgr.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\EventMgr.cpp(14,89): warning C4834: discarding return value of function with 'nodiscard' attribute
-  Finalboss.cpp
-  Food.cpp
-  GameScene.cpp
-  Grenade.cpp
-  GroundCollider.cpp
-  Heavymachinegun.cpp
-  Item.cpp
-  KeyMgr.cpp
-  Generating Code...
-  Compiling...
-  Line.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Line.cpp(74,15): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
-  LineCollider2D.cpp
-  LineMgr.cpp
-  Main.cpp
-  Mapcollider.cpp
-  Middleboss.cpp
-  Moveobj.cpp
-  Npc.cpp
-  Object.cpp
-  ObjectMgr.cpp
-  PathMgr.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\PathMgr.cpp(11,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Player.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Player.cpp(301,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Player.cpp(310,86): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Player.cpp(324,88): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Player.cpp(335,107): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Player.cpp(344,114): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Player.cpp(354,114): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Prisoner.cpp
-  Rebel.cpp
-  ResMgr.cpp
-  Rigidbody2D.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Rigidbody2D.cpp(59,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Rigidbody2D.cpp(67,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Scene.cpp
-  SceneMgr.cpp
-  SelectGDI.cpp
-  Stage.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Stage.cpp(28,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Stage.cpp(28,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
-  Texture.cpp
-  TimeMgr.cpp
-  ToolScene.cpp
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(46,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(51,41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(56,91): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(56,72): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(58,41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(64,41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(70,41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(73,41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(76,42): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(79,42): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(135,104): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(135,85): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(136,84): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\ToolScene.cpp(136,65): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-  Transform2D.cpp
-  Weapon.cpp
-  Zombie.cpp
-  Generating Code...
-  Win32Api_MetalSlug.vcxproj -> C:\Users\Admin\Desktop\temp\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  ToolScene.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(46,40): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(51,41): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(56,91): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(56,72): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(58,41): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(64,41): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(70,41): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(73,41): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(76,42): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(79,42): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(135,103): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(135,84): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(136,82): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\ToolScene.cpp(136,63): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Win32Api_MetalSlug.vcxproj -> C:\Users\chanjun\Documents\Win32Api_MetalSlug\Output\bin_debug\Win32Api_MetalSlug.exe

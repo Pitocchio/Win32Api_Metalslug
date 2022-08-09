@@ -132,13 +132,15 @@ bool CToolScene::CheckSceneChange()
 void CToolScene::AddMapObject()
 {
 	
-		Vector2 vClickPos = Vector2(CCamera::GetInst()->GetRealPos(Vector2(m_pointMousePos.x, m_pointMousePos.y)).x,
-										CCamera::GetInst()->GetRealPos(Vector2(m_pointMousePos.x, m_pointMousePos.y)).y);
+	Vector2 vClickPos = Vector2(CCamera::GetInst()->GetRealPos(Vector2(m_pointMousePos.x, m_pointMousePos.y)).x,
+								CCamera::GetInst()->GetRealPos(Vector2(m_pointMousePos.x, m_pointMousePos.y)).y);
 
+	//mouse_event()
+	//GetCursor()
 
 	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::Q) == KEY_STATE::KEY_HOLD) // Line Point
 	{
-		if (WM_LBUTTONDOWN)
+		if (VK_LBUTTON)
 		{
 			cout << "Q\n";
 		}
@@ -146,7 +148,7 @@ void CToolScene::AddMapObject()
 	}
 	else if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::W) == KEY_STATE::KEY_HOLD) // Camera - Y up
 	{
-		if (WM_LBUTTONDOWN)
+		if (VK_LBUTTON)
 		{
 			cout << "W\n";
 		}
@@ -154,7 +156,7 @@ void CToolScene::AddMapObject()
 	}
 	else if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::E) == KEY_STATE::KEY_HOLD) // Camera - Y down
 	{
-		if (WM_LBUTTONDOWN)
+		if (VK_LBUTTON)
 		{
 			cout << "E\n";
 		}
@@ -162,11 +164,14 @@ void CToolScene::AddMapObject()
 	}
 	else if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::R) == KEY_STATE::KEY_HOLD) // Camera - Rock
 	{
-		if (WM_LBUTTONDOWN)
+		if (VK_LBUTTON)
 		{
 			cout << "R\n";
 		}
 
 	}
 
+	
+
 }
+
