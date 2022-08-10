@@ -15,5 +15,6 @@ public:
 
 private:
 	vector<CLine*> m_pVecLine;
+	//void LoadMapObj(const wstring& _strKry, const wstring& _strRelativePath);
 };
 

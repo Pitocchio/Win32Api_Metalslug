@@ -17,20 +17,38 @@ public: // Methods
 public:
 	void ScrollMouse();
 	bool CheckSceneChange();
-	void AddMapObject();
+	void CreateMapObject();
 
-	vector<LINE>* GetvecLine() { return &m_vecLine; }
+private:
+	void AddMapObject(Vector2 vClickPos, MAPOBJ_TYPE type);
+	void PrintVector();
+
+	void SaveMapObj(const wstring& _strRelativePath);
+	void LoadMapObj(const wstring& _strRelativePath);
+
+
+	void RenderText(HDC hdc);
+	void RenderMapObj(HDC hdc);
+	void RenderLiveMapObj(HDC hdc);
+
+	void GetCurDrawObj();
+
+	
+
+	// Enter 입력시(SceneChange) 모든 벡터를 파일 입출력으로 파일에 저장
 
 
 private: // Variables
-	POINT m_pointMousePos;
+	POINT m_ptMousePos;
 
-	vector <LINE> m_vecLine;
 
-	
-	POINT* m_ptSrc;
-	POINT* m_ptDst;
+	vector <MAPOBJ*> m_vecMapObj;
 
-	bool m_bLinePairPull;
+
+	POINT* m_ptTemp1;
+	POINT* m_ptTemp2;
+
+
+	MAPOBJ_TYPE m_curDrawObj;
 };
 

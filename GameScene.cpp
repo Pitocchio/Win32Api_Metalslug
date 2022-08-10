@@ -15,7 +15,7 @@ void CGameScene::Update()
 		CScene::Update(); // 부모가 갖고 있는 멤버함수 사용
 
 		//스페이스 누를 시 Scene 변환
-		if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::KEY_DOWN)
+		if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::DOWN)
 		{
 			//CSceneMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
 

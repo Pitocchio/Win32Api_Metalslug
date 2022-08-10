@@ -16,5 +16,8 @@ public: // Methods
 
 	virtual void Render(HDC hdc) override;
 
+
+private:
+	vector <MAPOBJ*> m_vecMapObj;
 };
 

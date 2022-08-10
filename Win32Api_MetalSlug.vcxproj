@@ -162,8 +162,8 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Grenade.h" />
     <ClInclude Include="Heavymachinegun.h" />
+    <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="GroundCollider.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineCollider2D.h" />
@@ -219,8 +219,8 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="Heavymachinegun.cpp" />
+    <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="GroundCollider.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineCollider2D.cpp" />

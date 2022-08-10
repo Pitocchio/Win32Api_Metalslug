@@ -136,7 +136,7 @@ void CPlayer::Update()
 	else if (GetAsyncKeyState(VK_RIGHT) == 0 && GetAsyncKeyState(VK_LEFT) == 0)
 		m_fSpeed = 10.f;
 
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_DOWN)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::DOWN)
 	{
 		m_fJumpSpeed = 20.f;
 		fJumpStart = m_tInfo.fY;
@@ -169,7 +169,7 @@ void CPlayer::Update()
 
 
 	//// 어떤 어택인지 어택 타입 값 받아서 그에 맞는 어택 구현 ex 칼, 총, 수류탄
-	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::Z) == KEY_STATE::KEY_HOLD)
+	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::Z) == KEY_STATE::HOLD)
 	//	Attack();
 }
 
@@ -365,32 +365,32 @@ void CPlayer::Render(HDC hdc)
 void CPlayer::Move()
 {
 	// 키 입력에 따른 힘이나 속도 부여
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::HOLD)
 	{
 		//m_pRigidbody->AddForce(MyVector2(-200.f, 0.f));
 
 		m_vLook = { -1, 0 };
 		SetPos(Vector2(GetPos().x + (m_vLook.x * MOVESPEED * fDT), GetPos().y));
 	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::HOLD)
 	{
 		//m_pRigidbody->AddForce(MyVector2(200.f, 0.f));
 		m_vLook = { 1, 0 };
 		SetPos(Vector2(GetPos().x + (m_vLook.x * MOVESPEED * fDT), GetPos().y));
 	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_DOWN)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::DOWN)
 	{
 		//m_pRigidbody->AddVelocity(MyVector2(-200.f, 0.f));
 	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_DOWN)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::DOWN)
 	{
 		//m_pRigidbody->AddVelocity(MyVector2(200.f, 0.f));
 	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_UP)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::UP)
 	{
 		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
 	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_UP)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::UP)
 	{
 		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
 	}
@@ -398,19 +398,19 @@ void CPlayer::Move()
 
 
 	//// Temp Up Down
-	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_HOLD)
+	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::HOLD)
 	//{
 	//	m_pRigidbody->AddForce(MyVector2(0.f, -200.f));
 	//}
-	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_HOLD)
+	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::HOLD)
 	//{
 	//	m_pRigidbody->AddForce(MyVector2(0.f, 200.f));
 	//}
-	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_DOWN)
+	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::DOWN)
 	//{
 	//	m_pRigidbody->AddVelocity(MyVector2(0.f, -200.f));
 	//}
-	//if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_DOWN)
+	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::DOWN)
 	//{
 	//	m_pRigidbody->AddVelocity(MyVector2(0.f, 200.f));
 	//}
@@ -708,12 +708,12 @@ void CPlayer::Move()
 
 void CPlayer::Update_state() // for Animaion change
 {
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_DOWN)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::DOWN)
 	{
 		m_iCurDir = -1;
 		m_eCurState = OBJECT_STATE::WALK;
 	}
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_DOWN)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::DOWN)
 	{
 		m_iCurDir = 1;
 		m_eCurState = OBJECT_STATE::WALK;

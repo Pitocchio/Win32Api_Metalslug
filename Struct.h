@@ -66,6 +66,14 @@ typedef struct MyKey
 	// 벡터 내의 인덱스 값이 곧 키 값
 }Key;
 
+typedef struct MyMouse
+{
+	MOUSE_STATE state; // 현재 프레임 마우스의 상태
+	bool bPrev; // 이전 프레임에서 눌렸는지
+
+	// 벡터 내의 인덱스 값이 곧 키 값
+}Mouse;
+
 typedef struct MyEvent
 {
 	EVENT_TYPE eEven;
@@ -81,8 +89,17 @@ typedef struct tagInfo
 	float fCX, fCY; // 가로 세로 크기 (/2 X)
 }INFO;
 
-typedef struct MyLine
+
+// MapTool
+
+
+
+typedef struct MyMapObj
 {
-	POINT Src;
-	POINT Dst;
-}LINE;
+	POINT* point1; // Line일 경우 Src, Col일 경우 LeftTpo
+	POINT* point2; // Line일 경우 Dst, Col일 경우 RightBottom
+
+	UINT Coltype;
+
+}MAPOBJ;
+

@@ -22,6 +22,7 @@
 #include "PathMgr.h"
 #include "ResMgr.h"
 #include "LineMgr.h"
+#include "InputMgr.h"
 
 // 04.Object
 #include "Object.h"

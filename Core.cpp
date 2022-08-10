@@ -22,7 +22,7 @@ void CCore::Init(HWND hWnd)
 	// Manager Init
 	CPathMgr::GetInst()->Init();
 	CTimeMgr::GetInst()->Init();
-	CKeyMgr::GetInst()->Init();
+	CInputMgr::GetInst()->Init();
 	CSceneMgr::GetInst()->Init();
 	CCamera::GetInst()->Init();
 	CLineMgr::GetInst()->Init();
@@ -32,7 +32,7 @@ void CCore::Progress()
 {
 	// Manager Update
 	CTimeMgr::GetInst()->Update();
-	CKeyMgr::GetInst()->Update();
+	CInputMgr::GetInst()->Update();
 
 	// Scene Update
 	CSceneMgr::GetInst()->Update();
@@ -47,7 +47,7 @@ void CCore::Progress()
 
 	CSceneMgr::GetInst()->LateUpdate();
 
-	/*if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::KEY_UP)
+	/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::UP)
 	{
 		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));
 		CCamera::GetInst()->SetLookAt(Pos);
@@ -77,7 +77,7 @@ void CCore::Release()
 
 	// DestroyInst
 	CTimeMgr::GetInst()->DestroyInst();
-	CKeyMgr::GetInst()->DestroyInst();
+	CInputMgr::GetInst()->DestroyInst();
 	CSceneMgr::GetInst()->DestroyInst();
 	CObjectMgr::GetInst()->DestroyInst();
 	CEventMgr::GetInst()->DestroyInst();

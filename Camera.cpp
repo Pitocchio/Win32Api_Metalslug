@@ -35,13 +35,13 @@ void CCamera::Update()
 
 	// Camera Move by Key
 	
-	/*if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::KEY_HOLD)
+	/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::HOLD)
 		m_vLookAt.y -= 500.f * DT;
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::KEY_HOLD)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::HOLD)
 		m_vLookAt.y += 500.f * DT;
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::KEY_HOLD)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::HOLD)
 		m_vLookAt.x -= 500.f * DT;
-	if (CKeyMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::KEY_HOLD)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::HOLD)
 		m_vLookAt.x += 500.f * DT;*/
 	
 

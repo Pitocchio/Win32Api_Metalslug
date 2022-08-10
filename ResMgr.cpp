@@ -42,3 +42,7 @@ void CResMgr::Release()
 		delete iter->second;
 	}
 }
+
+
+
+// m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoMax.bmp");

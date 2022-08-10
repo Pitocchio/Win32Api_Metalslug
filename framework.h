@@ -12,6 +12,7 @@
 
 // My
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cmath>
 #include <ctime>
@@ -20,5 +21,6 @@
 #include <map>
 #include <vector>
 #include <stdlib.h>
+#include <stdio.h>
 #pragma comment(lib, "Msimg32.lib") // TransparentBlt
 using namespace std;

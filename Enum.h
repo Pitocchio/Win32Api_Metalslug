@@ -123,10 +123,10 @@ enum class PLAYER_STATE
 
 // ====================== Key ======================== // 
 enum class KEY_STATE {
-	KEY_NONE,
-	KEY_DOWN,
-	KEY_HOLD,
-	KEY_UP,
+	NONE,
+	DOWN,
+	HOLD,
+	UP,
 	TYPEEND_KEY
 };
 
@@ -143,6 +143,8 @@ enum class KEY_TYPE {
 	W,
 	E,
 	R,
+	T,
+	Y,
 	A,
 	S,
 	D,
@@ -157,6 +159,25 @@ enum class KEY_TYPE {
 	P,
 	TYPEEND_KEY
 };
+
+
+// ====================== Mouse ======================== // 
+enum class MOUSE_STATE {
+	NONE,
+	DOWN,
+	HOLD,
+	UP,
+	TYPEEND_KEY
+};
+
+enum class MOUSE_TYPE {
+	LBTN,
+	MBTN,
+	RBTN,
+	TYPEEND_MOUSE
+};
+
+
 
 // ====================== Event ======================== // 
 enum class EVENT_TYPE
@@ -182,3 +203,30 @@ enum class PEN_TYPE
 	BLUE,
 	TYPEEND_PEN
 };
+
+
+
+// Map
+
+enum class MAPOBJ_TYPE
+{
+	NONE,
+	LINE,
+	COL_CAMERA_FOLLOWPLAYERY,
+	COL_CAMERA_ROCK,
+	COL_PLAYER_LEFTMOVEROCK,
+	COL_ENEMY_SPAWNER,
+	TYPEEND_EVENT
+};
+
+
+
+/*
+Collider CameraFollowPlayerY
+
+Collider PlayerLeftMoveLock
+
+Collider CameraRock
+
+Collider MonsterSpawn
+*/
