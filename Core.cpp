@@ -25,7 +25,6 @@ void CCore::Init(HWND hWnd)
 	CInputMgr::GetInst()->Init();
 	CSceneMgr::GetInst()->Init();
 	CCamera::GetInst()->Init();
-	CLineMgr::GetInst()->Init();
 }
 
 void CCore::Progress()
@@ -56,7 +55,7 @@ void CCore::Progress()
 	// Render
 	Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);
 	CSceneMgr::GetInst()->Render(m_Hbitdc);
-	//CLineMgr::GetInst()->Render(m_Hbitdc);
+	//CMapLineMgr::GetInst()->Render(m_Hbitdc);
 
 	BitBlt(m_Hdc, 0, 0, m_RC.right, m_RC.bottom, m_Hbitdc, 0, 0, SRCCOPY);
 
@@ -73,7 +72,7 @@ void CCore::Release()
 	CObjectMgr::GetInst()->Release();
 	CResMgr::GetInst()->Release();
 	CCamera::GetInst()->Release();
-	CLineMgr::GetInst()->Release();
+	CMapLineMgr::GetInst()->Release();
 
 	// DestroyInst
 	CTimeMgr::GetInst()->DestroyInst();
@@ -85,7 +84,7 @@ void CCore::Release()
 	CResMgr::GetInst()->DestroyInst();
 	CPathMgr::GetInst()->DestroyInst();
 	CCamera::GetInst()->DestroyInst();
-	CLineMgr::GetInst()->DestroyInst();
+	CMapLineMgr::GetInst()->DestroyInst();
 
 	// Delete GDI obj (except Hollow)
 	for (int i = 0; i < (UINT)PEN_TYPE::TYPEEND_PEN; ++i)
@@ -101,9 +100,17 @@ void CCore::CreateBrushPen()
 	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
 
 	// Pen
-	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	int iLineWidth = 2;
+
+	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, iLineWidth, RGB(255, 0, 0));
+	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, iLineWidth, RGB(0, 255, 0));
+	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, iLineWidth, RGB(0, 0, 255));
+	m_arrPen[(UINT)PEN_TYPE::YELLOW] = CreatePen(PS_SOLID, iLineWidth, RGB(255, 255, 0));
+	m_arrPen[(UINT)PEN_TYPE::ORANGE] = CreatePen(PS_SOLID, iLineWidth, RGB(255, 165, 0));
+	m_arrPen[(UINT)PEN_TYPE::PURPLE] = CreatePen(PS_SOLID, iLineWidth, RGB(255, 255, 0));
+
+
+
 }
 
 

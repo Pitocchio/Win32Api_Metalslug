@@ -49,6 +49,13 @@ void CGameScene::Enter()
 	// Camera Look ÁöÁ¤
 	CCamera::GetInst()->SetLookAt(Vector2(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT*0.5f));
 
+
+	// Map Object Data File Load
+	LoadMapObj(L"mapdata\\Mapdata.bin");
+
+
+
+	
 }
 
 void CGameScene::Exit()
@@ -62,5 +69,49 @@ void CGameScene::Exit()
 void CGameScene::Render(HDC hdc)
 {
 	CObjectMgr::GetInst()->Render(hdc);
-	CLineMgr::GetInst()->Render(hdc);
+	//CMapLineMgr::GetInst()->Render(hdc);
+	CMapObjMgr::GetInst()->Render(hdc);
+}
+
+void CGameScene::LoadMapObj(const wstring& _strRelativePath)
+{
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	FILE* pFile = nullptr;
+
+	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
+	if (pFile == nullptr)
+		return;
+
+	LONG type = 0;
+	POINT pt1 = {};
+	POINT pt2 = {};
+	
+	while (feof(pFile) == 0)
+	{
+		fread(&type, sizeof(LONG), 1, pFile);
+		fread(&pt1.x, sizeof(LONG), 1, pFile);
+		fread(&pt1.y, sizeof(LONG), 1, pFile);
+		fread(&pt2.x, sizeof(LONG), 1, pFile);
+		fread(&pt2.y, sizeof(LONG), 1, pFile);
+
+		if (feof(pFile) != 0)
+			break;
+
+		if (type == (UINT)OBJECT_TYPE::ML_LINE)
+		{
+			CMapLine* temp = new CMapLine(pt1, pt2);
+			CMapObjMgr::GetInst()->AddMapLine(temp);
+		}
+		else
+		{
+			CMapCollider* temp = new CMapCollider(pt1, pt2, type);
+			CMapObjMgr::GetInst()->AddMapCol(temp);
+		}
+	}
+
+	cout << "\nFile Load Success!\n";
+
+	fclose(pFile);
 }

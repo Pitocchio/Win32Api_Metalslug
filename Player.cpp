@@ -150,7 +150,7 @@ void CPlayer::Update()
 	}
 
 
-	for (auto& iter : CLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
+	for (auto& iter : CMapLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
 	{
 		if (iter->IsInLine(Get_Info())) // 현재 플레이어가 라인에 위치해 있는가
 		{
@@ -235,7 +235,7 @@ void CPlayer::Render(HDC hdc)
 	//float diffY = CCamera::GetInst()->GetDiff().y;
 	//Rectangle(hdc, m_tRect.left - diffX, m_tRect.top - diffY, m_tRect.right - diffX, m_tRect.bottom - diffY);
 
-	//CLineMgr::GetInst()->Render(hdc);
+	//CMapLineMgr::GetInst()->Render(hdc);
 
 
 	// Temp

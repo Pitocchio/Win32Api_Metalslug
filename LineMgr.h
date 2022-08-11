@@ -1,20 +1,20 @@
 #pragma once
 
-class CLine;
+class CMapLine;
 
-class CLineMgr
+class CMapLineMgr
 {
-	SINGLETONE(CLineMgr)
+	SINGLETONE(CMapLineMgr)
 
 public:
 	void Init();
 	void Render(HDC hdc);
 	void Release();
 public:
-	vector<CLine*> GetVecLine() { return m_pVecLine; }
+	vector<CMapLine*> GetVecLine() { return m_pVecLine; }
 
 private:
-	vector<CLine*> m_pVecLine;
+	vector<CMapLine*> m_pVecLine;
 	//void LoadMapObj(const wstring& _strKry, const wstring& _strRelativePath);
 };
 

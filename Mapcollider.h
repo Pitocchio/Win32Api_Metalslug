@@ -1,13 +1,23 @@
 #pragma once
-#include "Object.h"
-
-class CMapcollider : public CObject
+class CMapCollider
 {
 public:
-	CMapcollider();
-	~CMapcollider();
+	CMapCollider();
+	~CMapCollider();
+	CMapCollider(POINT _LeftTop, POINT _RightBottom, UINT _ObjType);
 
-	virtual void Init() override;
+public:
+	void Init();
+	void Render(HDC hDC);
+
+public:
+
+
+private:
+	POINT m_ptLeftTop;
+	POINT m_ptRightBottom;
+	
+	OBJECT_TYPE m_Objtype;
 
 };
 

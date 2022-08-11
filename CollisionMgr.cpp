@@ -164,46 +164,46 @@ bool CCollisionMgr::IsCollisionBoxBox(CCollider2D* pLeftCollider, CCollider2D* p
 
 bool CCollisionMgr::IsCollisionBoxLine(CCollider2D* pLeftCollider, CCollider2D* pRihtCollider)
 {
-	Vector2 vLineStart;
-	Vector2 vLineEnd;
-	Vector2 vBoxPos;
-	Vector2 vBoxSize;
+	//Vector2 vLineStart;
+	//Vector2 vLineEnd;
+	//Vector2 vBoxPos;
+	//Vector2 vBoxSize;
 
-	if (pLeftCollider->GetIsColliderType() == COLLIDER_TYPE::LINE2D)
-	{
-		vLineStart = dynamic_cast<CLineCollider2D*>(pLeftCollider)->GetStartPoint();
-		vLineEnd = dynamic_cast<CLineCollider2D*>(pLeftCollider)->GetEndPoint();
+	//if (pLeftCollider->GetIsColliderType() == COLLIDER_TYPE::LINE2D)
+	//{
+	//	vLineStart = dynamic_cast<CMapLineCollider2D*>(pLeftCollider)->GetStartPoint();
+	//	vLineEnd = dynamic_cast<CMapLineCollider2D*>(pLeftCollider)->GetEndPoint();
 
-		vBoxPos = pRihtCollider->GetOffset();
-		vBoxSize = dynamic_cast<CBoxCollider2D*>(pRihtCollider)->GetSize();
-	}
-	else
-	{
-		vLineStart = dynamic_cast<CLineCollider2D*>(pRihtCollider)->GetStartPoint();
-		vLineEnd = dynamic_cast<CLineCollider2D*>(pRihtCollider)->GetEndPoint();
+	//	vBoxPos = pRihtCollider->GetOffset();
+	//	vBoxSize = dynamic_cast<CBoxCollider2D*>(pRihtCollider)->GetSize();
+	//}
+	//else
+	//{
+	//	vLineStart = dynamic_cast<CMapLineCollider2D*>(pRihtCollider)->GetStartPoint();
+	//	vLineEnd = dynamic_cast<CMapLineCollider2D*>(pRihtCollider)->GetEndPoint();
 
-		vBoxPos = pLeftCollider->GetOffset();
-		vBoxSize = dynamic_cast<CBoxCollider2D*>(pLeftCollider)->GetSize();
-	}
+	//	vBoxPos = pLeftCollider->GetOffset();
+	//	vBoxSize = dynamic_cast<CBoxCollider2D*>(pLeftCollider)->GetSize();
+	//}
 
-	// 플레이어 콜라이더의 밑변 y 값
-	float fPlayerPosY = vBoxPos.y + vBoxSize.y * 0.5f;
+	//// 플레이어 콜라이더의 밑변 y 값
+	//float fPlayerPosY = vBoxPos.y + vBoxSize.y * 0.5f;
 
-	// 플레이어와 그라운드의 충돌을 처리하기 위한 선분 (플레이어 윗변 Y부터 플레이어 size y*1.5까지)
-	Vector2 vVerticalLineStart = vBoxPos;
-	Vector2 vVerticalLineEnd  = Vector2(vBoxPos.x, fPlayerPosY + vBoxSize.y * 0.5f);
+	//// 플레이어와 그라운드의 충돌을 처리하기 위한 선분 (플레이어 윗변 Y부터 플레이어 size y*1.5까지)
+	//Vector2 vVerticalLineStart = vBoxPos;
+	//Vector2 vVerticalLineEnd  = Vector2(vBoxPos.x, fPlayerPosY + vBoxSize.y * 0.5f);
 
-	// VetricalLine과 Ground 선분의 교차점 
-	Vector2 vGroundPos = IntersectionPoint(&vVerticalLineStart, &vVerticalLineEnd, &vLineStart, &vLineEnd);
-
-
-	
+	//// VetricalLine과 Ground 선분의 교차점 
+	//Vector2 vGroundPos = IntersectionPoint(&vVerticalLineStart, &vVerticalLineEnd, &vLineStart, &vLineEnd);
 
 
-	if (fPlayerPosY > vGroundPos.y)
-	{
-	}
-		return true;
+	//
+
+
+	//if (fPlayerPosY > vGroundPos.y)
+	//{
+	//}
+	//	return true;
 
 
 	return false;

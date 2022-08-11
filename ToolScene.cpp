@@ -19,7 +19,7 @@ void CToolScene::Enter()
 	m_ptTemp1 = nullptr;
 	m_ptTemp2 = nullptr;
 
-	m_curDrawObj == MAPOBJ_TYPE::NONE;
+	m_curDrawObj == OBJECT_TYPE::NONE;
 }
 
 void CToolScene::Update()
@@ -125,35 +125,35 @@ void CToolScene::CreateMapObject()
 	if (CInputMgr::GetInst()->GetMouseState(MOUSE_TYPE::LBTN) == MOUSE_STATE::DOWN)
 	{
 
-		if (m_curDrawObj == MAPOBJ_TYPE::LINE) // LINE
+		if (m_curDrawObj == OBJECT_TYPE::ML_LINE) // ML_LINE
 		{
-			//cout << "MAPOBJ_TYPE : LINE\n";
+			//cout << "OBJECT_TYPE : ML_LINE\n";
 			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
-			AddMapObject(vClickPos, MAPOBJ_TYPE::LINE);
+			AddMapObject(vClickPos, OBJECT_TYPE::ML_LINE);
 		}
-		else if (m_curDrawObj == MAPOBJ_TYPE::COL_CAMERA_FOLLOWPLAYERY) // COL_CAMERA_FOLLOWPLAYERY
+		else if (m_curDrawObj == OBJECT_TYPE::MC_CAMERA_FOLLOWPLAYERY) // MC_CAMERA_FOLLOWPLAYERY
 		{
-			//cout << "MAPOBJ_TYPE : COL_CAMERA_FOLLOWPLAYERY\n";
+			//cout << "OBJECT_TYPE : MC_CAMERA_FOLLOWPLAYERY\n";
 			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
-			AddMapObject(vClickPos, MAPOBJ_TYPE::COL_CAMERA_FOLLOWPLAYERY);
+			AddMapObject(vClickPos, OBJECT_TYPE::MC_CAMERA_FOLLOWPLAYERY);
 		}
-		else if (m_curDrawObj == MAPOBJ_TYPE::COL_CAMERA_ROCK) // COL_CAMERA_ROCK
+		else if (m_curDrawObj == OBJECT_TYPE::MC_CAMERA_ROCK) // MC_CAMERA_ROCK
 		{
-			//cout << "MAPOBJ_TYPE : COL_CAMERA_ROCK\n";
+			//cout << "OBJECT_TYPE : MC_CAMERA_ROCK\n";
 			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
-			AddMapObject(vClickPos, MAPOBJ_TYPE::COL_CAMERA_ROCK);
+			AddMapObject(vClickPos, OBJECT_TYPE::MC_CAMERA_ROCK);
 		}
-		else if (m_curDrawObj == MAPOBJ_TYPE::COL_PLAYER_LEFTMOVEROCK) // COL_PLAYER_LEFTMOVEROCK
+		else if (m_curDrawObj == OBJECT_TYPE::MC_PLAYER_LEFTMOVEROCK) // MC_PLAYER_LEFTMOVEROCK
 		{
-			//cout << "MAPOBJ_TYPE : COL_PLAYER_LEFTMOVEROCK\n";
+			//cout << "OBJECT_TYPE : MC_PLAYER_LEFTMOVEROCK\n";
 			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
-			AddMapObject(vClickPos, MAPOBJ_TYPE::COL_PLAYER_LEFTMOVEROCK);
+			AddMapObject(vClickPos, OBJECT_TYPE::MC_PLAYER_LEFTMOVEROCK);
 		}
-		else if (m_curDrawObj == MAPOBJ_TYPE::COL_ENEMY_SPAWNER) // COL_ENEMY_SPAWNER
+		else if (m_curDrawObj == OBJECT_TYPE::MC_ENEMY_SPAWNER) // MC_ENEMY_SPAWNER
 		{
-			//cout << "MAPOBJ_TYPE : COL_ENEMY_SPAWNER\n";
+			//cout << "OBJECT_TYPE : MC_ENEMY_SPAWNER\n";
 			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
-			AddMapObject(vClickPos, MAPOBJ_TYPE::COL_ENEMY_SPAWNER);
+			AddMapObject(vClickPos, OBJECT_TYPE::MC_ENEMY_SPAWNER);
 		}
 	}
 	if (CInputMgr::GetInst()->GetMouseState(MOUSE_TYPE::RBTN) == MOUSE_STATE::DOWN) // Back
@@ -171,7 +171,7 @@ void CToolScene::CreateMapObject()
 	}
 }
 
-void CToolScene::AddMapObject(Vector2 vClickPos, MAPOBJ_TYPE type)
+void CToolScene::AddMapObject(Vector2 vClickPos, OBJECT_TYPE type)
 {
 	if (m_ptTemp2 == nullptr)
 	{
@@ -181,7 +181,7 @@ void CToolScene::AddMapObject(Vector2 vClickPos, MAPOBJ_TYPE type)
 
 
 			// 라인일 경우 꼭짓점 맞춰주는 센스
-			if (m_curDrawObj == MAPOBJ_TYPE::LINE)
+			if (m_curDrawObj == OBJECT_TYPE::ML_LINE)
 			{
 				float dis = 111.f;
 				float tempdis = 0.f;
@@ -197,6 +197,7 @@ void CToolScene::AddMapObject(Vector2 vClickPos, MAPOBJ_TYPE type)
 						{
 							dis = tempdis;
 							delete m_ptTemp1;
+
 							m_ptTemp1 = (*iter)->point1;
 						}
 					}
@@ -263,11 +264,11 @@ void CToolScene::SaveMapObj(const wstring& _strRelativePath)
 	{
 		if ((*iter) != nullptr)
 		{
+			fwrite(&((*iter)->Coltype), sizeof(UINT), 1, pFile);
 			fwrite(&((*iter)->point1->x), sizeof(LONG), 1, pFile);
 			fwrite(&((*iter)->point1->y), sizeof(LONG), 1, pFile);
 			fwrite(&((*iter)->point2->x), sizeof(LONG), 1, pFile);
 			fwrite(&((*iter)->point2->y), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->Coltype), sizeof(UINT), 1, pFile);
 		}
 	}
 
@@ -300,15 +301,6 @@ void CToolScene::LoadMapObj(const wstring& _strRelativePath)
 		if (feof(pFile) != 0)
 			break;
 
-		cout << test << endl;
-	}
-
-
-
-
-	while (feof(pFile) == 0)
-	{
-		fread(&test, sizeof(LONG), 1, pFile);
 		cout << test << endl;
 	}
 
@@ -377,11 +369,11 @@ void CToolScene::RenderText(HDC hdc)
 	TextOut(hdc, 0, 165, tch13, _tcslen(tch13));
 
 	TCHAR tch10[256] = {};
-	swprintf_s(tch10, L"[RightClick]        : Back");
+	swprintf_s(tch10, L"[RightClick] : Back");
 	TextOut(hdc, 0, 180, tch10, _tcslen(tch10));
 
 	TCHAR tch11[256] = {};
-	swprintf_s(tch11, L"[S]        : Save");
+	swprintf_s(tch11, L"[S] : Save");
 	TextOut(hdc, 0, 195, tch11, _tcslen(tch11));
 
 	TCHAR tch12[256] = {};
@@ -396,7 +388,7 @@ void CToolScene::RenderMapObj(HDC hdc)
 {
 	for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
 	{
-		if ((*iter)->Coltype == UINT(MAPOBJ_TYPE::LINE))
+		if ((*iter)->Coltype == UINT(OBJECT_TYPE::ML_LINE))
 		{
 			PEN_TYPE ePen = PEN_TYPE::RED;
 
@@ -412,7 +404,25 @@ void CToolScene::RenderMapObj(HDC hdc)
 		}
 		else
 		{
-			PEN_TYPE ePen = PEN_TYPE::GREEN;
+			PEN_TYPE ePen = PEN_TYPE::NONE;
+		
+			switch ((*iter)->Coltype)
+			{
+				case UINT(OBJECT_TYPE::MC_CAMERA_FOLLOWPLAYERY):
+					ePen = PEN_TYPE::ORANGE;
+					break;
+				case UINT(OBJECT_TYPE::MC_CAMERA_ROCK):
+					ePen = PEN_TYPE::PURPLE;
+					break;
+				case UINT(OBJECT_TYPE::MC_PLAYER_LEFTMOVEROCK):
+					ePen = PEN_TYPE::BLUE;
+					break;
+				case UINT(OBJECT_TYPE::MC_ENEMY_SPAWNER):
+					ePen = PEN_TYPE::GREEN;
+					break;
+				default:
+					break;
+			}
 
 			SelectGDI pen(hdc, ePen);
 			SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
@@ -432,7 +442,7 @@ void CToolScene::RenderLiveMapObj(HDC hdc)
 	{
 		if (m_ptTemp2 == nullptr)
 		{
-			if (m_curDrawObj == MAPOBJ_TYPE::LINE)
+			if (m_curDrawObj == OBJECT_TYPE::ML_LINE)
 			{
 				PEN_TYPE ePen;
 
@@ -480,29 +490,29 @@ void CToolScene::RenderLiveMapObj(HDC hdc)
 void CToolScene::GetCurDrawObj()
 {
 
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::Q) == KEY_STATE::DOWN) // LINE
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::Q) == KEY_STATE::DOWN) // ML_LINE
 	{
-		m_curDrawObj = MAPOBJ_TYPE::LINE;
+		m_curDrawObj = OBJECT_TYPE::ML_LINE;
 	}
-	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::W) == KEY_STATE::DOWN) // COL_CAMERA_FOLLOWPLAYERY
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::W) == KEY_STATE::DOWN) // MC_CAMERA_FOLLOWPLAYERY
 	{
-		m_curDrawObj = MAPOBJ_TYPE::COL_CAMERA_FOLLOWPLAYERY;
+		m_curDrawObj = OBJECT_TYPE::MC_CAMERA_FOLLOWPLAYERY;
 	}
-	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::E) == KEY_STATE::DOWN) // COL_CAMERA_ROCK
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::E) == KEY_STATE::DOWN) // MC_CAMERA_ROCK
 	{
-		m_curDrawObj = MAPOBJ_TYPE::COL_CAMERA_ROCK;
+		m_curDrawObj = OBJECT_TYPE::MC_CAMERA_ROCK;
 	}
-	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::R) == KEY_STATE::DOWN) // COL_PLAYER_LEFTMOVEROCK
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::R) == KEY_STATE::DOWN) // MC_PLAYER_LEFTMOVEROCK
 	{
-		m_curDrawObj = MAPOBJ_TYPE::COL_PLAYER_LEFTMOVEROCK;
+		m_curDrawObj = OBJECT_TYPE::MC_PLAYER_LEFTMOVEROCK;
 	}
-	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::T) == KEY_STATE::DOWN) // COL_ENEMY_SPAWNER
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::T) == KEY_STATE::DOWN) // MC_ENEMY_SPAWNER
 	{
-		m_curDrawObj = MAPOBJ_TYPE::COL_ENEMY_SPAWNER;
+		m_curDrawObj = OBJECT_TYPE::MC_ENEMY_SPAWNER;
 	}
-	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::Y) == KEY_STATE::DOWN) // COL_ENEMY_SPAWNER
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::Y) == KEY_STATE::DOWN) // MC_ENEMY_SPAWNER
 	{
-		m_curDrawObj = MAPOBJ_TYPE::NONE;
+		m_curDrawObj = OBJECT_TYPE::NONE;
 	}
 }
 

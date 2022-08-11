@@ -67,23 +67,23 @@ void CObject::ComponentRender(HDC hdc)
 			int(vTempPos.y + int(vTempSize.y * 0.5f)));
 	}
 
-	if (IsComponent(COMPONENT_TYPE::LINECOLLIDER2D))
-	{
-		if (!m_pCollider->IsActive())
-			return;
+	//if (IsComponent(COMPONENT_TYPE::LINECOLLIDER2D))
+	//{
+	//	if (!m_pCollider->IsActive())
+	//		return;
 
-		Vector2 vStart = dynamic_cast<CLineCollider2D*>(m_pCollider)->GetStartPoint();
-		Vector2 vEnd = dynamic_cast<CLineCollider2D*>(m_pCollider)->GetEndPoint();
+	//	Vector2 vStart = dynamic_cast<CMapLineCollider2D*>(m_pCollider)->GetStartPoint();
+	//	Vector2 vEnd = dynamic_cast<CMapLineCollider2D*>(m_pCollider)->GetEndPoint();
 
-		PEN_TYPE ePen = PEN_TYPE::BLUE;
-		SelectGDI pen(hdc, ePen);
-
-
-		MoveToEx(hdc, int(vStart.x), int(vStart.y), NULL);
-		LineTo(hdc, int(vEnd.x), int(vEnd.y));
+	//	PEN_TYPE ePen = PEN_TYPE::BLUE;
+	//	SelectGDI pen(hdc, ePen);
 
 
-	}
+	//	MoveToEx(hdc, int(vStart.x), int(vStart.y), NULL);
+	//	LineTo(hdc, int(vEnd.x), int(vEnd.y));
+
+
+	//}
 }	
 
 

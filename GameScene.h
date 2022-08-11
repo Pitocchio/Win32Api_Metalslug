@@ -18,6 +18,10 @@ public: // Methods
 
 
 private:
+	// Map data File load
+	void LoadMapObj(const wstring& _strRelativePath);
+
+private:
 	vector <MAPOBJ*> m_vecMapObj;
 };
 

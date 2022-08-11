@@ -15,6 +15,16 @@ enum class SCENE_TYPE {
 // ====================== Object ======================== // 
 enum class OBJECT_TYPE {
 
+
+	NONE,
+
+	// Map Obj
+	ML_LINE,
+	MC_CAMERA_FOLLOWPLAYERY,
+	MC_CAMERA_ROCK,
+	MC_PLAYER_LEFTMOVEROCK,
+	MC_ENEMY_SPAWNER,
+
 	// CStage
 	S_LANDSCAPE,
 	S_GROUND,
@@ -198,27 +208,31 @@ enum class BRUSH_TYPE
 
 enum class PEN_TYPE
 {
+	NONE,
 	RED,
 	GREEN,
 	BLUE,
+	YELLOW,
+	ORANGE,
+	PURPLE,
 	TYPEEND_PEN
 };
 
 
 
 // Map
-
-enum class MAPOBJ_TYPE
-{
-	NONE,
-	LINE,
-	COL_CAMERA_FOLLOWPLAYERY,
-	COL_CAMERA_ROCK,
-	COL_PLAYER_LEFTMOVEROCK,
-	COL_ENEMY_SPAWNER,
-	TYPEEND_EVENT
-};
-
+//
+//enum class MAPOBJ_TYPE
+//{
+//	NONE,
+//	LINE,
+//	COL_CAMERA_FOLLOWPLAYERY,
+//	COL_CAMERA_ROCK,
+//	COL_PLAYER_LEFTMOVEROCK,
+//	COL_ENEMY_SPAWNER,
+//	TYPEEND_EVENT
+//};
+//
 
 
 /*

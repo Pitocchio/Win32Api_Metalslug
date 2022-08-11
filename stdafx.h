@@ -23,6 +23,7 @@
 #include "ResMgr.h"
 #include "LineMgr.h"
 #include "InputMgr.h"
+#include "MapObjMgr.h"
 
 // 04.Object
 #include "Object.h"
@@ -43,12 +44,16 @@
 #include "Heavymachinegun.h"
 #include "Grenade.h"
 #include "Food.h"
-#include "Mapcollider.h"
-#include "Cameracollider.h"
+#include "MapCollider.h"
 #include "CGrenadei.h"
 #include "Liquid.h"
-#include "GroundCollider.h"
 #include "Stage.h"
+#include "Stage.h"
+
+// 05. MapObj
+#include "MapLine.h"
+#include "MapCollider.h"
+
 
 // 05.Scene
 #include "Scene.h"
@@ -78,4 +83,3 @@
 
 
 
-#include "Line.h"
