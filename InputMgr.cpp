@@ -23,54 +23,63 @@ void CInputMgr::Init()
 
 void CInputMgr::Update()
 {
-	// Key
-	for (int i = 0; i < (int)KEY_TYPE::TYPEEND_KEY; ++i)
+
+	HWND hwnd;
+		
+	hwnd = GetFocus(); // 현재 이 윈도우가 포커싱 되어있는지 여부를 bool 값으로 반환
+
+	if (hwnd)
 	{
-		if (GetAsyncKeyState(m_arrKey[i]) & 0x8000)
-		{
-			if (m_vecKey[i].bPrev)
-				m_vecKey[i].state = KEY_STATE::HOLD;
-			else
-				m_vecKey[i].state = KEY_STATE::DOWN;
 
-			m_vecKey[i].bPrev = true;
+		// Key
+		for (int i = 0; i < (int)KEY_TYPE::TYPEEND_KEY; ++i)
+		{
+			if (GetAsyncKeyState(m_arrKey[i]) & 0x8000)
+			{
+				if (m_vecKey[i].bPrev)
+					m_vecKey[i].state = KEY_STATE::HOLD;
+				else
+					m_vecKey[i].state = KEY_STATE::DOWN;
+
+				m_vecKey[i].bPrev = true;
+			}
+			else
+			{
+				if (m_vecKey[i].bPrev)
+					m_vecKey[i].state = KEY_STATE::UP;
+				else
+					m_vecKey[i].state = KEY_STATE::NONE;
+
+				m_vecKey[i].bPrev = false;
+			}
 		}
-		else
+
+
+		// Mouse
+
+		GetCursorPos(&m_ptMousePos);
+		ScreenToClient(CCore::GetInst()->GetMainHwnd(), &m_ptMousePos);
+
+		for (int i = 0; i < (int)MOUSE_TYPE::TYPEEND_MOUSE; ++i)
 		{
-			if (m_vecKey[i].bPrev)
-				m_vecKey[i].state = KEY_STATE::UP;
+			if (GetAsyncKeyState(m_arrMouse[i]) & 0x8000)
+			{
+				if (m_vecMouse[i].bPrev)
+					m_vecMouse[i].state = MOUSE_STATE::HOLD;
+				else
+					m_vecMouse[i].state = MOUSE_STATE::DOWN;
+
+				m_vecMouse[i].bPrev = true;
+			}
 			else
-				m_vecKey[i].state = KEY_STATE::NONE;
+			{
+				if (m_vecMouse[i].bPrev)
+					m_vecMouse[i].state = MOUSE_STATE::UP;
+				else
+					m_vecMouse[i].state = MOUSE_STATE::NONE;
 
-			m_vecKey[i].bPrev = false;
-		}
-	}
-
-
-	// Mouse
-
-	GetCursorPos(&m_ptMousePos);
-	ScreenToClient(CCore::GetInst()->GetMainHwnd(), &m_ptMousePos);
-
-	for (int i = 0; i < (int)MOUSE_TYPE::TYPEEND_MOUSE; ++i)
-	{
-		if (GetAsyncKeyState(m_arrMouse[i]) & 0x8000)
-		{
-			if (m_vecMouse[i].bPrev)
-				m_vecMouse[i].state = MOUSE_STATE::HOLD;
-			else
-				m_vecMouse[i].state = MOUSE_STATE::DOWN;
-
-			m_vecMouse[i].bPrev = true;
-		}
-		else
-		{
-			if (m_vecMouse[i].bPrev)
-				m_vecMouse[i].state = MOUSE_STATE::UP;
-			else
-				m_vecMouse[i].state = MOUSE_STATE::NONE;
-
-			m_vecMouse[i].bPrev = false;
+				m_vecMouse[i].bPrev = false;
+			}
 		}
 	}
 }

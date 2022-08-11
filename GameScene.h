@@ -23,5 +23,8 @@ private:
 
 private:
 	vector <MAPOBJ*> m_vecMapObj;
+
+	wstring m_strFilePath;
+
 };
 

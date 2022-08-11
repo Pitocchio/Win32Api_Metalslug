@@ -29,6 +29,9 @@ void CCore::Init(HWND hWnd)
 
 void CCore::Progress()
 {
+
+	CTimeMgr::GetInst()->LimitFPS();
+
 	// Manager Update
 	CTimeMgr::GetInst()->Update();
 	CInputMgr::GetInst()->Update();
@@ -61,6 +64,7 @@ void CCore::Progress()
 
 	// Event
 	CEventMgr::GetInst()->Update();
+
 
 
 }

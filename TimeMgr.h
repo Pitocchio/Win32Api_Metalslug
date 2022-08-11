@@ -12,6 +12,10 @@ public: // Methods
 	double GetDT() const { return m_dDT; }
 	UINT GetFPS() const { return m_iFPS; }
 
+	void LimitFPS();
+
+	
+
 private: // Variables
 	/*LARGE_INTEGER m_liPeriodFrequency;
 	LARGE_INTEGER m_liCurTime;
@@ -27,6 +31,14 @@ private: // Variables
 	UINT m_iCallCount; // 초당 호출 횟수 체크
 	UINT m_iFPS; // 초당 호출 횟수
 
+
+
+
+	// ===== Frame Limit ===== // 
+
+	double m_dDT_test;
+	double m_dAT_test;
+	LARGE_INTEGER m_lltest;
 	
 
 };

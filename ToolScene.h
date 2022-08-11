@@ -47,5 +47,7 @@ private: // Variables
 	POINT* m_ptTemp2;
 
 	OBJECT_TYPE m_curDrawObj;
+
+	wstring m_strFilePath;
 };
 

@@ -26,6 +26,9 @@ void CGameScene::Update()
 
 void CGameScene::Enter()
 {
+	m_strFilePath = L"mapdata\\OriginData.bin";
+
+
 	//// 오브젝트 추가
 
 	CStage* pStage = new CStage(OBJECT_TYPE::S_GROUND);
@@ -51,8 +54,7 @@ void CGameScene::Enter()
 
 
 	// Map Object Data File Load
-	LoadMapObj(L"mapdata\\Mapdata.bin");
-
+	LoadMapObj(m_strFilePath);
 
 
 	

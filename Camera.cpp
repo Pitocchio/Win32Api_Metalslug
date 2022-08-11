@@ -71,7 +71,7 @@ void CCamera::CalDiff()
 	// 이전 Look과 현재 Look의 차이값을 보정해서 현재의 Look을 구한다
 
 	// m_fTime의 시간 동안 m_vLook을 향해 감
-	m_fAccTime += DT;
+	m_fAccTime += fDT;
 
 	if (m_fTime <= m_fAccTime)
 	{
@@ -82,7 +82,7 @@ void CCamera::CalDiff()
 		Vector2 vLookDir = m_vLookAt - m_vPreLookAt; // Set할 Look으로의 방향을 구한다
 		vLookDir.Normalize();
 
-		m_vCurLookAt = m_vPreLookAt + vLookDir * m_fSpeed * DT; // 이전 프레임 위치에서 방향만큼 500DT의 속도로 이동
+		m_vCurLookAt = m_vPreLookAt + vLookDir * m_fSpeed * fDT; // 이전 프레임 위치에서 방향만큼 500DT의 속도로 이동
 	}
 
 	Vector2 vCenter = Vector2(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);

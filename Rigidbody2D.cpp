@@ -56,7 +56,7 @@ void CRigidbody2D::CalVelocity()
 	}
 
 	m_vAccel += m_vAccelA;                           // => for 중력 구현
-	m_vVelocity += m_vAccel * DT;			         	// => 속도를 구함
+	m_vVelocity += m_vAccel * fDT;			         	// => 속도를 구함
 
 	// 2. 마찰력 적용 (마찰력에 의한 반대 방향으로의 가속도 정도로 칭한다, 이 자체가 힘은 아님)
 	if (m_vVelocity.Length() != 0.f)               
@@ -64,7 +64,7 @@ void CRigidbody2D::CalVelocity()
 		Vector2 vFricDir = -m_vVelocity;
 		vFricDir.Normalize();
 
-		Vector2 vFriction = vFricDir * m_fFricCoeff * DT;
+		Vector2 vFriction = vFricDir * m_fFricCoeff * fDT;
 		if (m_vVelocity.Length() <= vFriction.Length())
 		{
 			// 마찰 가속도가 본래 속도보다 더 큰 경우

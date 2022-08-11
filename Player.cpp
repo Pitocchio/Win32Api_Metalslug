@@ -149,8 +149,8 @@ void CPlayer::Update()
 		m_tInfo.fY -= m_fJumpSpeed;
 	}
 
-
-	for (auto& iter : CMapLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
+	//for (auto& iter : CMapLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
+	for (auto& iter : CMapObjMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
 	{
 		if (iter->IsInLine(Get_Info())) // 현재 플레이어가 라인에 위치해 있는가
 		{

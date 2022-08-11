@@ -6,12 +6,7 @@ CMapLineMgr* CMapLineMgr::m_pInst = nullptr;
 
 void CMapLineMgr::Init()
 {
-	/*m_pVecLine.emplace_back(new CMapLine({ 0, 1200 }, { 500, 1200 }));
-	m_pVecLine.emplace_back(new CMapLine({ 500, 1200 }, { 700, 1100 }));
-	m_pVecLine.emplace_back(new CMapLine({ 700, 1100 }, { 900, 900 }));
-	m_pVecLine.emplace_back(new CMapLine({ 900, 900 }, { 1200, 900 }));
-	m_pVecLine.emplace_back(new CMapLine({ 1200, 900 }, { 1400, 1200 }));
-	m_pVecLine.emplace_back(new CMapLine({ 1400, 1200 }, { 1800, 1200 }));*/
+	
 
 	m_pVecLine.emplace_back(new CMapLine({ 0, 1000 }, { 500, 1000 }));
 	m_pVecLine.emplace_back(new CMapLine({ 500, 1000 }, { 1000, 900 }));

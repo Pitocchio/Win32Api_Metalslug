@@ -19,7 +19,10 @@ void CToolScene::Enter()
 	m_ptTemp1 = nullptr;
 	m_ptTemp2 = nullptr;
 
-	m_curDrawObj == OBJECT_TYPE::NONE;
+	m_curDrawObj = OBJECT_TYPE::NONE;
+
+	m_strFilePath = L"mapdata\\OriginData.bin"; // Origin Data! 변경금지!
+
 }
 
 void CToolScene::Update()
@@ -38,10 +41,10 @@ void CToolScene::Update()
 	CreateMapObject();
 
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::S) == KEY_STATE::DOWN)
-		SaveMapObj(L"mapdata\\Mapdata.bin");
+		SaveMapObj(m_strFilePath);
 
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::A) == KEY_STATE::DOWN)
-		LoadMapObj(L"mapdata\\Mapdata.bin");
+		LoadMapObj(m_strFilePath);
 	
 }
 
@@ -64,7 +67,7 @@ void CToolScene::Exit()
 {
 	CObjectMgr::GetInst()->Release();
 
-	SaveMapObj(L"mapdata\\Mapdata.bin");
+	SaveMapObj(m_strFilePath);
 
 
 	for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
@@ -119,8 +122,8 @@ bool CToolScene::CheckSceneChange()
 
 void CToolScene::CreateMapObject()
 {
-	Vector2 vClickPos = Vector2(int(CCamera::GetInst()->GetRealPos(Vector2(m_ptMousePos.x, m_ptMousePos.y)).x),
-								int(CCamera::GetInst()->GetRealPos(Vector2(m_ptMousePos.x, m_ptMousePos.y)).y));
+	Vector2 vClickPos = Vector2(int(CCamera::GetInst()->GetRealPos(Vector2(float(m_ptMousePos.x), float(m_ptMousePos.y))).x),
+								int(CCamera::GetInst()->GetRealPos(Vector2(float(m_ptMousePos.x), float(m_ptMousePos.y))).y));
 
 	if (CInputMgr::GetInst()->GetMouseState(MOUSE_TYPE::LBTN) == MOUSE_STATE::DOWN)
 	{
@@ -183,8 +186,8 @@ void CToolScene::AddMapObject(Vector2 vClickPos, OBJECT_TYPE type)
 			// 라인일 경우 꼭짓점 맞춰주는 센스
 			if (m_curDrawObj == OBJECT_TYPE::ML_LINE)
 			{
-				float dis = 111.f;
-				float tempdis = 0.f;
+				double dis = 111.f;
+				double tempdis = 0.f;
 
 				for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
 				{
@@ -240,8 +243,8 @@ void CToolScene::PrintVector()
 	{
 		if ((*iter) != nullptr)
 		{
-			printf("POINT 1 : X %d, Y %d\nPOINT 2 : X : %d, Y : %d\n", (*iter)->point1->x, (*iter)->point1->y, (*iter)->point2->x, (*iter)->point2->y);
 			cout << "(UINT)OBJTYPE : " << (UINT)(*iter)->Coltype << endl << endl;
+			printf("POINT 1 : X %d, Y %d\nPOINT 2 : X : %d, Y : %d\n", (*iter)->point1->x, (*iter)->point1->y, (*iter)->point2->x, (*iter)->point2->y);
 		}
 	}
 	cout << "====================================\n";
@@ -318,67 +321,67 @@ void CToolScene::RenderText(HDC hdc)
 	TCHAR tch1[128] = {};
 	swprintf_s(tch1, L"FPS : %.2f ",
 		float(FPS));
-	TextOut(hdc, 0, 0, tch1, _tcslen(tch1));
+	TextOut(hdc, 0, 0, tch1, (int)_tcslen(tch1));
 
 	// Text - DT
 	TCHAR tch2[128] = {};
 	swprintf_s(tch2, L"DT : %f ", DT);
-	TextOut(hdc, 0, 15, tch2, _tcslen(tch2));
+	TextOut(hdc, 0, 15, tch2, (int)_tcslen(tch2));
 
 
 	// Text - World Cursor
 	TCHAR tch3[128] = {};
 	Vector2 temp1 = CCamera::GetInst()->GetRealPos(Vector2(m_ptMousePos.x, m_ptMousePos.y));
 	swprintf_s(tch3, L"World Cursor Pos : %d, %d ", int(temp1.x), int(temp1.y));
-	TextOut(hdc, 0, 30, tch3, _tcslen(tch3));
+	TextOut(hdc, 0, 30, tch3, (int)_tcslen(tch3));
 
 
 	// Text - Local Cursor
 	TCHAR tch4[128] = {};
 	swprintf_s(tch4, L"Local Cursor Pos : %d, %d ", m_ptMousePos.x, m_ptMousePos.y);
-	TextOut(hdc, 0, 45, tch4, _tcslen(tch4));
+	TextOut(hdc, 0, 45, tch4, (int)_tcslen(tch4));
 
 
 	// Text - Info
 	TCHAR tch45[256] = {};
 	swprintf_s(tch45, L"=============  Map Tool Control =============");
-	TextOut(hdc, 0, 75, tch45, _tcslen(tch45));
+	TextOut(hdc, 0, 75, tch45, (int)_tcslen(tch45));
 
 	TCHAR tch5[256] = {};
 	swprintf_s(tch5, L"[Q] : Line Point");
-	TextOut(hdc, 0, 90, tch5, _tcslen(tch5));
+	TextOut(hdc, 0, 90, tch5, (int)_tcslen(tch5));
 
 	TCHAR tch6[256] = {};
 	swprintf_s(tch6, L"[W] : Collider CameraFollowPlayerY");
-	TextOut(hdc, 0, 105, tch6, _tcslen(tch6));
+	TextOut(hdc, 0, 105, tch6, (int)_tcslen(tch6));
 
 	TCHAR tch7[256] = {};
 	swprintf_s(tch7, L"[E] : Collider PlayerLeftMoveLock");
-	TextOut(hdc, 0, 120, tch7, _tcslen(tch7));
+	TextOut(hdc, 0, 120, tch7, (int)_tcslen(tch7));
 
 	TCHAR tch8[256] = {};
 	swprintf_s(tch8, L"[R] : Collider CameraRock");
-	TextOut(hdc, 0, 135, tch8, _tcslen(tch8));
+	TextOut(hdc, 0, 135, tch8, (int)_tcslen(tch8));
 
 	TCHAR tch9[256] = {};
 	swprintf_s(tch9, L"[T] : Collider MonsterSpawn");
-	TextOut(hdc, 0, 150, tch9, _tcslen(tch9));
+	TextOut(hdc, 0, 150, tch9, (int)_tcslen(tch9));
 
 	TCHAR tch13[256] = {};
 	swprintf_s(tch13, L"[Y] : NONE");
-	TextOut(hdc, 0, 165, tch13, _tcslen(tch13));
+	TextOut(hdc, 0, 165, tch13, (int)_tcslen(tch13));
 
 	TCHAR tch10[256] = {};
 	swprintf_s(tch10, L"[RightClick] : Back");
-	TextOut(hdc, 0, 180, tch10, _tcslen(tch10));
+	TextOut(hdc, 0, 180, tch10, (int)_tcslen(tch10));
 
 	TCHAR tch11[256] = {};
 	swprintf_s(tch11, L"[S] : Save");
-	TextOut(hdc, 0, 195, tch11, _tcslen(tch11));
+	TextOut(hdc, 0, 195, tch11, (int)_tcslen(tch11));
 
 	TCHAR tch12[256] = {};
 	swprintf_s(tch12, L"=========================================");
-	TextOut(hdc, 0, 210, tch12, _tcslen(tch12));
+	TextOut(hdc, 0, 210, tch12, (int)_tcslen(tch12));
 
 
 
