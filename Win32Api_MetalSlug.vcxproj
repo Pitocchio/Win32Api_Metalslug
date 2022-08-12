@@ -79,6 +79,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\bin_debug\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -164,7 +166,6 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="MapCollider.h" />
     <ClInclude Include="MapLine.h" />
-    <ClInclude Include="LineMgr.h" />
     <ClInclude Include="Liquid.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MapObjMgr.h" />
@@ -218,7 +219,6 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MapCollider.cpp" />
     <ClCompile Include="MapLine.cpp" />
-    <ClCompile Include="LineMgr.cpp" />
     <ClCompile Include="Liquid.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapObjMgr.cpp" />

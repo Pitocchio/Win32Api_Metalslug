@@ -12,15 +12,11 @@ public: // Methods
 	double GetDT() const { return m_dDT; }
 	UINT GetFPS() const { return m_iFPS; }
 
-	void LimitFPS();
+	bool LimitFPS(float _frame);
 
 	
 
 private: // Variables
-	/*LARGE_INTEGER m_liPeriodFrequency;
-	LARGE_INTEGER m_liCurTime;
-	LARGE_INTEGER m_liLastTime;
-	float m_fDeltaTime;*/
 
 	LARGE_INTEGER m_llCurCount;
 	LARGE_INTEGER m_llPrevCount;
@@ -33,13 +29,11 @@ private: // Variables
 
 
 
+	// Frame
+	LARGE_INTEGER m_llCurCnt;
+	LARGE_INTEGER m_llPrevCnt;
 
-	// ===== Frame Limit ===== // 
-
-	double m_dDT_test;
-	double m_dAT_test;
-	LARGE_INTEGER m_lltest;
-	
-
+	double m_dTotalTime;
+	double m_dLimit;
 };
 

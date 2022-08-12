@@ -29,43 +29,41 @@ void CCore::Init(HWND hWnd)
 
 void CCore::Progress()
 {
+	// Limit FPS
+	if (CTimeMgr::GetInst()->LimitFPS(LIMIT_FPS))
+	{
+		// Manager Update
+		CTimeMgr::GetInst()->Update();
+		CInputMgr::GetInst()->Update();
 
-	CTimeMgr::GetInst()->LimitFPS();
-
-	// Manager Update
-	CTimeMgr::GetInst()->Update();
-	CInputMgr::GetInst()->Update();
-
-	// Scene Update
-	CSceneMgr::GetInst()->Update();
+		// Scene Update
+		CSceneMgr::GetInst()->Update();
 
 	
+		//Collision Update
+		//CCollisionMgr::GetInst()->Update();
 
-	// Collision Update
-	//CCollisionMgr::GetInst()->Update();
+		// Scene LateUpdate
+		CCamera::GetInst()->Update();
 
-	// Scene LateUpdate
-	CCamera::GetInst()->Update();
+		CSceneMgr::GetInst()->LateUpdate();
 
-	CSceneMgr::GetInst()->LateUpdate();
+		/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::UP)
+		{
+			Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));
+			CCamera::GetInst()->SetLookAt(Pos);
+		}*/
 
-	/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::UP)
-	{
-		Vector2 Pos = CCamera::GetInst()->GetRealPos(Vector2(900.f, WINDOW_HEIGHT * 0.5f));
-		CCamera::GetInst()->SetLookAt(Pos);
-	}*/
+		// Render
+		Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);
+		CSceneMgr::GetInst()->Render(m_Hbitdc);
+		//CMapLineMgr::GetInst()->Render(m_Hbitdc);
 
-	// Render
-	Rectangle(m_Hbitdc, -1, -1, m_RC.right + 1, m_RC.bottom + 1);
-	CSceneMgr::GetInst()->Render(m_Hbitdc);
-	//CMapLineMgr::GetInst()->Render(m_Hbitdc);
+		BitBlt(m_Hdc, 0, 0, m_RC.right, m_RC.bottom, m_Hbitdc, 0, 0, SRCCOPY);
 
-	BitBlt(m_Hdc, 0, 0, m_RC.right, m_RC.bottom, m_Hbitdc, 0, 0, SRCCOPY);
-
-	// Event
-	CEventMgr::GetInst()->Update();
-
-
+		// Event
+		CEventMgr::GetInst()->Update();
+	}
 
 }
 
@@ -76,19 +74,19 @@ void CCore::Release()
 	CObjectMgr::GetInst()->Release();
 	CResMgr::GetInst()->Release();
 	CCamera::GetInst()->Release();
-	CMapLineMgr::GetInst()->Release();
+	CMapObjMgr::GetInst()->Release();
 
 	// DestroyInst
 	CTimeMgr::GetInst()->DestroyInst();
 	CInputMgr::GetInst()->DestroyInst();
 	CSceneMgr::GetInst()->DestroyInst();
+	CCamera::GetInst()->DestroyInst();
 	CObjectMgr::GetInst()->DestroyInst();
 	CEventMgr::GetInst()->DestroyInst();
 	CCollisionMgr::GetInst()->DestroyInst();
 	CResMgr::GetInst()->DestroyInst();
 	CPathMgr::GetInst()->DestroyInst();
-	CCamera::GetInst()->DestroyInst();
-	CMapLineMgr::GetInst()->DestroyInst();
+	CMapObjMgr::GetInst()->DestroyInst();
 
 	// Delete GDI obj (except Hollow)
 	for (int i = 0; i < (UINT)PEN_TYPE::TYPEEND_PEN; ++i)

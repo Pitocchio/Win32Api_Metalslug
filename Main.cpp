@@ -1,6 +1,6 @@
-﻿#include "stdafx.h"
+﻿//#include <vld.h>
+#include "stdafx.h"
 #include "Win32Api_MetalSlug.h"
-
 #define MAX_LOADSTRING 100
 
 HINSTANCE hInst;                               
@@ -28,8 +28,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     //Memory leak Check!
-    //_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(298);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //_CrtSetBreakAlloc(276);
 
 
     UNREFERENCED_PARAMETER(hPrevInstance);

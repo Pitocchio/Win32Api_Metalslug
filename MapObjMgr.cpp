@@ -28,6 +28,14 @@ void CMapObjMgr::Release()
 {
 	for (auto& line : m_pVecLine)
 		delete line;
+
+	for (vector<CMapCollider*>::iterator iter = m_pVecCol.begin(); iter != m_pVecCol.end(); ++iter)
+	{
+		if ((*iter) != nullptr)
+			delete* iter;
+	}
+
+	m_pVecCol.clear();
 }
 
 void CMapObjMgr::AddMapLine(CMapLine* _Line)
@@ -37,7 +45,6 @@ void CMapObjMgr::AddMapLine(CMapLine* _Line)
 		m_pVecLine.push_back(_Line);
 		_Line->Init();
 	}
-
 }
 
 void CMapObjMgr::AddMapCol(CMapCollider* _Col)

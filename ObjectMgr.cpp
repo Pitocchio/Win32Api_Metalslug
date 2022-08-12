@@ -64,8 +64,10 @@ void CObjectMgr::Release()
 	{
 		for (list<CObject*>::iterator iter = mapiter->second.begin(); iter != mapiter->second.end(); ++iter)
 		{
-			if((*iter) != nullptr)
-				delete *iter;
+			if ((*iter) != nullptr)
+			{
+				delete* iter;
+			}
 		}
 	}
 

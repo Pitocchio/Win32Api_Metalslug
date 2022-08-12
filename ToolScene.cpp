@@ -23,6 +23,7 @@ void CToolScene::Enter()
 
 	m_strFilePath = L"mapdata\\OriginData.bin"; // Origin Data! 변경금지!
 
+	//LoadMapObj(m_strFilePath); // 기존에 저장되어있던 파일 불러온다
 }
 
 void CToolScene::Update()
@@ -42,10 +43,6 @@ void CToolScene::Update()
 
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::S) == KEY_STATE::DOWN)
 		SaveMapObj(m_strFilePath);
-
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::A) == KEY_STATE::DOWN)
-		LoadMapObj(m_strFilePath);
-	
 }
 
 
@@ -53,7 +50,6 @@ void CToolScene::Update()
 
 void CToolScene::Render(HDC hdc)
 {
-
 	CObjectMgr::GetInst()->Render(hdc);
 
 	RenderMapObj(hdc);
@@ -83,25 +79,27 @@ void CToolScene::ScrollMouse()
 {
 	Vector2 vCameraLookat = CCamera::GetInst()->GetLookAt();
 
+	float fSpeed = 300000.f;
+
 	if ((-100.f <= m_ptMousePos.x && m_ptMousePos.x <= 15.f)
 		&& (0.f <= m_ptMousePos.y && m_ptMousePos.y <= WINDOW_HEIGHT))
 	{
-		vCameraLookat.x -= 300000.f * fDT;
+		vCameraLookat.x -= fSpeed * fDT;
 	}
 	else if ((WINDOW_WIDTH + 100.f >= m_ptMousePos.x && m_ptMousePos.x  >= WINDOW_WIDTH - 15.f)
 		&& (0.f <= m_ptMousePos.y && m_ptMousePos.y <= WINDOW_HEIGHT))
 	{
-		vCameraLookat.x += 300000.f * fDT;
+		vCameraLookat.x += fSpeed * fDT;
 	}
 	else if ((-100.f <= m_ptMousePos.y && m_ptMousePos.y <= 15.f) // Up
 		&& (0.f <= m_ptMousePos.x && m_ptMousePos.x <= WINDOW_WIDTH))
 	{
-		vCameraLookat.y -= 300000.f * fDT;
+		vCameraLookat.y -= fSpeed * fDT;
 	}
 	else if ((WINDOW_HEIGHT + 100.f >= m_ptMousePos.y && m_ptMousePos.y >= WINDOW_HEIGHT - 15.f)
 		&& (0.f <= m_ptMousePos.x && m_ptMousePos.x <= WINDOW_WIDTH))
 	{
-		vCameraLookat.y += 300000.f * fDT;
+		vCameraLookat.y += fSpeed * fDT;
 	}
 
 	CCamera::GetInst()->SetLookAt(vCameraLookat);
@@ -129,36 +127,17 @@ void CToolScene::CreateMapObject()
 	{
 
 		if (m_curDrawObj == OBJECT_TYPE::ML_LINE) // ML_LINE
-		{
-			//cout << "OBJECT_TYPE : ML_LINE\n";
-			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
 			AddMapObject(vClickPos, OBJECT_TYPE::ML_LINE);
-		}
 		else if (m_curDrawObj == OBJECT_TYPE::MC_CAMERA_FOLLOWPLAYERY) // MC_CAMERA_FOLLOWPLAYERY
-		{
-			//cout << "OBJECT_TYPE : MC_CAMERA_FOLLOWPLAYERY\n";
-			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
 			AddMapObject(vClickPos, OBJECT_TYPE::MC_CAMERA_FOLLOWPLAYERY);
-		}
 		else if (m_curDrawObj == OBJECT_TYPE::MC_CAMERA_ROCK) // MC_CAMERA_ROCK
-		{
-			//cout << "OBJECT_TYPE : MC_CAMERA_ROCK\n";
-			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
 			AddMapObject(vClickPos, OBJECT_TYPE::MC_CAMERA_ROCK);
-		}
 		else if (m_curDrawObj == OBJECT_TYPE::MC_PLAYER_LEFTMOVEROCK) // MC_PLAYER_LEFTMOVEROCK
-		{
-			//cout << "OBJECT_TYPE : MC_PLAYER_LEFTMOVEROCK\n";
-			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
 			AddMapObject(vClickPos, OBJECT_TYPE::MC_PLAYER_LEFTMOVEROCK);
-		}
 		else if (m_curDrawObj == OBJECT_TYPE::MC_ENEMY_SPAWNER) // MC_ENEMY_SPAWNER
-		{
-			//cout << "OBJECT_TYPE : MC_ENEMY_SPAWNER\n";
-			//printf("Click Coordinate : %d, %d\n\n", int(vClickPos.x), int(vClickPos.y));
 			AddMapObject(vClickPos, OBJECT_TYPE::MC_ENEMY_SPAWNER);
-		}
 	}
+
 	if (CInputMgr::GetInst()->GetMouseState(MOUSE_TYPE::RBTN) == MOUSE_STATE::DOWN) // Back
 	{
 		if (!m_vecMapObj.empty())
@@ -191,17 +170,14 @@ void CToolScene::AddMapObject(Vector2 vClickPos, OBJECT_TYPE type)
 
 				for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
 				{
-					//DISTANCE((*iter)->point1.x, (*iter)->point2.x, (*iter)->point1.y, (*iter)->point2.y)
-
 					tempdis = sqrt(pow((*iter)->point1->x - m_ptTemp1->x, 2) + pow((*iter)->point1->y - m_ptTemp1->y, 2));
 					if (tempdis < 25.f)
 					{
 						if (dis > tempdis)
 						{
 							dis = tempdis;
-							delete m_ptTemp1;
 
-							m_ptTemp1 = (*iter)->point1;
+							*m_ptTemp1 = *((*iter)->point1);
 						}
 					}
 
@@ -211,8 +187,8 @@ void CToolScene::AddMapObject(Vector2 vClickPos, OBJECT_TYPE type)
 						if (dis > tempdis)
 						{
 							dis = tempdis;
-							delete m_ptTemp1;
-							m_ptTemp1 = (*iter)->point2;
+
+							*m_ptTemp1 = *((*iter)->point2);
 						}
 					}
 				}
@@ -280,6 +256,40 @@ void CToolScene::SaveMapObj(const wstring& _strRelativePath)
 	fclose(pFile);
 }
 
+//void CToolScene::LoadMapObj(const wstring& _strRelativePath)
+//{
+//	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+//	strFilePath += _strRelativePath;
+//
+//	FILE* pFile = nullptr;
+//
+//	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
+//	if (pFile == nullptr)
+//		return;
+//
+//	
+//	
+//
+//	LONG test = 0;
+//	
+//	
+//	while (feof(pFile) == 0)
+//	{
+//		fread(&test, sizeof(LONG), 1, pFile);
+//
+//		if (feof(pFile) != 0)
+//			break;
+//
+//		cout << test << endl;
+//	}
+//
+//
+//	cout << "\nFile Load Success!\n";
+//
+//	fclose(pFile);
+//}
+
+
 void CToolScene::LoadMapObj(const wstring& _strRelativePath)
 {
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
@@ -291,22 +301,32 @@ void CToolScene::LoadMapObj(const wstring& _strRelativePath)
 	if (pFile == nullptr)
 		return;
 
-	
-	
+	LONG type = 0;
+	/*POINT pt1 = {};
+	POINT pt2 = {};*/
 
-	LONG test = 0;
-	
-	
 	while (feof(pFile) == 0)
 	{
-		fread(&test, sizeof(LONG), 1, pFile);
+		POINT* pt1 = new POINT{};
+		POINT* pt2 = new POINT{};
+
+		fread(&type, sizeof(LONG), 1, pFile);
+		fread(&pt1->x, sizeof(LONG), 1, pFile);
+		fread(&pt1->y, sizeof(LONG), 1, pFile);
+		fread(&pt2->x, sizeof(LONG), 1, pFile);
+		fread(&pt2->y, sizeof(LONG), 1, pFile);
+	/*	fread(&type, sizeof(LONG), 1, pFile);
+		fread(&pt1.x, sizeof(LONG), 1, pFile);
+		fread(&pt1.y, sizeof(LONG), 1, pFile);
+		fread(&pt2.x, sizeof(LONG), 1, pFile);
+		fread(&pt2.y, sizeof(LONG), 1, pFile);*/
 
 		if (feof(pFile) != 0)
 			break;
 
-		cout << test << endl;
+		MAPOBJ* temp = new MAPOBJ{ pt1, pt2, (UINT)type };
+		m_vecMapObj.push_back(temp);
 	}
-
 
 	cout << "\nFile Load Success!\n";
 

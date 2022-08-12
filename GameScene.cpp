@@ -66,6 +66,16 @@ void CGameScene::Exit()
 	CCollisionMgr::GetInst()->ResetObjectType();
 
 	CObjectMgr::GetInst()->Release();
+
+	/*for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
+	{
+		if ((*iter) != nullptr)
+			delete* iter;
+	}
+
+	m_vecMapObj.clear();*/
+
+
 }
 
 void CGameScene::Render(HDC hdc)

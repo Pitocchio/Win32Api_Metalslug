@@ -92,6 +92,5 @@ int CMapLine::LineCheck(INFO& _tInfo)
 			}
 		}
 	}
-
 	return 0;
 }

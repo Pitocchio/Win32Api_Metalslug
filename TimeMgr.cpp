@@ -12,6 +12,10 @@ void CTimeMgr::Init()
 	m_dAcc = 0.;
 	m_iCallCount = 0;
 	m_iFPS = 0;
+
+
+	m_dTotalTime = 0.f;
+	m_dLimit = 0.016f;
 }
 
 void CTimeMgr::Update()
@@ -33,20 +37,32 @@ void CTimeMgr::Update()
 	}
 }
 
-void CTimeMgr::LimitFPS()
+bool CTimeMgr::LimitFPS(float _frame)
 {
-	m_dDT_test = 0.f;
+	//m_dTotalTime = 0.f;
+	m_dLimit = 1.f / _frame;
 
-	while (m_dDT_test < 16.f)
+	/*while (m_dTotalTime < m_dLimit)
 	{
-		QueryPerformanceCounter(&m_lltest);
-		m_dAT_test = (float)m_lltest.QuadPart / (double)m_llFrequency.QuadPart;
+		QueryPerformanceCounter(&m_llCurCnt);
+		m_dTotalTime += (double)(m_llCurCnt.QuadPart - m_llPrevCnt.QuadPart) / (double)m_llFrequency.QuadPart;
+		m_llPrevCnt = m_llCurCnt;
+	}*/
 
-		m_dDT_test += m_dAT_test;
+	QueryPerformanceCounter(&m_llCurCnt);
+	m_dTotalTime += (double)(m_llCurCnt.QuadPart - m_llPrevCnt.QuadPart) / (double)m_llFrequency.QuadPart;
+	m_llPrevCnt = m_llCurCnt;
+
+	if (m_dTotalTime >= m_dLimit) // 갱신
+	{
+		m_dTotalTime = 0.f;
+
+		return true;
 	}
-
-	//cout << m_dDT_test << endl;
-
+	else
+	{
+		return false;
+	}
 }
 
 
@@ -55,7 +71,6 @@ void CTimeMgr::LimitFPS()
 
 
 
-// 지금 내 거에서는 델타타임이 알파타임 역할 중
 
 
 /*

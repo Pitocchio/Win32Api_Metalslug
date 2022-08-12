@@ -55,6 +55,7 @@ void CCamera::Release()
 		delete m_pTargetObj;
 
 		m_pTargetObj = nullptr;
+
 	}*/
 }
 

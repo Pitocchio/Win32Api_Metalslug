@@ -73,9 +73,6 @@
     <Filter Include="소스 파일\01.Header">
       <UniqueIdentifier>{531fc382-2941-4aa7-a7d8-14793296e0ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\03.Manager\08.LineMgr">
-      <UniqueIdentifier>{5ec2185a-e858-43a5-9c2d-cbd603da2654}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\03.Manager\01.InputMgr">
       <UniqueIdentifier>{4f68e072-6ee7-472c-a7d2-fe23ff3fad4b}</UniqueIdentifier>
     </Filter>
@@ -366,9 +363,6 @@
     <ClInclude Include="Stage.h">
       <Filter>소스 파일\06.GameObject\05.Stage</Filter>
     </ClInclude>
-    <ClInclude Include="LineMgr.h">
-      <Filter>소스 파일\03.Manager\08.LineMgr</Filter>
-    </ClInclude>
     <ClInclude Include="MapLine.h">
       <Filter>소스 파일\05.MapObject\00.MapLine</Filter>
     </ClInclude>
@@ -521,9 +515,6 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>소스 파일\06.GameObject\05.Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="LineMgr.cpp">
-      <Filter>소스 파일\03.Manager\08.LineMgr</Filter>
     </ClCompile>
     <ClCompile Include="MapLine.cpp">
       <Filter>소스 파일\05.MapObject\00.MapLine</Filter>

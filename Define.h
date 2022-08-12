@@ -34,5 +34,8 @@
 #define PROJECILE_POS_Y 500
 
 
+#define LIMIT_FPS 60.f
+
+
 
 
