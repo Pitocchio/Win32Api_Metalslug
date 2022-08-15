@@ -22,5 +22,6 @@
 #include <vector>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cassert>
 #pragma comment(lib, "Msimg32.lib") // TransparentBlt
 using namespace std;

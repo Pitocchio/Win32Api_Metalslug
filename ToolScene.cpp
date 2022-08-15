@@ -23,7 +23,7 @@ void CToolScene::Enter()
 
 	m_strFilePath = L"mapdata\\OriginData.bin"; // Origin Data! 변경금지!
 
-	//LoadMapObj(m_strFilePath); // 기존에 저장되어있던 파일 불러온다
+	LoadMapObj(m_strFilePath); // 기존에 저장되어있던 파일 불러온다
 }
 
 void CToolScene::Update()
@@ -417,8 +417,8 @@ void CToolScene::RenderMapObj(HDC hdc)
 			SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
 
-			POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point1);
-			POINT tempDst = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point2);
+			POINT tempSrc = CCamera::GetInst()->GetRenderPos(*(*iter)->point1);
+			POINT tempDst = CCamera::GetInst()->GetRenderPos(*(*iter)->point2);
 
 			MoveToEx(hdc, tempSrc.x, tempSrc.y, nullptr);
 			LineTo(hdc, tempDst.x, tempDst.y);
@@ -448,8 +448,8 @@ void CToolScene::RenderMapObj(HDC hdc)
 			SelectGDI pen(hdc, ePen);
 			SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
-			POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point1);
-			POINT tempDst = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point2);
+			POINT tempSrc = CCamera::GetInst()->GetRenderPos(*(*iter)->point1);
+			POINT tempDst = CCamera::GetInst()->GetRenderPos(*(*iter)->point2);
 
 			Rectangle(hdc, tempSrc.x, tempSrc.y, tempDst.x, tempDst.y);
 		}
@@ -468,7 +468,7 @@ void CToolScene::RenderLiveMapObj(HDC hdc)
 			{
 				PEN_TYPE ePen;
 
-				POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*m_ptTemp1);
+				POINT tempSrc = CCamera::GetInst()->GetRenderPos(*m_ptTemp1);
 				POINT tempDst = CInputMgr::GetInst()->GetMousePos();
 				
 				float angle = ((float)(tempDst.y - tempSrc.y) / (float)(tempDst.x - tempSrc.x));
@@ -491,7 +491,7 @@ void CToolScene::RenderLiveMapObj(HDC hdc)
 				SelectGDI pen(hdc, ePen);
 				SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
-				POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*m_ptTemp1);
+				POINT tempSrc = CCamera::GetInst()->GetRenderPos(*m_ptTemp1);
 				POINT tempDst = CInputMgr::GetInst()->GetMousePos();
 
 				Rectangle(hdc, tempSrc.x, tempSrc.y, tempDst.x, tempDst.y);

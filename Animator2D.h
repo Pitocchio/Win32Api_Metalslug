@@ -20,21 +20,24 @@ public: // Lifecycle
 public: // Methods
 
 	// Animation
-	void CreateAnimation(CTexture*, Vector2 _vLT, Vector2 _vSliceSize, Vector2 _vStep, UINT _iFrameCount);  // 텍스쳐, LeftTop, SliceSize
-	void FindAnimation();
-	void PlayAnimation();
+	void CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, 
+						Vector2 _vSliceSize, Vector2 _vStep, float fDuration, UINT _iFrameCount);  // 텍스쳐, LeftTop, SliceSize, 간격, 애니메이션 수
+	CAnimation2D* FindAnimation(const wstring& _strName);
+	void PlayAnimation(const wstring& _strName, bool _bRepeat); // 이름, 반복재생 여부
 
 
 
 
 	// with Variables
 	void SetOwnerObj(CObject* obj);
+	CObject* GetOwnerObj() { return m_pOwnerObj; }
 
 
 private: // Variables
 	CObject*						m_pOwnerObj;
 	map<wstring, CAnimation2D*>		m_mapAni;	// 모든 애니메이션
 	CAnimation2D*					m_pCurAni;	// 현재 재생 중인 애니메이션 
+	bool							m_bRepeat;	// 반복재생 여부
 
 
 

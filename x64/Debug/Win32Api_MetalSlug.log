@@ -1,6 +1,8 @@
-﻿  ToolScene.cpp
-C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(122,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(121,33): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(352,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(352,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Win32Api_MetalSlug.vcxproj -> C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  Player.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(300,81): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(309,86): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(323,88): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(334,107): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(343,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(353,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Win32Api_MetalSlug.vcxproj -> C:\Users\chanjun\Documents\Win32Api_MetalSlug\Output\bin_debug\Win32Api_MetalSlug.exe

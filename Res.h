@@ -4,7 +4,7 @@ class CRes
 {
 public:
 	CRes();
-	~CRes();
+	virtual ~CRes();
 
 public:
 	void SetKey(const wstring& _strKey) { m_strKey = _strKey; }

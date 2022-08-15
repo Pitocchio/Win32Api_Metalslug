@@ -27,6 +27,8 @@ public: // Methods
 	virtual void Attack() override;
 
 
+
+
 private: // Variables
 	int m_iBulletCount;
 	int m_iGrenadeCount;
@@ -99,7 +101,7 @@ public:
 
 
 
-
+	INFO GetInfo() { return m_tInfo; }
 
 
 };

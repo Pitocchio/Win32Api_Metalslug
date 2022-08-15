@@ -57,20 +57,18 @@ void CPlayer::Init()
 
 
 
-
 	// temp (텍스처 로딩)
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp"); // 플레이어 원본 
+	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp"); // 플레이어 원본 
 
 
 
 	// Animator
-	//m_pAnimator->SetOwnerObj(this);
-	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoAll.bmp"); // 애니메이션 테스트 (애니메이션 파일 불러옴)
-	//GetAnimator()->CreateAnimation(m_pTex, Vector2(0.f, 0.f), Vector2(35.5f, 43.f), Vector2(35.5f, 0.f), 14); //
-
-		//(35.5) X 43
-
-
+	m_pAnimator->SetOwnerObj(this);
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoAniSample.bmp"); // 애니메이션 테스트 (애니메이션 파일 불러옴)
+	GetAnimator()->CreateAnimation(L"WALK_DOWN", m_pTex, Vector2(0.f, 0.f), Vector2(35.5f, 43.f), Vector2(35.5f, 0.f), 0.1f, 14); 
+	GetAnimator()->PlayAnimation(L"WALK_DOWN", true);
+	//GetAnimator()->FindAnimation(L"WALK_DOWN")
+	
 
 
 
@@ -185,6 +183,8 @@ void CPlayer::Update()
 	}
 
 
+	GetAnimator()->Update();
+
 	//Move();
 
 	//Update_state();
@@ -255,62 +255,28 @@ void CPlayer::Render(HDC hdc)
 {
 	UpdateRect();
 
-	//float diffX = CCamera::GetInst()->GetDiff().x;
-	//float diffY = CCamera::GetInst()->GetDiff().y;
-	//Rectangle(hdc, m_tRect.left - diffX, m_tRect.top - diffY, m_tRect.right - diffX, m_tRect.bottom - diffY);
-
-	//CMapLineMgr::GetInst()->Render(hdc);
 
 
-	// Temp
-	int iWidth = (int)m_pTex->Width();
+
+	// None Animation
+	int iWidth = (int)m_pTex->Width() - 500;
 	int iHeight = (int)m_pTex->Height();
 
-	Vector2 vPos = m_pTransform->GetPos();
 	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(Vector2(m_tInfo.fX, m_tInfo.fY));
 
-	TransparentBlt(hdc,
-		int(vRenderPos.x - (float)(iWidth * 0.5f)),
-		int(vRenderPos.y - (float)(iHeight * 0.5f)),
-		iWidth, iHeight,
-		m_pTex->GetDC(),
-		0, 0, iWidth, iHeight,
-		RGB(255, 255, 255));
-
-
-
-	/*StretchBlt(hdc,
-		0, 0,
-		6429 * 3, 999 * 3,
-		hdc,
-		0, 0,
-		6429, 999,
-		SRCCOPY);*/
-
-
-	//Vector2 vSize = m_pTransform->GetSize();	
-	//BitBlt(hdc,
-	//	int(vPos.x - (float)(iWidth * 0.5f)),
-	//	int(vPos.y - (float)(iHeight * 0.5f)),
-	//	iWidth,
-	//	iHeight,
+	//TransparentBlt(hdc,
+	//	int(vRenderPos.x - (float)(iWidth * 0.5f)),
+	//	int(vRenderPos.y - (float)(iHeight * 0.5f)),
+	//	iWidth, iHeight,
 	//	m_pTex->GetDC(),
-	//	0, 0, SRCCOPY);
+	//	0, 0, iWidth, iHeight,
+	//	RGB(255, 255, 255));
 
 
 
-	// Point Collider
-	//Vector2 Temp = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
-	//PEN_TYPE ePen = PEN_TYPE::RED;
 
-	//SelectGDI pen(hdc, ePen);
-	//SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW); // 임시객체(지역변수)기 때문에 나갈때 자동으로 소멸자 호출, 그때 다시 셀렉
-
-	//Rectangle(hdc, int(Temp.x - 5),
-	//	int(Temp.y - 5),
-	//	int(Temp.x + 5),
-	//	int(Temp.y + 5));
-
+	// Apply Animation
+	m_pAnimator->Render(hdc);
 
 
 

@@ -21,7 +21,7 @@ void CStage::Init()
 {
 	CObject::Init();
 
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\Map.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\MapMax.bmp");
 
 	// Component - Transform
 	m_pTransform->SetOwnerObj(this);
@@ -63,13 +63,13 @@ void CStage::Render(HDC hdc)
 		0, 0, iWidth, iHeight,
 		RGB(255, 255, 0));
 
-	StretchBlt(hdc,
+	/*StretchBlt(hdc,
 		0, 0,
 		int(iWidth * 3), int(iHeight * 3),
 		hdc,
 		0, 0,
 		iWidth, iHeight,
-		SRCCOPY);
+		SRCCOPY);*/
 }
 
 

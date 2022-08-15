@@ -6,7 +6,7 @@ class CTexture : public CRes
 
 public:
 	CTexture();
-	~CTexture();
+	virtual ~CTexture();
 
 public:
 	void Load(const wstring& _strFilePath);
