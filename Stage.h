@@ -15,6 +15,8 @@ public:
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hdc) override;
 
+
+
 private:
 	CTexture* m_pTex;
 

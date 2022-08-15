@@ -82,6 +82,7 @@ void CGameScene::Render(HDC hdc)
 {
 	CObjectMgr::GetInst()->Render(hdc);
 	//CMapLineMgr::GetInst()->Render(hdc);
+
 	CMapObjMgr::GetInst()->Render(hdc);
 }
 

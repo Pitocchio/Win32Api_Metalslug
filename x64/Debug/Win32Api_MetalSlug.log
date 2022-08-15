@@ -1,2 +1,6 @@
-﻿  Camera.cpp
-  Win32Api_MetalSlug.vcxproj -> D:\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  ToolScene.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(122,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(121,33): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(352,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\ToolScene.cpp(352,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Win32Api_MetalSlug.vcxproj -> C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe

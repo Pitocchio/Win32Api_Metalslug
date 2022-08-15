@@ -3,6 +3,7 @@
 CObject::CObject()
 	:m_pTransform(nullptr)
 	,m_pCollider(nullptr)
+	,m_pAnimator(nullptr)
 {
 }
 
@@ -21,6 +22,10 @@ void CObject::Init()
 {
 	m_pTransform = new CTransform2D();
 	AddComponent(COMPONENT_TYPE::TRANSFORM2D, m_pTransform);
+
+	m_pAnimator = new CAnimator2D();
+	AddComponent(COMPONENT_TYPE::ANIMATOR2D, m_pAnimator);
+
 
 	
 }
@@ -66,6 +71,16 @@ void CObject::ComponentRender(HDC hdc)
 			int(vTempPos.x + int(vTempSize.x * 0.5f)),
 			int(vTempPos.y + int(vTempSize.y * 0.5f)));
 	}
+
+
+	if (IsComponent(COMPONENT_TYPE::ANIMATOR2D))
+	{
+		if (!m_pCollider->IsActive())
+			return;
+
+		m_pAnimator->Render(hdc);
+	}
+
 
 	//if (IsComponent(COMPONENT_TYPE::LINECOLLIDER2D))
 	//{

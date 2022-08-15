@@ -1,0 +1,46 @@
+#pragma once
+#include "Component.h"
+
+// Animator은 컴포넌트로서 Animation을 보유하고 관리하며, 오브젝트의 상황에 따라 알맞은 애니메이션을 재생
+
+class CAnimation2D;
+class CTexture;
+
+class CAnimator2D : public CComponent
+{
+public: CAnimator2D();
+	  ~CAnimator2D();
+
+public: // Lifecycle
+	virtual void Init() override;
+	virtual void Update() override; // Animator Update() -> Current Animation Update()
+	virtual void LateUpdate() override;
+	virtual void Render(HDC hdc) override;
+
+public: // Methods
+
+	// Animation
+	void CreateAnimation(CTexture*, Vector2 _vLT, Vector2 _vSliceSize, Vector2 _vStep, UINT _iFrameCount);  // 텍스쳐, LeftTop, SliceSize
+	void FindAnimation();
+	void PlayAnimation();
+
+
+
+
+	// with Variables
+	void SetOwnerObj(CObject* obj);
+
+
+private: // Variables
+	CObject*						m_pOwnerObj;
+	map<wstring, CAnimation2D*>		m_mapAni;	// 모든 애니메이션
+	CAnimation2D*					m_pCurAni;	// 현재 재생 중인 애니메이션 
+
+
+
+	// 497(35.5) X 43
+	// 가로, 세로
+
+
+};
+

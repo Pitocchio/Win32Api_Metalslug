@@ -39,3 +39,7 @@
 
 
 
+#define MOUSE_SPEED 30000.f
+
+
+

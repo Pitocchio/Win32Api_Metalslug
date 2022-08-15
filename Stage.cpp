@@ -21,7 +21,7 @@ void CStage::Init()
 {
 	CObject::Init();
 
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\MapMax.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"MapTex", L"texture\\Map.bmp");
 
 	// Component - Transform
 	m_pTransform->SetOwnerObj(this);
@@ -50,12 +50,10 @@ void CStage::LateUpdate()
 
 void CStage::Render(HDC hdc)
 {
-	// Temp
 	int iWidth = (int)m_pTex->Width();
 	int iHeight = (int)m_pTex->Height();
 
-	Vector2 vPos = m_pTransform->GetPos();
-	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(vPos);
+	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_pTransform->GetPos());
 
 	TransparentBlt(hdc,
 		int(vRenderPos.x - (float)(iWidth * 0.5f)),
@@ -65,14 +63,13 @@ void CStage::Render(HDC hdc)
 		0, 0, iWidth, iHeight,
 		RGB(255, 255, 0));
 
-
-	//TransparentBlt(hdc,
-	//	int(vRenderPos.x * 0.8f - (float)(iWidth * 0.5f)),
-	//	int(vRenderPos.y * 0.8f - (float)(iHeight * 0.5f)),
-	//	iWidth, iHeight,
-	//	m_pTex->GetDC(),
-	//	0, 0, iWidth, iHeight,
-	//	RGB(255, 0, 255));
+	StretchBlt(hdc,
+		0, 0,
+		int(iWidth * 3), int(iHeight * 3),
+		hdc,
+		0, 0,
+		iWidth, iHeight,
+		SRCCOPY);
 }
 
 

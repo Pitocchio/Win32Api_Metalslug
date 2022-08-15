@@ -143,6 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation2D.h" />
+    <ClInclude Include="Animator2D.h" />
     <ClInclude Include="Attackobj.h" />
     <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="Bullet.h" />
@@ -199,6 +201,8 @@
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation2D.cpp" />
+    <ClCompile Include="Animator2D.cpp" />
     <ClCompile Include="Attackobj.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
     <ClCompile Include="Bullet.cpp" />

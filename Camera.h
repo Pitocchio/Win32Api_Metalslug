@@ -21,6 +21,9 @@ public: // Methods
 	Vector2 GetRealPos(Vector2 RenderPos) { return RenderPos + m_vDiff; }
 	Vector2 GetDiff() { return m_vDiff; }
 
+	POINT GetRenderPos_Test(POINT pos) { return POINT({ LONG(pos.x - (m_vDiff.x * 3)), LONG(pos.y - (m_vDiff.y * 3)) }); }
+
+
 private: // Methods 
 	void CalDiff(); // 해상도 중심 위치와 카메라 LookAt 좌표간의 차이 값 계산
 	

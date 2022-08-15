@@ -4,6 +4,7 @@ class CComponent;
 class CTransform2D;
 class CBoxCollider2D;
 class CCollider2D;
+class CAnimator2D;
 
 class CObject
 {
@@ -42,6 +43,13 @@ public: // Methods
 
 	OBJECT_STATE GetObjCurState() { return m_eCurState; }
 
+
+
+
+	//Animator
+	CAnimator2D* GetAnimator() { return m_pAnimator; }
+
+
 protected: // Variables
 	map<COMPONENT_TYPE, CComponent*> m_mapComponent;
 	OBJECT_TYPE m_ObjectType;
@@ -55,6 +63,8 @@ protected: // Variables
 
 	CTransform2D* m_pTransform;
 	CCollider2D* m_pCollider;
+	CAnimator2D* m_pAnimator;
+	
 	
 	
 

@@ -50,13 +50,13 @@ void CToolScene::Update()
 
 void CToolScene::Render(HDC hdc)
 {
-	CObjectMgr::GetInst()->Render(hdc);
+	CObjectMgr::GetInst()->Render(hdc); // 일반 오브젝트 (스테이지)
 
-	RenderMapObj(hdc);
+	RenderLiveMapObj(hdc); // 지금 그리고 있는 맵 오브젝트(라인, 콜라이더 박스)
 
-	RenderLiveMapObj(hdc);
+	RenderMapObj(hdc); // 현재 벡터에 저장된 맵 오브젝트(라인, 콜라이더 박스)
 
-	RenderText(hdc);
+	RenderText(hdc); // 툴 관련 텍스트 
 }
 
 void CToolScene::Exit()
@@ -64,7 +64,6 @@ void CToolScene::Exit()
 	CObjectMgr::GetInst()->Release();
 
 	SaveMapObj(m_strFilePath);
-
 
 	for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
 	{
@@ -79,27 +78,26 @@ void CToolScene::ScrollMouse()
 {
 	Vector2 vCameraLookat = CCamera::GetInst()->GetLookAt();
 
-	float fSpeed = 300000.f;
 
 	if ((-100.f <= m_ptMousePos.x && m_ptMousePos.x <= 15.f)
 		&& (0.f <= m_ptMousePos.y && m_ptMousePos.y <= WINDOW_HEIGHT))
 	{
-		vCameraLookat.x -= fSpeed * fDT;
+		vCameraLookat.x -= MOUSE_SPEED * fDT;
 	}
 	else if ((WINDOW_WIDTH + 100.f >= m_ptMousePos.x && m_ptMousePos.x  >= WINDOW_WIDTH - 15.f)
 		&& (0.f <= m_ptMousePos.y && m_ptMousePos.y <= WINDOW_HEIGHT))
 	{
-		vCameraLookat.x += fSpeed * fDT;
+		vCameraLookat.x += MOUSE_SPEED * fDT;
 	}
 	else if ((-100.f <= m_ptMousePos.y && m_ptMousePos.y <= 15.f) // Up
 		&& (0.f <= m_ptMousePos.x && m_ptMousePos.x <= WINDOW_WIDTH))
 	{
-		vCameraLookat.y -= fSpeed * fDT;
+		vCameraLookat.y -= MOUSE_SPEED * fDT;
 	}
 	else if ((WINDOW_HEIGHT + 100.f >= m_ptMousePos.y && m_ptMousePos.y >= WINDOW_HEIGHT - 15.f)
 		&& (0.f <= m_ptMousePos.x && m_ptMousePos.x <= WINDOW_WIDTH))
 	{
-		vCameraLookat.y += fSpeed * fDT;
+		vCameraLookat.y += MOUSE_SPEED * fDT;
 	}
 
 	CCamera::GetInst()->SetLookAt(vCameraLookat);
@@ -219,8 +217,8 @@ void CToolScene::PrintVector()
 	{
 		if ((*iter) != nullptr)
 		{
-			cout << "(UINT)OBJTYPE : " << (UINT)(*iter)->Coltype << endl << endl;
-			printf("POINT 1 : X %d, Y %d\nPOINT 2 : X : %d, Y : %d\n", (*iter)->point1->x, (*iter)->point1->y, (*iter)->point2->x, (*iter)->point2->y);
+			cout << "(UINT)OBJTYPE : " << (UINT)(*iter)->Coltype << endl;
+			printf("POINT 1 : X : %d, Y : %d\nPOINT 2 : X : %d, Y : %d\n\n", (*iter)->point1->x, (*iter)->point1->y, (*iter)->point2->x, (*iter)->point2->y);
 		}
 	}
 	cout << "====================================\n";
@@ -419,8 +417,8 @@ void CToolScene::RenderMapObj(HDC hdc)
 			SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
 
-			POINT tempSrc = CCamera::GetInst()->GetRenderPos(*(*iter)->point1);
-			POINT tempDst = CCamera::GetInst()->GetRenderPos(*(*iter)->point2);
+			POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point1);
+			POINT tempDst = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point2);
 
 			MoveToEx(hdc, tempSrc.x, tempSrc.y, nullptr);
 			LineTo(hdc, tempDst.x, tempDst.y);
@@ -450,12 +448,13 @@ void CToolScene::RenderMapObj(HDC hdc)
 			SelectGDI pen(hdc, ePen);
 			SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
-			POINT tempSrc = CCamera::GetInst()->GetRenderPos(*(*iter)->point1);
-			POINT tempDst = CCamera::GetInst()->GetRenderPos(*(*iter)->point2);
+			POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point1);
+			POINT tempDst = CCamera::GetInst()->GetRenderPos_Test(*(*iter)->point2);
 
 			Rectangle(hdc, tempSrc.x, tempSrc.y, tempDst.x, tempDst.y);
 		}
 	}
+
 }
 
 void CToolScene::RenderLiveMapObj(HDC hdc)
@@ -469,28 +468,21 @@ void CToolScene::RenderLiveMapObj(HDC hdc)
 			{
 				PEN_TYPE ePen;
 
-				POINT tempSrc = CCamera::GetInst()->GetRenderPos(*m_ptTemp1);
+				POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*m_ptTemp1);
 				POINT tempDst = CInputMgr::GetInst()->GetMousePos();
 				
 				float angle = ((float)(tempDst.y - tempSrc.y) / (float)(tempDst.x - tempSrc.x));
-
 
 				if (angle == 0.f)
 					ePen = PEN_TYPE::GREEN;
 				else
 					ePen = PEN_TYPE::RED;
 
-
 				SelectGDI pen(hdc, ePen);
 				SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
-
 				MoveToEx(hdc, tempSrc.x, tempSrc.y, nullptr);
 				LineTo(hdc, tempDst.x, tempDst.y);
-
-
-			
-
 			}
 			else
 			{
@@ -499,15 +491,13 @@ void CToolScene::RenderLiveMapObj(HDC hdc)
 				SelectGDI pen(hdc, ePen);
 				SelectGDI brush(hdc, BRUSH_TYPE::HOLLOW);
 
-				POINT tempSrc = CCamera::GetInst()->GetRenderPos(*m_ptTemp1);
+				POINT tempSrc = CCamera::GetInst()->GetRenderPos_Test(*m_ptTemp1);
 				POINT tempDst = CInputMgr::GetInst()->GetMousePos();
 
 				Rectangle(hdc, tempSrc.x, tempSrc.y, tempDst.x, tempDst.y);
 			}
 		}
 	}
-
-
 }
 
 void CToolScene::GetCurDrawObj()

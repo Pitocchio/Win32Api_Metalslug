@@ -43,9 +43,6 @@
     <Filter Include="소스 파일\07.Component\04.Raycast2D">
       <UniqueIdentifier>{13a265bd-e664-4d65-a38d-9e209d8edee9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\07.Component\05.Animator">
-      <UniqueIdentifier>{393466f9-3276-4950-a3fd-1e2ef290f620}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\07.Component\02.Collider2D\00.Collider2D">
       <UniqueIdentifier>{82bd6f71-be7f-48ef-91de-4171a87ae656}</UniqueIdentifier>
     </Filter>
@@ -211,6 +208,12 @@
     <Filter Include="소스 파일\10.Camera">
       <UniqueIdentifier>{bb6f9c83-cdcc-42b2-9596-c287885985fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\07.Component\05.Animator2D">
+      <UniqueIdentifier>{393466f9-3276-4950-a3fd-1e2ef290f620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07.Component\05.Animator2D\Animaton2D">
+      <UniqueIdentifier>{a6274651-0d67-45cd-9607-ac2ae9aaffd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -375,6 +378,12 @@
     <ClInclude Include="MapCollider.h">
       <Filter>소스 파일\05.MapObject\01.MapCollider</Filter>
     </ClInclude>
+    <ClInclude Include="Animator2D.h">
+      <Filter>소스 파일\07.Component\05.Animator2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D.h">
+      <Filter>소스 파일\07.Component\05.Animator2D\Animaton2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Win32Api_MetalSlug.rc">
@@ -527,6 +536,12 @@
     </ClCompile>
     <ClCompile Include="MapCollider.cpp">
       <Filter>소스 파일\05.MapObject\01.MapCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator2D.cpp">
+      <Filter>소스 파일\07.Component\05.Animator2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D.cpp">
+      <Filter>소스 파일\07.Component\05.Animator2D\Animaton2D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

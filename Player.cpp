@@ -50,8 +50,32 @@ void CPlayer::Init()
 	m_iGrenadeCount = 10;
 
 
+
+
+	// =========================================================== //
+
+
+
+
+
 	// temp (텍스처 로딩)
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoMax.bmp");
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp"); // 플레이어 원본 
+
+
+
+	// Animator
+	//m_pAnimator->SetOwnerObj(this);
+	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoAll.bmp"); // 애니메이션 테스트 (애니메이션 파일 불러옴)
+	//GetAnimator()->CreateAnimation(m_pTex, Vector2(0.f, 0.f), Vector2(35.5f, 43.f), Vector2(35.5f, 0.f), 14); //
+
+		//(35.5) X 43
+
+
+
+
+
+
+	// =========================================================== //
 
 	CCamera::GetInst()->SetTargetObj(this);
 
@@ -254,6 +278,16 @@ void CPlayer::Render(HDC hdc)
 		RGB(255, 255, 255));
 
 
+
+	/*StretchBlt(hdc,
+		0, 0,
+		6429 * 3, 999 * 3,
+		hdc,
+		0, 0,
+		6429, 999,
+		SRCCOPY);*/
+
+
 	//Vector2 vSize = m_pTransform->GetSize();	
 	//BitBlt(hdc,
 	//	int(vPos.x - (float)(iWidth * 0.5f)),
@@ -262,7 +296,6 @@ void CPlayer::Render(HDC hdc)
 	//	iHeight,
 	//	m_pTex->GetDC(),
 	//	0, 0, SRCCOPY);
-
 
 
 

@@ -74,7 +74,8 @@
 #include "BoxCollider2D.h"
 #include "Rigidbody2D.h"
 #include "LineCollider2D.h"
-
+#include "Animator2D.h"
+#include "Animation2D.h"
 
 
 // 08.Module
