@@ -5,18 +5,18 @@ CSceneMgr* CSceneMgr::m_pInst = nullptr;
 
 void CSceneMgr::Init()
 {
-	m_arrScene[(UINT)SCENE_TYPE::TOOL] = new CToolScene;
-	m_arrScene[(UINT)SCENE_TYPE::TOOL]->SetSceneType(SCENE_TYPE::TOOL);
+	m_arrScene[(UINT)SCENE_TYPE::ANITOOL] = new CAniToolScene;
+	m_arrScene[(UINT)SCENE_TYPE::ANITOOL]->SetSceneType(SCENE_TYPE::ANITOOL);
 
-	m_arrScene[(UINT)SCENE_TYPE::GAME] = new CGameScene; // 모든 Scene 생성
+	m_arrScene[(UINT)SCENE_TYPE::MAPTOOL] = new CMapToolScene;
+	m_arrScene[(UINT)SCENE_TYPE::MAPTOOL]->SetSceneType(SCENE_TYPE::MAPTOOL);
+
+	m_arrScene[(UINT)SCENE_TYPE::GAME] = new CGameScene; 
 	m_arrScene[(UINT)SCENE_TYPE::GAME]->SetSceneType(SCENE_TYPE::GAME);
 
 
-	/*m_arrScene[(UINT)SCENE_TYPE::CHARACTER] = new CCharacterScene;
-	m_arrScene[(UINT)SCENE_TYPE::GAME] = new CGameScene;
-	m_arrScene[(UINT)SCENE_TYPE::OUTTRO] = new COuttroScene;*/
-
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::TOOL]; // 현재 Scene 지정
+	// 현재 Scene 지정
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::ANITOOL]; 
 	m_pCurScene->Enter();
 }
 

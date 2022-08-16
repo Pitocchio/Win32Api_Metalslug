@@ -123,6 +123,17 @@ void CPlayer::Init()
 	m_fJumpSpeed = 10.f;
 	fJumpStart = 0.f;
 	m_bJump = false;
+
+
+
+
+	// ============= Animation ============== //
+
+
+
+
+
+
 }
 
 void CPlayer::LateInit()

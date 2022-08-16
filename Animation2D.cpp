@@ -29,7 +29,6 @@ void CAnimation2D::Update()
 	{
 		++m_iCurFrame;
 
-
 		if (m_vecFrame.size() <= m_iCurFrame)
 		{
 			m_iCurFrame = -1;

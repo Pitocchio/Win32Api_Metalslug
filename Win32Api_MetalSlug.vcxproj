@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Animator2D.h" />
+    <ClInclude Include="AniToolScene.h" />
     <ClInclude Include="Attackobj.h" />
     <ClInclude Include="BoxCollider2D.h" />
     <ClInclude Include="Camera.h" />
@@ -180,13 +181,14 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
-    <ClInclude Include="ToolScene.h" />
+    <ClInclude Include="MapToolScene.h" />
     <ClInclude Include="Transform2D.h" />
     <ClInclude Include="Win32Api_MetalSlug.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Animator2D.cpp" />
+    <ClCompile Include="AniToolScene.cpp" />
     <ClCompile Include="Attackobj.cpp" />
     <ClCompile Include="BoxCollider2D.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -215,7 +217,7 @@
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
-    <ClCompile Include="ToolScene.cpp" />
+    <ClCompile Include="MapToolScene.cpp" />
     <ClCompile Include="Transform2D.cpp" />
   </ItemGroup>
   <ItemGroup>

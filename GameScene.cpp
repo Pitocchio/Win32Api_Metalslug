@@ -19,7 +19,7 @@ void CGameScene::Update()
 		{
 			//CSceneMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
 
-			CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::TOOL);
+			CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::MAPTOOL);
 		}
 	}
 }

@@ -115,3 +115,5 @@ typedef struct MyAniFrame
 	float fDuration; // 해당 프레임에 머무를 시간 
 
 }AniFrame;
+
+

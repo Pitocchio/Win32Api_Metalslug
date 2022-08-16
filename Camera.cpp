@@ -9,7 +9,7 @@ void CCamera::Init()
 
 	m_fTime = 2.f;
 
-	m_vLookAt = Vector2(PLAYER_POS_X, PLAYER_POS_Y);
+	m_vLookAt = Vector2(0.f, 0.f);
 	m_vPreLookAt = m_vLookAt;
 	m_vCurLookAt = m_vLookAt;
 	m_fSpeed = 0;

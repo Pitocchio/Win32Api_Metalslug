@@ -1,8 +1,88 @@
-﻿  Player.cpp
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(300,81): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(309,86): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(323,88): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(334,107): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(343,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(353,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Win32Api_MetalSlug.vcxproj -> C:\Users\chanjun\Documents\Win32Api_MetalSlug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  AniToolScene.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\AniToolScene.cpp(92,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\AniToolScene.cpp(92,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Animation2D.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.cpp(90,31): warning C4244: '인수': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Animator2D.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Attackobj.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BoxCollider2D.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Camera.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Collider2D.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CollisionMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Component.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Core.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  EventMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\EventMgr.cpp(14,89): warning C4834: 'nodiscard' 특성이 포함된 함수의 반환 값을 버리는 중
+  GameScene.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  InputMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Main.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MapCollider.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MapLine.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\MapLine.cpp(84,15): warning C4244: '초기화 중': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MapObjMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MapToolScene.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\MapToolScene.cpp(122,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\MapToolScene.cpp(121,33): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\MapToolScene.cpp(352,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\MapToolScene.cpp(352,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Moveobj.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Object.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  ObjectMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  PathMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\PathMgr.cpp(11,36): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Player.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Player.cpp(311,81): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Player.cpp(320,86): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Player.cpp(334,88): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Player.cpp(345,107): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Player.cpp(354,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Player.cpp(364,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Res.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ResMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Rigidbody2D.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Scene.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SceneMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  SelectGDI.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Stage.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Stage.cpp(28,63): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Stage.cpp(28,34): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Texture.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  TimeMgr.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Transform2D.cpp
+C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Animation2D.h(27,20): warning C4267: 'return': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  Win32Api_MetalSlug.vcxproj -> C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe

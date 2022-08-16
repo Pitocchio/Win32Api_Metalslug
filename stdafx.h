@@ -43,7 +43,8 @@
 
 // 05.Scene
 #include "Scene.h"
-#include "ToolScene.h"
+#include "MapToolScene.h"
+#include "AniToolScene.h"
 #include "GameScene.h"
 
 // 06. Res

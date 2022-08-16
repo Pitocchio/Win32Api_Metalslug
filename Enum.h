@@ -3,7 +3,8 @@
 
 // ====================== Scene ======================== // 
 enum class SCENE_TYPE {
-	TOOL,
+	MAPTOOL,
+	ANITOOL,
 	INTRO,
 	CHARACTER,
 	GAME,
@@ -220,6 +221,9 @@ enum class PEN_TYPE
 
 
 
+
+
+
 // Map
 //
 //enum class MAPOBJ_TYPE
@@ -244,3 +248,5 @@ Collider CameraRock
 
 Collider MonsterSpawn
 */
+
+
