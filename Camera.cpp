@@ -13,39 +13,29 @@ void CCamera::Init()
 	m_vPreLookAt = m_vLookAt;
 	m_vCurLookAt = m_vLookAt;
 	m_fSpeed = 0;
-
+	bBlock = false;
 }
 
 void CCamera::Update()
 {
-	if (m_pTargetObj)
+	if (!bBlock)
 	{
-		if (m_pTargetObj->GetObjCurState() == OBJECT_STATE::DEAD)
+
+		if (m_pTargetObj)
 		{
-			m_pTargetObj = nullptr;
+			if (m_pTargetObj->GetObjCurState() == OBJECT_STATE::DEAD)
+			{
+				m_pTargetObj = nullptr;
+			}
+			else
+			{
+				// m_vLookAt = m_pTargetObj->GetPos();
+				m_vLookAt = dynamic_cast<CPlayer*>(m_pTargetObj)->GetPOS_Test();
+			}
 		}
-		else
-		{
-			// m_vLookAt = m_pTargetObj->GetPos();
-			m_vLookAt = dynamic_cast<CPlayer*>(m_pTargetObj)->GetPOS_Test();
-		}
+
+		CalDiff();
 	}
-	
-
-
-	// Camera Move by Key
-	
-	/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::HOLD)
-		m_vLookAt.y -= 500.f * DT;
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::HOLD)
-		m_vLookAt.y += 500.f * DT;
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::HOLD)
-		m_vLookAt.x -= 500.f * DT;
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::HOLD)
-		m_vLookAt.x += 500.f * DT;*/
-	
-
-	CalDiff();
 }
 
 void CCamera::Release()

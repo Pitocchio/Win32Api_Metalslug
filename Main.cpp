@@ -1,6 +1,6 @@
 ﻿//#include <vld.h>
+//#include "Win32Api_MetalSlug.h"
 #include "stdafx.h"
-#include "Win32Api_MetalSlug.h"
 #define MAX_LOADSTRING 100
 
 HINSTANCE hInst;                               
@@ -14,6 +14,8 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 //for Core
 HWND g_hWnd;
+
+
 
 // Console Print
 #ifdef UNICODE
@@ -84,7 +86,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WIN32APIMETALSLUG));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = NULL;
+    wcex.lpszMenuName   = MAKEINTRESOURCE(IDC_WIN32APIMETALSLUG); // NULL : 메뉴바 없음 MAKEINTRESOURCE(IDC_WIN32APIMETALSLUG) : 메뉴바 있음
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -95,8 +97,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; 
 
+ 
    HWND hWnd = CreateWindowW(szWindowClass, L"MetalSlug3", WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    // for Core
    g_hWnd = hWnd;
@@ -112,31 +115,74 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+
+static HWND g_hDlg;
+LRESULT CALLBACK DIG_TEST(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+
     switch (message)
     {
     case WM_COMMAND:
         {
-            int wmId = LOWORD(wParam);
-            switch (wmId)
+            switch (LOWORD(wParam))
             {
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
+
+            // =========== Menu ========== //
+            case ID_FILE_LOAD :
+            {
+                CInputMgr::GetInst()->BlockInput();
+                CCamera::GetInst()->BlockUpdate();
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_LOAD), hWnd, DIG_TEST);
+                ShowWindow(g_hDlg, SW_SHOW);
                 break;
+            }
+            case ID_FILE_SAVE:
+            {
+                CInputMgr::GetInst()->BlockInput();
+                CCamera::GetInst()->BlockUpdate();
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_SAVE), hWnd, WndProc);
+                ShowWindow(g_hDlg, SW_SHOW);
+                break;
+            }
+
+
+            // =========== Btn ========== //
+            //case IDC_BTN_LOAD:
+            //{ 
+            //    TCHAR tchTemp[BSIZE] {};
+            //    GetDlgItemText(hWnd, IDC_EDIT_LOAD, tchTemp, BSIZE);
+            //    wstring wstrTemp(&tchTemp[0]); // texture\Tarma.bmp 입력
+            //    
+            //    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrTemp);
+            //    CCamera::GetInst()->UnblockUpdate();
+            //    CInputMgr::GetInst()->UnblockInput();
+            //    EndDialog(g_hDlg, 0);
+            //    break;
+            //}
+            case IDC_BTN_SAVE:
+            {
+                TCHAR tchTemp[BSIZE]{};
+                GetDlgItemText(hWnd, IDC_EDIT_SAVE, tchTemp, BSIZE);
+                wstring wstrTemp(&tchTemp[0]); // texture\animation-frame.
+
+                dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapBox(wstrTemp);
+                CCamera::GetInst()->UnblockUpdate();
+                CInputMgr::GetInst()->UnblockInput();
+                EndDialog(g_hDlg, 0);
+                break;
+            }
+               
+
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            EndPaint(hWnd, &ps);
         }
         break;
     // for Debug
@@ -174,4 +220,35 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+
+LRESULT CALLBACK DIG_TEST(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        break;
+
+    case WM_COMMAND:
+    {
+        switch (LOWORD(wParam))
+        {
+        case IDC_BTN_LOAD:
+            TCHAR tchTemp[BSIZE]{};
+            GetDlgItemText(hDlg, IDC_EDIT_LOAD, tchTemp, BSIZE);
+            wstring wstrTemp(&tchTemp[0]); // texture\Tarma.bmp 입력
+
+            dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrTemp);
+            CCamera::GetInst()->UnblockUpdate();
+            CInputMgr::GetInst()->UnblockInput();
+            EndDialog(g_hDlg, 0);
+            break;
+        }
+    }
+
+    }
+    return 0;
+
 }

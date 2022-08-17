@@ -31,6 +31,7 @@ private: // Variables
 	HBRUSH m_arrBrush[(UINT)BRUSH_TYPE::TYPEEND_BRUSH];
 	HPEN m_arrPen[(UINT)PEN_TYPE::TYPEEND_PEN];
 
+	HWND m_Hdlg;
 
 
 };

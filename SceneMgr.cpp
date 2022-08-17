@@ -5,8 +5,11 @@ CSceneMgr* CSceneMgr::m_pInst = nullptr;
 
 void CSceneMgr::Init()
 {
-	m_arrScene[(UINT)SCENE_TYPE::ANITOOL] = new CAniToolScene;
-	m_arrScene[(UINT)SCENE_TYPE::ANITOOL]->SetSceneType(SCENE_TYPE::ANITOOL);
+	m_arrScene[(UINT)SCENE_TYPE::ANITOOL1] = new CAniToolScene1;
+	m_arrScene[(UINT)SCENE_TYPE::ANITOOL1]->SetSceneType(SCENE_TYPE::ANITOOL1);
+
+	m_arrScene[(UINT)SCENE_TYPE::ANITOOL2] = new CAniToolScene2;
+	m_arrScene[(UINT)SCENE_TYPE::ANITOOL2]->SetSceneType(SCENE_TYPE::ANITOOL2);
 
 	m_arrScene[(UINT)SCENE_TYPE::MAPTOOL] = new CMapToolScene;
 	m_arrScene[(UINT)SCENE_TYPE::MAPTOOL]->SetSceneType(SCENE_TYPE::MAPTOOL);
@@ -16,7 +19,7 @@ void CSceneMgr::Init()
 
 
 	// 현재 Scene 지정
-	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::ANITOOL]; 
+	m_pCurScene = m_arrScene[(UINT)SCENE_TYPE::ANITOOL1];
 	m_pCurScene->Enter();
 }
 

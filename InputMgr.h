@@ -9,6 +9,8 @@ public: // Lifecycle
 	void Update();
 
 public: 
+	void BlockInput();
+	void UnblockInput();
 
 	// Key Methods
 	KEY_STATE GetKeyState(KEY_TYPE key) const;
@@ -41,5 +43,7 @@ private:
 	};
 
 	POINT m_ptMousePos;
+
+	bool bBlock;
 };
 

@@ -3,8 +3,9 @@
 
 // ====================== Scene ======================== // 
 enum class SCENE_TYPE {
+	ANITOOL1,
+	ANITOOL2,
 	MAPTOOL,
-	ANITOOL,
 	INTRO,
 	CHARACTER,
 	GAME,

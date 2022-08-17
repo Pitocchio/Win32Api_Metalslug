@@ -101,7 +101,7 @@ void CCore::CreateBrushPen()
 	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
 
 	// Pen
-	int iLineWidth = 2;
+	int iLineWidth = 1;
 
 	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, iLineWidth, RGB(255, 0, 0));
 	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, iLineWidth, RGB(0, 255, 0));

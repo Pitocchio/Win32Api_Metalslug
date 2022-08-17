@@ -117,3 +117,9 @@ typedef struct MyAniFrame
 }AniFrame;
 
 
+
+typedef struct MyRectangle
+{
+	POINT* point1;
+	POINT* point2;
+}Box;

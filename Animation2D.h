@@ -24,7 +24,7 @@ public: // Methods
 	void Create(CTexture* _pTex, Vector2 _vLT, Vector2 _vSliceSize, Vector2 _vStep, float fDuration, UINT _iFrameCount);
 	bool IsFinish() { return m_bFinish; }
 
-	int GetMaxFrame() { return m_vecFrame.size(); }
+	int GetMaxFrame() { return (int)m_vecFrame.size(); }
 
 
 	// ========== Test ======== //

@@ -68,7 +68,11 @@ void CMapToolScene::Exit()
 	for (vector <MAPOBJ*>::iterator iter = m_vecMapObj.begin(); iter != m_vecMapObj.end(); ++iter)
 	{
 		if ((*iter) != nullptr)
-				delete* iter;
+		{
+			delete (*iter)->point1;
+			delete (*iter)->point2;
+			delete* iter;
+		}
 	}
 
 	m_vecMapObj.clear();
@@ -118,6 +122,7 @@ bool CMapToolScene::CheckSceneChange()
 
 void CMapToolScene::CreateMapObject()
 {
+
 	Vector2 vClickPos = Vector2(int(CCamera::GetInst()->GetRealPos(Vector2(float(m_ptMousePos.x), float(m_ptMousePos.y))).x),
 								int(CCamera::GetInst()->GetRealPos(Vector2(float(m_ptMousePos.x), float(m_ptMousePos.y))).y));
 
@@ -459,7 +464,6 @@ void CMapToolScene::RenderMapObj(HDC hdc)
 
 void CMapToolScene::RenderLiveMapObj(HDC hdc)
 {
-
 	if (m_ptTemp1 != nullptr)
 	{
 		if (m_ptTemp2 == nullptr)

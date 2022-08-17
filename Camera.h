@@ -23,6 +23,8 @@ public: // Methods
 
 	POINT GetRenderPos_Test(POINT pos) { return POINT({ LONG(pos.x - (m_vDiff.x * 3)), LONG(pos.y - (m_vDiff.y * 3)) }); }
 
+	void BlockUpdate() { bBlock = true; }
+	void UnblockUpdate() { bBlock = false; };
 
 private: // Methods 
 	void CalDiff(); // 해상도 중심 위치와 카메라 LookAt 좌표간의 차이 값 계산
@@ -37,6 +39,8 @@ private:
 	float m_fTime; // 타겟을 따라가는 데 걸리는 시간
 	float m_fSpeed; // 타겟을 따라가는 속도
 	float m_fAccTime; // 누적 시간
+
+	bool bBlock;
 };
 
 

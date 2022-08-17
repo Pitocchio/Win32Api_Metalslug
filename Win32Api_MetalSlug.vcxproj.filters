@@ -88,9 +88,6 @@
     <Filter Include="소스 파일\04.Scene\00.Scene">
       <UniqueIdentifier>{5504bc62-588d-4c44-83eb-5a70ee24b102}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\04.Scene\04.GameScene">
-      <UniqueIdentifier>{642f15b9-9caf-4012-a86b-ede488e5ffd9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\06.GameObject">
       <UniqueIdentifier>{c7851654-a18f-4dff-8089-f98c22c9b8f9}</UniqueIdentifier>
     </Filter>
@@ -208,11 +205,17 @@
     <Filter Include="소스 파일\03.Manager\08.MapObjectjMgr">
       <UniqueIdentifier>{4e6a8f45-d51a-4d47-adcd-a7064a471de2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\04.Scene\02.MapToolScene">
+    <Filter Include="소스 파일\04.Scene\03.MapToolScene">
       <UniqueIdentifier>{ecffcd43-7993-4e26-b9ea-384abe30af24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\04.Scene\01.AniToolScene">
+    <Filter Include="소스 파일\04.Scene\05.GameScene">
+      <UniqueIdentifier>{642f15b9-9caf-4012-a86b-ede488e5ffd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\01.AniToolScene2">
       <UniqueIdentifier>{488ab657-1733-47a7-99dd-ba9efaeaff83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\01.AniToolScene1">
+      <UniqueIdentifier>{0f450cf7-dd24-4f35-b6a9-b446c1402198}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -280,10 +283,10 @@
       <Filter>소스 파일\07.Component\02.Collider2D\01.BoxCollider2D</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
-      <Filter>소스 파일\04.Scene\04.GameScene</Filter>
+      <Filter>소스 파일\04.Scene\05.GameScene</Filter>
     </ClInclude>
     <ClInclude Include="MapToolScene.h">
-      <Filter>소스 파일\04.Scene\02.MapToolScene</Filter>
+      <Filter>소스 파일\04.Scene\03.MapToolScene</Filter>
     </ClInclude>
     <ClInclude Include="EventMgr.h">
       <Filter>소스 파일\03.Manager\04.EventMgr</Filter>
@@ -336,8 +339,11 @@
     <ClInclude Include="Animation2D.h">
       <Filter>소스 파일\07.Component\05.Animator2D\Animaton2D</Filter>
     </ClInclude>
-    <ClInclude Include="AniToolScene.h">
-      <Filter>소스 파일\04.Scene\01.AniToolScene</Filter>
+    <ClInclude Include="AniToolScene2.h">
+      <Filter>소스 파일\04.Scene\01.AniToolScene2</Filter>
+    </ClInclude>
+    <ClInclude Include="AniToolScene1.h">
+      <Filter>소스 파일\04.Scene\01.AniToolScene1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -394,10 +400,10 @@
       <Filter>소스 파일\07.Component\02.Collider2D\01.BoxCollider2D</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>소스 파일\04.Scene\04.GameScene</Filter>
+      <Filter>소스 파일\04.Scene\05.GameScene</Filter>
     </ClCompile>
     <ClCompile Include="MapToolScene.cpp">
-      <Filter>소스 파일\04.Scene\02.MapToolScene</Filter>
+      <Filter>소스 파일\04.Scene\03.MapToolScene</Filter>
     </ClCompile>
     <ClCompile Include="EventMgr.cpp">
       <Filter>소스 파일\03.Manager\04.EventMgr</Filter>
@@ -450,8 +456,11 @@
     <ClCompile Include="Animation2D.cpp">
       <Filter>소스 파일\07.Component\05.Animator2D\Animaton2D</Filter>
     </ClCompile>
-    <ClCompile Include="AniToolScene.cpp">
-      <Filter>소스 파일\04.Scene\01.AniToolScene</Filter>
+    <ClCompile Include="AniToolScene2.cpp">
+      <Filter>소스 파일\04.Scene\01.AniToolScene2</Filter>
+    </ClCompile>
+    <ClCompile Include="AniToolScene1.cpp">
+      <Filter>소스 파일\04.Scene\01.AniToolScene1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

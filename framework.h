@@ -25,3 +25,6 @@
 #include <cassert>
 #pragma comment(lib, "Msimg32.lib") // TransparentBlt
 using namespace std;
+
+
+#include "Win32Api_MetalSlug.h"
