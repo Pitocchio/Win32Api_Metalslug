@@ -117,7 +117,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 
 static HWND g_hDlg;
-LRESULT CALLBACK DIG_TEST(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -139,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 CInputMgr::GetInst()->BlockInput();
                 CCamera::GetInst()->BlockUpdate();
-                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_LOAD), hWnd, DIG_TEST);
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_LOAD), hWnd, DigProc);
                 ShowWindow(g_hDlg, SW_SHOW);
                 break;
             }
@@ -147,39 +148,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 CInputMgr::GetInst()->BlockInput();
                 CCamera::GetInst()->BlockUpdate();
-                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_SAVE), hWnd, WndProc);
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_SAVE), hWnd, DigProc);
                 ShowWindow(g_hDlg, SW_SHOW);
                 break;
             }
-
-
-            // =========== Btn ========== //
-            //case IDC_BTN_LOAD:
-            //{ 
-            //    TCHAR tchTemp[BSIZE] {};
-            //    GetDlgItemText(hWnd, IDC_EDIT_LOAD, tchTemp, BSIZE);
-            //    wstring wstrTemp(&tchTemp[0]); // texture\Tarma.bmp 입력
-            //    
-            //    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrTemp);
-            //    CCamera::GetInst()->UnblockUpdate();
-            //    CInputMgr::GetInst()->UnblockInput();
-            //    EndDialog(g_hDlg, 0);
-            //    break;
-            //}
-            case IDC_BTN_SAVE:
-            {
-                TCHAR tchTemp[BSIZE]{};
-                GetDlgItemText(hWnd, IDC_EDIT_SAVE, tchTemp, BSIZE);
-                wstring wstrTemp(&tchTemp[0]); // texture\animation-frame.
-
-                dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapBox(wstrTemp);
-                CCamera::GetInst()->UnblockUpdate();
-                CInputMgr::GetInst()->UnblockInput();
-                EndDialog(g_hDlg, 0);
-                break;
-            }
-               
-
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -203,6 +175,50 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+
+LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+        case WM_INITDIALOG:
+            break;
+        case WM_COMMAND:
+        {
+            switch (LOWORD(wParam))
+            {
+                case IDC_BTN_LOAD:
+                {
+                    TCHAR tchTemp[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_LOAD, tchTemp, BSIZE);
+                    wstring wstrTemp(&tchTemp[0]); // texture\Tarma.bmp 입력
+
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrTemp);
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                case IDC_BTN_SAVE:
+                {
+                    TCHAR tchTemp[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_SAVE, tchTemp, BSIZE);
+                    wstring wstrTemp(&tchTemp[0]); // texture\animation-frame.~
+
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapBox(wstrTemp);
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+
+
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
@@ -222,33 +238,3 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)FALSE;
 }
 
-
-LRESULT CALLBACK DIG_TEST(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        break;
-
-    case WM_COMMAND:
-    {
-        switch (LOWORD(wParam))
-        {
-        case IDC_BTN_LOAD:
-            TCHAR tchTemp[BSIZE]{};
-            GetDlgItemText(hDlg, IDC_EDIT_LOAD, tchTemp, BSIZE);
-            wstring wstrTemp(&tchTemp[0]); // texture\Tarma.bmp 입력
-
-            dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrTemp);
-            CCamera::GetInst()->UnblockUpdate();
-            CInputMgr::GetInst()->UnblockInput();
-            EndDialog(g_hDlg, 0);
-            break;
-        }
-    }
-
-    }
-    return 0;
-
-}

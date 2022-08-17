@@ -248,57 +248,7 @@ void CAniToolScene1::SaveMapBox(const wstring& _strRelativePath)
 	cout << "\nFile Save Success!\n";
 
 	fclose(pFile);
-}
 
-void CAniToolScene1::LoadMapBox_TEST(const wstring& _strRelativePath)
-{
-
-	for (vector <Box*>::iterator iter = m_vecBox.begin(); iter != m_vecBox.end(); ++iter)
-	{
-		if ((*iter) != nullptr)
-		{
-			delete (*iter)->point1;
-			delete (*iter)->point2;
-			delete* iter;
-		}
-	}
-
-	m_vecBox.clear();
-
-	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
-	strFilePath += _strRelativePath;
-
-	FILE* pFile = nullptr;
-
-	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
-	if (pFile == nullptr)
-		return;
-
-	while (feof(pFile) == 0)
-	{
-		POINT* pt1 = new POINT{};
-		POINT* pt2 = new POINT{};
-
-		fread(&pt1->x, sizeof(LONG), 1, pFile);
-		fread(&pt1->y, sizeof(LONG), 1, pFile);
-		fread(&pt2->x, sizeof(LONG), 1, pFile);
-		fread(&pt2->y, sizeof(LONG), 1, pFile);
-		/*	fread(&type, sizeof(LONG), 1, pFile);
-			fread(&pt1.x, sizeof(LONG), 1, pFile);
-			fread(&pt1.y, sizeof(LONG), 1, pFile);
-			fread(&pt2.x, sizeof(LONG), 1, pFile);
-			fread(&pt2.y, sizeof(LONG), 1, pFile);*/
-
-		if (feof(pFile) != 0)
-			break;
-
-		Box* temp = new Box{ pt1, pt2};
-		m_vecBox.push_back(temp);
-	}
-
-	cout << "\nFile Load Success!\n";
-
-	fclose(pFile);
 }
 
 

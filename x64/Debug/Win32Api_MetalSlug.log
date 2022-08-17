@@ -1,2 +1,62 @@
-﻿  Main.cpp
-  Win32Api_MetalSlug.vcxproj -> C:\Users\Admin\OneDrive\바탕 화면\temp\Win32Api_Metalslug\Output\bin_debug\Win32Api_MetalSlug.exe
+﻿  AniToolScene1.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene1.cpp(52,64): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene1.cpp(52,56): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene1.cpp(155,6): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene1.cpp(154,33): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene1.cpp(215,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene1.cpp(215,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  AniToolScene2.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene2.cpp(104,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\AniToolScene2.cpp(104,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Animation2D.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Animation2D.cpp(90,31): warning C4244: '인수': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Animator2D.cpp
+  Attackobj.cpp
+  BoxCollider2D.cpp
+  Camera.cpp
+  Collider2D.cpp
+  CollisionMgr.cpp
+  Component.cpp
+  Core.cpp
+  EventMgr.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\EventMgr.cpp(14,89): warning C4834: 'nodiscard' 특성이 포함된 함수의 반환 값을 버리는 중
+  GameScene.cpp
+  InputMgr.cpp
+  Main.cpp
+  MapCollider.cpp
+  MapLine.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\MapLine.cpp(84,15): warning C4244: '초기화 중': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MapObjMgr.cpp
+  MapToolScene.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\MapToolScene.cpp(127,12): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\MapToolScene.cpp(126,33): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\MapToolScene.cpp(357,85): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\MapToolScene.cpp(357,69): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Moveobj.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Object.cpp
+  ObjectMgr.cpp
+  PathMgr.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\PathMgr.cpp(11,36): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Player.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(311,81): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(320,86): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(334,88): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(345,107): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(354,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Player.cpp(364,114): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Res.cpp
+  ResMgr.cpp
+  Rigidbody2D.cpp
+  Scene.cpp
+  SceneMgr.cpp
+  SelectGDI.cpp
+  Stage.cpp
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Stage.cpp(28,63): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\chanjun\Documents\Win32Api_MetalSlug\Stage.cpp(28,34): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Texture.cpp
+  TimeMgr.cpp
+  Transform2D.cpp
+  코드를 생성하고 있습니다...
+  Win32Api_MetalSlug.vcxproj -> C:\Users\chanjun\Documents\Win32Api_MetalSlug\Output\bin_debug\Win32Api_MetalSlug.exe

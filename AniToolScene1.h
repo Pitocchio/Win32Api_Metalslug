@@ -32,7 +32,6 @@ public: // from Main;
 
 	void SaveMapBox(const wstring& _strRelativePath);
 	
-	void LoadMapBox_TEST(const wstring& _strRelativePath);
 
 private: // Variables
 	POINT m_ptMousePos;
