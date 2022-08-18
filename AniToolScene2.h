@@ -24,7 +24,6 @@ private: // Methods
 
 private: // Variables
 	POINT m_ptMousePos;
-	wstring m_strFilePath;
 
 
 
@@ -33,5 +32,12 @@ private: // Variables
 	CTexture* m_pTex;
 
 
+	vector<Frm*> m_vecFrm; 
+
+public:
+	/*void SetData(const wstring& _strRelativePath);
+	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);*/
+
+	void CreateAnimation(const wstring& _strKeyName, const wstring& _strTexPath, const wstring& _strDataPath);
 };
 

@@ -25,12 +25,17 @@ public: // Methods
 	CAnimation2D* FindAnimation(const wstring& _strName);
 	void PlayAnimation(const wstring& _strName, bool _bRepeat); // 이름, 반복재생 여부
 
-
-
-
 	// with Variables
 	void SetOwnerObj(CObject* obj);
 	CObject* GetOwnerObj() { return m_pOwnerObj; }
+
+
+
+
+
+
+
+
 
 
 private: // Variables
@@ -39,11 +44,23 @@ private: // Variables
 	CAnimation2D*					m_pCurAni;	// 현재 재생 중인 애니메이션 
 	bool							m_bRepeat;	// 반복재생 여부
 
-
-
 	// 497(35.5) X 43
 	// 가로, 세로
 
+
+
+	// ====================== Test ====================== // 
+
+protected:
+	CTexture*									m_pTex;
+	vector<Frm*>									m_vecFrm;
+	map<wstring, CAnimation2D*>					m_mapAnim;
+	vector<wstring>								m_vecStateName;
+
+public:	
+	void SetData(const wstring& _strRelativePath);
+	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);
+	void CreateAnimation_Test();
 
 };
 

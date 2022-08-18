@@ -135,20 +135,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
 
-            // =========== Menu ========== //
-            case ID_FILE_LOAD :
+            // =========== ANITOOL 1 ========== //
+            case ID_ANITOOL1_LOAD:
             {
                 CInputMgr::GetInst()->BlockInput();
                 CCamera::GetInst()->BlockUpdate();
-                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_LOAD), hWnd, DigProc);
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_ANITOOL1_LOAD), hWnd, DigProc);  // texture\Tarma.bmp 입력 
                 ShowWindow(g_hDlg, SW_SHOW);
                 break;
             }
-            case ID_FILE_SAVE:
+            case ID_ANITOOL1_SAVE:
             {
                 CInputMgr::GetInst()->BlockInput();
                 CCamera::GetInst()->BlockUpdate();
-                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_SAVE), hWnd, DigProc);
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_ANITOOL1_SAVE), hWnd, DigProc); // animation\TARMA_PISTOL_BASIC_MOVE_ST.frame 입력 
+                ShowWindow(g_hDlg, SW_SHOW);
+                break;
+            }
+            case ID_ANITOOL1_CHANGE_STATE:
+            {
+                CInputMgr::GetInst()->BlockInput();
+                CCamera::GetInst()->BlockUpdate();
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_ANITOOL1_CHANGE_STATE), hWnd, DigProc);  
+                ShowWindow(g_hDlg, SW_SHOW);
+                break;
+            }
+            case ID_ANITOOL1_CHANGE_BODY:
+            {
+                CInputMgr::GetInst()->BlockInput();
+                CCamera::GetInst()->BlockUpdate();
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_ANITOOL1_CHANGE_BODY), hWnd, DigProc);  
+                ShowWindow(g_hDlg, SW_SHOW);
+                break;
+            }
+            // =========== ANITOOL 2 ========== //
+            case ID_ANITOOL2_LOAD:
+            {
+                CInputMgr::GetInst()->BlockInput();
+                CCamera::GetInst()->BlockUpdate();
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_ANITOOL2_LOAD), hWnd, DigProc);
                 ShowWindow(g_hDlg, SW_SHOW);
                 break;
             }
@@ -187,25 +212,93 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         {
             switch (LOWORD(wParam))
             {
-                case IDC_BTN_LOAD:
+                // =========== ANITOOL 1 ========== //
+                case IDC_BTN_ANITOOL1_LOAD:
                 {
-                    TCHAR tchTemp[BSIZE]{};
-                    GetDlgItemText(hDlg, IDC_EDIT_LOAD, tchTemp, BSIZE);
-                    wstring wstrTemp(&tchTemp[0]); // texture\Tarma.bmp 입력
+                    TCHAR tchFile[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_FILE, tchFile, BSIZE);
+                    wstring wstrFile(&tchFile[0]); // texture\Tarma.bmp 입력
 
-                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrTemp);
+
+                    TCHAR tchKeyName[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_KEYNAME, tchKeyName, BSIZE);
+                    wstring wstrKeyName(&tchKeyName[0]);
+
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrFile);
+
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();
                     EndDialog(g_hDlg, 0);
                     break;
                 }
-                case IDC_BTN_SAVE:
+                case IDC_BTN_ANITOOL1_SAVE:
                 {
                     TCHAR tchTemp[BSIZE]{};
-                    GetDlgItemText(hDlg, IDC_EDIT_SAVE, tchTemp, BSIZE);
-                    wstring wstrTemp(&tchTemp[0]); // texture\animation-frame.~
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_SAVE, tchTemp, BSIZE);
+                    wstring wstrTemp(&tchTemp[0]); 
 
-                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapBox(wstrTemp);
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapFrame(wstrTemp);
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                case IDC_BTN_CHANGE_STATE:
+                {
+                    TCHAR tchTemp[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_CHANGE_STATE, tchTemp, BSIZE);
+                    wstring wstrTemp(&tchTemp[0]);
+
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetCurState(wstrTemp);
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->PushbackState(wstrTemp);
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                case IDC_RADIO_ANITOOL1_CHANGE_BODY_TOP:
+                {
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetCurbody(BODY_TYPE::TOP);
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                case IDC_RADIO_ANITOOL1_CHANGE_BODY_BOT:
+                {
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetCurbody(BODY_TYPE::BOT);
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                // =========== ANITOOL 2 ========== //
+                case IDC_BTN_ANITOOL2_LOAD:
+                {
+                    TCHAR tchPath[BSIZE]{};
+                    TCHAR tchKeyName[BSIZE]{};
+                    TCHAR tchDat[BSIZE]{};
+
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_PATH, tchPath, BSIZE);
+                    wstring wstrTexPath(&tchPath[0]);
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_NAME, tchKeyName, BSIZE);
+                    wstring wstrKeyName(&tchKeyName[0]);
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_DAT, tchDat, BSIZE);
+                    wstring wstrDatPath(&tchDat[0]);
+
+                    /*dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrTexPath);
+                    dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->SetData(wstrDatPath);*/
+
+                    dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->CreateAnimation(wstrKeyName, wstrTexPath, wstrDatPath);
+                    // 여기서 애니메이션 생성 호출 
+
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                case IDCANCEL:
+                {
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();
                     EndDialog(g_hDlg, 0);

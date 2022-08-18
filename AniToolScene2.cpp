@@ -17,7 +17,9 @@ void CAniToolScene2::Enter()
 
 	CCamera::GetInst()->SetLookAt(Vector2(0.f, 0.f));
 
-	//m_pAnimator = new CAnimator2D();
+	m_pAnimator = new CAnimator2D();
+
+
 	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\PISTOL_BASIC_MOVE_ST.bmp"); // 애니메이션 테스트 (애니메이션 파일 불러옴)
 	//m_pAnimator->CreateAnimation(L"PISTOL_BASIC_MOVE_ST", m_pTex, Vector2(0.f, 0.f), Vector2(39.1f, 64.f), Vector2(39.1f, 0.f), 0.1f, 18);
 	//m_pAnimator->PlayAnimation(L"PISTOL_BASIC_MOVE_ST", true);
@@ -27,6 +29,7 @@ void CAniToolScene2::Update()
 {
 	m_ptMousePos = CInputMgr::GetInst()->GetMousePos();
 
+	//m_pAnimator->Update();
 
 	if (CheckSceneChange()) // Check Scene Change
 		return;
@@ -68,6 +71,18 @@ void CAniToolScene2::Render(HDC hdc)
 
 void CAniToolScene2::Exit()
 {
+
+	for (vector <Frm*>::iterator iter = m_vecFrm.begin(); iter != m_vecFrm.end(); ++iter)
+	{
+		if ((*iter) != nullptr)
+		{
+			delete* iter;
+		}
+	}
+
+	m_vecFrm.clear();
+
+	delete m_pTex;
 }
 
 
@@ -180,6 +195,69 @@ void CAniToolScene2::RenderText(HDC hdc)
 	swprintf_s(tch, L"L : Load");
 	TextOut(hdc, 1, 600, tch, (int)_tcslen(tch));
 }
+//
+//void CAniToolScene2::SetData(const wstring& _strRelativePath)
+//{
+//
+//	// 상대경로를 현 함수의 인자로 받아 절대경로 세팅
+//	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+//	strFilePath += _strRelativePath;
+//
+//	// 파일 포인터 생성 
+//	FILE* pFile = nullptr;
+//
+//	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
+//	if (pFile == nullptr)
+//		return;
+//
+//	POINT pt1 = {};
+//	POINT pt2 = {};
+//	wstring state;
+//	UINT body;
+//	Vector2 pivot;
+//	float duration;
+//
+//	while (feof(pFile) == 0)
+//	{
+//
+//		fread(&state, sizeof(state), 1, pFile);
+//		fread(&body, sizeof(UINT), 1, pFile);
+//
+//		fread(&pt1.x, sizeof(LONG), 1, pFile);
+//		fread(&pt1.y, sizeof(LONG), 1, pFile);
+//		fread(&pt2.x, sizeof(LONG), 1, pFile);
+//		fread(&pt2.y, sizeof(LONG), 1, pFile);
+//		fread(&pivot.x, sizeof(pivot.x), 1, pFile);
+//		fread(&pivot.y, sizeof(pivot.y), 1, pFile);
+//		fread(&duration, sizeof(duration), 1, pFile);
+//
+//
+//		if (feof(pFile) != 0)
+//		{
+//			break;
+//		}
+//
+//
+//		Frm* temp = new Frm{ state, body, pt1, pt2, pivot, duration };
+//		m_vecFrm.push_back(temp);
+//	}
+//
+//	fclose(pFile);
+//}
+//
+//void CAniToolScene2::SetTexture(const wstring& _strKeyName, const wstring& _strFilePath)
+//{
+//	m_pTex = CResMgr::GetInst()->LoadTexture(_strKeyName, _strFilePath);
+//}
+
+void CAniToolScene2::CreateAnimation(const wstring& _strKeyName, const wstring& _strTexPath, const wstring& _strDataPath)
+{
+	m_pAnimator->SetTexture(_strKeyName, _strTexPath);
+	m_pAnimator->SetData(_strDataPath);
+	m_pAnimator->CreateAnimation_Test();
+	m_pAnimator->PlayAnimation(L"TARMA_PISTOL_BASIC_IDLE_ST", true);
+}
+
 
 
 void CAniToolScene2::ScrollMouse()

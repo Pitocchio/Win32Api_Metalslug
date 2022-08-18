@@ -251,3 +251,23 @@ Collider MonsterSpawn
 */
 
 
+
+
+enum class ANIMATION_STATE_TARMA
+{
+
+	// IDLE
+	PISTOL_BASIC_IDLE_ST,
+
+	// MOVE
+	PISOTL_BASIC_MOVE_ST,
+
+	TYPE_END
+};
+
+enum class BODY_TYPE
+{
+	TOP,
+	BOT,
+	TYPE_END
+};
