@@ -164,5 +164,4 @@ typedef struct MyFrm
 	Vector2 Pivot;
 
 	float Duration;
-
 }Frm;

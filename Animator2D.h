@@ -20,8 +20,8 @@ public: // Lifecycle
 public: // Methods
 
 	// Animation
-	void CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, 
-						Vector2 _vSliceSize, Vector2 _vStep, float fDuration, UINT _iFrameCount);  // 텍스쳐, LeftTop, SliceSize, 간격, 애니메이션 수
+	//void CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, 
+	//					Vector2 _vSliceSize, Vector2 _vStep, float fDuration, UINT _iFrameCount);  // 텍스쳐, LeftTop, SliceSize, 간격, 애니메이션 수
 	CAnimation2D* FindAnimation(const wstring& _strName);
 	void PlayAnimation(const wstring& _strName, bool _bRepeat); // 이름, 반복재생 여부
 
@@ -51,16 +51,18 @@ private: // Variables
 
 	// ====================== Test ====================== // 
 
-protected:
-	CTexture*									m_pTex;
+private:
 	vector<Frm*>									m_vecFrm;
-	map<wstring, CAnimation2D*>					m_mapAnim;
 	vector<wstring>								m_vecStateName;
+	map<wstring, CAnimation2D*>					m_mapAnim;
+
+private:
+	CTexture*									m_pTex;
 
 public:	
 	void SetData(const wstring& _strRelativePath);
 	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);
-	void CreateAnimation_Test();
+	void CreateAnimation();
 
 };
 

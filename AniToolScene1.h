@@ -8,28 +8,24 @@ public:
 	CAniToolScene1();
 	~CAniToolScene1();
 
-public: // Lifecycle
+public: 
 	virtual void Enter() override;
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Exit() override;
 
 
-public: // from Main;
+public: 
 	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);
-
-
 
 	void ScrollMouse();
 	bool CheckSceneChange();
-	void AddvecBox();
 
 	void Render_vecBox(HDC hdc);
 	void Render_CurBox(HDC hdc);
 	void RenderText(HDC hdc);
 
 
-	void SaveMapBox(const wstring& _strRelativePath);
 	
 
 private: // Variables

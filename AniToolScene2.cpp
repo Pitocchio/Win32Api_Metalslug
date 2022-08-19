@@ -29,7 +29,8 @@ void CAniToolScene2::Update()
 {
 	m_ptMousePos = CInputMgr::GetInst()->GetMousePos();
 
-	//m_pAnimator->Update();
+	if (m_pAnimator != nullptr)
+		m_pAnimator->Update();
 
 	if (CheckSceneChange()) // Check Scene Change
 		return;
@@ -63,7 +64,7 @@ void CAniToolScene2::Render(HDC hdc)
 
 
 	//Animator Render
-	//m_pAnimator->Render(hdc);
+	m_pAnimator->Render(hdc);
 
 	// Text Info
 	RenderText(hdc);
@@ -123,77 +124,6 @@ void CAniToolScene2::RenderText(HDC hdc)
 	swprintf_s(tch, L"Local Cursor Pos : %d, %d ", m_ptMousePos.x, m_ptMousePos.y);
 	TextOut(hdc, 1, 80, tch, (int)_tcslen(tch));
 
-
-
-
-	// Animation Left
-	// Name
-	swprintf_s(tch, L"Ani Name(State) : ");
-	TextOut(hdc, 1, 160, tch, (int)_tcslen(tch));
-
-	// 상체 or 하체
-	swprintf_s(tch, L"Control Ani : ");
-	TextOut(hdc, 1, 180, tch, (int)_tcslen(tch));
-
-	// 상체 인덱스
-	swprintf_s(tch, L"Top Idx : ");
-	TextOut(hdc, 1, 200, tch, (int)_tcslen(tch));
-
-	// 상체 피벗
-	swprintf_s(tch, L"Top Pivot : ");
-	TextOut(hdc, 1, 220, tch, (int)_tcslen(tch));
-
-	// 하체 인덱스
-	swprintf_s(tch, L"Bot Idx : ");
-	TextOut(hdc, 1, 240, tch, (int)_tcslen(tch));
-
-	// 하체 피벗
-	swprintf_s(tch, L"Top Pivot : ");
-	TextOut(hdc, 1, 260, tch, (int)_tcslen(tch));
-
-	// 프레임 시간
-	swprintf_s(tch, L"Frame Time : ");
-	TextOut(hdc, 1, 280, tch, (int)_tcslen(tch));
-
-	// 반복 여부
-	swprintf_s(tch, L"Repeat : ");
-	TextOut(hdc, 1, 300, tch, (int)_tcslen(tch));
-
-
-
-
-	swprintf_s(tch, L"Num 2, 4, 6, 8 : Animation Move (5px)");
-	TextOut(hdc, 1, 400, tch, (int)_tcslen(tch));
-	
-	swprintf_s(tch, L"Num 2, 4, 6, 8 + Ctrl: Animation Move (1px)");
-	TextOut(hdc, 1, 420, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"Ctrl : Choice Top or Bottom");
-	TextOut(hdc, 1, 440, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"Shift : LR Flip");
-	TextOut(hdc, 1, 460, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"Enter : Play Toggle(On/Off)");
-	TextOut(hdc, 1, 480, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"LEFT_KEY : Prev State");
-	TextOut(hdc, 1, 500, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"RIGHT_KEY : Next State");
-	TextOut(hdc, 1, 520, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"UP_KEY : Frame Time 0.01second + ");
-	TextOut(hdc, 1, 540, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"DOWN_KEY : Frame Time 0.01second - ");
-	TextOut(hdc, 1, 560, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"S : Save");
-	TextOut(hdc, 1, 580, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"L : Load");
-	TextOut(hdc, 1, 600, tch, (int)_tcslen(tch));
 }
 //
 //void CAniToolScene2::SetData(const wstring& _strRelativePath)
@@ -254,8 +184,8 @@ void CAniToolScene2::CreateAnimation(const wstring& _strKeyName, const wstring& 
 {
 	m_pAnimator->SetTexture(_strKeyName, _strTexPath);
 	m_pAnimator->SetData(_strDataPath);
-	m_pAnimator->CreateAnimation_Test();
-	m_pAnimator->PlayAnimation(L"TARMA_PISTOL_BASIC_IDLE_ST", true);
+	m_pAnimator->CreateAnimation();
+	m_pAnimator->PlayAnimation(L"TARMA_PISTOL_BASIC_MOVE_ST", true);
 }
 
 

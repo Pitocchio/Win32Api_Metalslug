@@ -153,51 +153,6 @@ bool CAniToolScene1::CheckSceneChange()
 }
 
 
-void CAniToolScene1::AddvecBox()
-{
-	Vector2 vClickPos = Vector2(int(CCamera::GetInst()->GetRealPos(Vector2(float(m_ptMousePos.x), float(m_ptMousePos.y))).x),
-		int(CCamera::GetInst()->GetRealPos(Vector2(float(m_ptMousePos.x), float(m_ptMousePos.y))).y));
-
-	if (CInputMgr::GetInst()->GetMouseState(MOUSE_TYPE::LBTN) == MOUSE_STATE::DOWN)
-	{
-		if (m_ptTemp2 == nullptr)
-		{
-			if (m_ptTemp1 == nullptr) // (X, X)
-			{
-				m_ptTemp1 = new POINT{ LONG(vClickPos.x), LONG(vClickPos.y) }; // (O, X)
-
-			}
-			else // (O, X)
-			{
-				m_ptTemp2 = new POINT{ LONG(vClickPos.x), LONG(vClickPos.y) }; // (O, O)
-
-				Box* temp = new Box{ m_ptTemp1, m_ptTemp2 };
-				m_vecBox.push_back(temp);
-
-				m_ptTemp1 = nullptr;
-				m_ptTemp2 = nullptr;
-
-				Print_vecFrame();
-			}
-		}
-	}
-
-	if (CInputMgr::GetInst()->GetMouseState(MOUSE_TYPE::RBTN) == MOUSE_STATE::DOWN) // Back
-	{
-		if (!m_vecBox.empty())
-		{
-			cout << "Pop Data!\n";
-			delete m_vecBox.back()->point1;
-			delete m_vecBox.back()->point2;
-			delete m_vecBox.back();
-
-			m_vecBox.pop_back();
-
-			Print_vecFrame();
-		}
-	}
-}
-
 void CAniToolScene1::RenderText(HDC hdc)
 {
 	SetTextAlign(hdc, TA_LEFT);
@@ -225,35 +180,6 @@ void CAniToolScene1::RenderText(HDC hdc)
 	TextOut(hdc, 1, 80, tch, (int)_tcslen(tch));
 }
 
-void CAniToolScene1::SaveMapBox(const wstring& _strRelativePath)
-{
-	// 상대경로를 현 함수의 인자로 받아 절대경로 세팅
-	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
-	strFilePath += _strRelativePath;
-
-	// 파일 포인터 생성 
-	FILE* pFile = nullptr;
-
-	_wfopen_s(&pFile, strFilePath.c_str(), L"wb");
-	if (pFile == nullptr)
-		return;
-
-	for (vector <Box*>::iterator iter = m_vecBox.begin(); iter != m_vecBox.end(); ++iter)
-	{
-		if ((*iter) != nullptr)
-		{
-			fwrite(&((*iter)->point1->x), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->point1->y), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->point2->x), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->point2->y), sizeof(LONG), 1, pFile);
-		}
-	}
-
-	cout << "\nFile Save Success!\n";
-
-	fclose(pFile);
-
-}
 
 void CAniToolScene1::SaveMapFrame(const wstring& _strRelativePath)
 {
@@ -261,52 +187,24 @@ void CAniToolScene1::SaveMapFrame(const wstring& _strRelativePath)
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 	strFilePath += _strRelativePath;
 
-	// 파일 포인터 생성 
-	FILE* pFile = nullptr;
-
-	_wfopen_s(&pFile, strFilePath.c_str(), L"wb");
-	if (pFile == nullptr)
-		return;
-
-	//
-	// 스테이트 개수 저장
-	int size = m_vecState.size();
-	fwrite(&(size), sizeof(UINT), 1, pFile);
-
-	// 스테이트 이름 저장 
-	for (vector<wstring>::iterator iter = m_vecState.begin(); iter != m_vecState.end(); ++iter)
-	{
-		if ((*iter) != L"")
-		{
-			fwrite(&(*iter), sizeof(*iter), 1, pFile);
-		}
-	}
-
-	int k = 0;
-	//
-
-
-
-
+	wofstream ofs(strFilePath, ios::out | ios::trunc);
 	for (vector <Frame*>::iterator iter = m_vecFrame.begin(); iter != m_vecFrame.end(); ++iter)
 	{
 		if ((*iter) != nullptr)
 		{
-			fwrite(&((*iter)->State), sizeof((*iter)->State), 1, pFile);
-			fwrite(&((*iter)->Body), sizeof(UINT), 1, pFile);
-			fwrite(&((*iter)->point1->x), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->point1->y), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->point2->x), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->point2->y), sizeof(LONG), 1, pFile);
-			fwrite(&((*iter)->Pivot.x), sizeof(float), 1, pFile);
-			fwrite(&((*iter)->Pivot.y), sizeof(float), 1, pFile);
-			fwrite(&((*iter)->Duration), sizeof(float), 1, pFile);
+
+			ofs << (*iter)->State << endl
+				<< (*iter)->Body << endl
+				<< (*iter)->point1->x << endl
+				<< (*iter)->point1->y << endl
+				<< (*iter)->point2->x << endl
+				<< (*iter)->point2->y << endl
+				<< (*iter)->Pivot.x << endl
+				<< (*iter)->Pivot.y << endl
+				<< (*iter)->Duration << endl << endl;
 		}
 	}
-
-	cout << "\nFile Save Success!\n";
-
-	fclose(pFile);
+	ofs.close();
 }
 
 
@@ -323,12 +221,15 @@ void CAniToolScene1::AddvecFrame()
 			{
 				m_ptTemp1 = new POINT{ LONG(vClickPos.x), LONG(vClickPos.y) }; // (O, X)
 
+				if (m_ptTemp1->x < 0) // x값이 음수일 경우 에러를 방지하기 위해, 0으로 강제 세팅 
+					m_ptTemp1->x = 0;
+
 			}
 			else // (O, X)
 			{
 				m_ptTemp2 = new POINT{ LONG(vClickPos.x), LONG(vClickPos.y) }; // (O, O)
 
-				Frame* temp = new Frame{ m_wstrCurState, UINT(m_Curbody), m_ptTemp1, m_ptTemp2, Vector2(0.f, 0.f), 0.01f };
+				Frame* temp = new Frame{ m_wstrCurState, UINT(m_Curbody), m_ptTemp1, m_ptTemp2, Vector2(0.f, 0.f), 0.1f };
 				m_vecFrame.push_back(temp);
 
 				m_ptTemp1 = nullptr;

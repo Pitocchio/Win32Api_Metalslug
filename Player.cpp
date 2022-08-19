@@ -65,8 +65,8 @@ void CPlayer::Init()
 	// Animator
 	m_pAnimator->SetOwnerObj(this);
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoAniSample.bmp"); // 애니메이션 테스트 (애니메이션 파일 불러옴)
-	GetAnimator()->CreateAnimation(L"WALK_DOWN", m_pTex, Vector2(0.f, 0.f), Vector2(35.5f, 43.f), Vector2(35.5f, 0.f), 0.1f, 14); 
-	GetAnimator()->PlayAnimation(L"WALK_DOWN", true);
+	//GetAnimator()->CreateAnimation(L"WALK_DOWN", m_pTex, Vector2(0.f, 0.f), Vector2(35.5f, 43.f), Vector2(35.5f, 0.f), 0.1f, 14); 
+	//GetAnimator()->PlayAnimation(L"WALK_DOWN", true);
 	//GetAnimator()->FindAnimation(L"WALK_DOWN")
 	
 

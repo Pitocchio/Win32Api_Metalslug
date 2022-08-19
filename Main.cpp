@@ -215,14 +215,20 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 // =========== ANITOOL 1 ========== //
                 case IDC_BTN_ANITOOL1_LOAD:
                 {
-                    TCHAR tchFile[BSIZE]{};
-                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_FILE, tchFile, BSIZE);
-                    wstring wstrFile(&tchFile[0]); // texture\Tarma.bmp 입력
+                    //TCHAR tchFile[BSIZE]{};
+                    //GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_FILE, tchFile, BSIZE);
+                    //wstring wstrFile(&tchFile[0]); // texture\Tarma.bmp 입력
 
 
-                    TCHAR tchKeyName[BSIZE]{};
-                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_KEYNAME, tchKeyName, BSIZE);
-                    wstring wstrKeyName(&tchKeyName[0]);
+                    //TCHAR tchKeyName[BSIZE]{};
+                    //GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_KEYNAME, tchKeyName, BSIZE);
+                    //wstring wstrKeyName(&tchKeyName[0]);
+
+
+                    // 자동 로드
+                    wstring wstrKeyName = L"texture\\Tarma.bmp";
+                    wstring wstrFile = L"Tarma";
+
 
                     dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrFile);
 
@@ -275,7 +281,7 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 // =========== ANITOOL 2 ========== //
                 case IDC_BTN_ANITOOL2_LOAD:
                 {
-                    TCHAR tchPath[BSIZE]{};
+                   /* TCHAR tchPath[BSIZE]{};
                     TCHAR tchKeyName[BSIZE]{};
                     TCHAR tchDat[BSIZE]{};
 
@@ -284,10 +290,13 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_NAME, tchKeyName, BSIZE);
                     wstring wstrKeyName(&tchKeyName[0]);
                     GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_DAT, tchDat, BSIZE);
-                    wstring wstrDatPath(&tchDat[0]);
+                    wstring wstrDatPath(&tchDat[0]);*/
 
-                    /*dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrTexPath);
-                    dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->SetData(wstrDatPath);*/
+                    // 자동 로드 설정 
+                    wstring wstrTexPath = L"texture\\Tarma.bmp";
+                    wstring wstrKeyName = L"Tarma";
+                    wstring wstrDatPath = L"sample2.txt";
+                  
 
                     dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->CreateAnimation(wstrKeyName, wstrTexPath, wstrDatPath);
                     // 여기서 애니메이션 생성 호출 

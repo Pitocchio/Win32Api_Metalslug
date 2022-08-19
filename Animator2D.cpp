@@ -5,6 +5,7 @@ CAnimator2D::CAnimator2D()
 	: m_pOwnerObj(nullptr)
 	, m_pCurAni(nullptr)
 	, m_bRepeat(false)
+	, m_pTex(nullptr)
 {
 }
 
@@ -42,25 +43,19 @@ void CAnimator2D::Render(HDC hdc) // 현재 애니메이션을 렌더
 	}
 }
 
-void CAnimator2D::CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, Vector2 _vSliceSize, 
-									Vector2 _vStep, float fDuration, UINT _iFrameCount)
-{
-	CAnimation2D* pAni = FindAnimation(_strName);
-	assert(pAni == nullptr);
-
-	pAni = new CAnimation2D;
-
-	pAni->SetName(_strName);
-	pAni->SetOwnerObj(this);  // 만들어진 애니메이션들도 애니메이터를 알아야 함
-	pAni->Create(_pTex, _vLT, _vSliceSize, _vStep, fDuration, _iFrameCount);
-
-	m_mapAni.insert(make_pair(_strName, pAni));
-}
-
-//
-//void CAnimator2D::CreateAnimation_Test()
+//void CAnimator2D::CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, Vector2 _vSliceSize, 
+//									Vector2 _vStep, float fDuration, UINT _iFrameCount)
 //{
-//	m_vecFrm
+//	CAnimation2D* pAni = FindAnimation(_strName);
+//	assert(pAni == nullptr);
+//
+//	pAni = new CAnimation2D;
+//
+//	pAni->SetName(_strName);
+//	pAni->SetOwnerObj(this);  // 만들어진 애니메이션들도 애니메이터를 알아야 함
+//	pAni->Create(_pTex, _vLT, _vSliceSize, _vStep, fDuration, _iFrameCount);
+//
+//	m_mapAni.insert(make_pair(_strName, pAni));
 //}
 
 
@@ -94,72 +89,66 @@ void CAnimator2D::SetData(const wstring& _strRelativePath)
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 	strFilePath += _strRelativePath;
 
-	// 파일 포인터 생성 
-	FILE* pFile = nullptr;
+	wifstream wifs;
+	wifs.open(strFilePath, ios::in);
 
-	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
-	if (pFile == nullptr)
-		return;
-
-	POINT pt1 = {};
-	POINT pt2 = {};
-	wstring state;
-	UINT body;
-	Vector2 pivot;
-	float duration;
-
-
-	// 스테이트 개수, 이름등 먼저 저장 
-	int StateSize;
-
-	fread(&StateSize, sizeof(StateSize), 1, pFile);
-
-	for (int i = 0; i < StateSize; ++i)
+	if (wifs.is_open())
 	{
-		wstring temp;
-		fread(&temp, sizeof(temp), 1, pFile);
-		m_vecStateName.push_back(temp);
-	}
-	
+		while (!wifs.eof())
+		{		
+			WCHAR str[256];
+			wifs.getline(str, 256);
+			wstring state(&str[0]);
+
+			wifs.getline(str, 64);
+			UINT body = _wtoi(str);
+
+			wifs.getline(str, 64);
+			int pt1x = _wtoi(str);
+			wifs.getline(str, 64);
+			int pt1y = _wtoi(str);
+			wifs.getline(str, 64);
+			int pt2x = _wtoi(str);
+			wifs.getline(str, 64);
+			int pt2y = _wtoi(str);
+			POINT pt1; 
+			pt1.x = pt1x;
+			pt1.y = pt1y;
+			POINT pt2;
+			pt2.x = pt2x;
+			pt2.y = pt2y;
+			
+		
+			wifs.getline(str, 64);
+			float pvx = _wtof(str);
+			wifs.getline(str, 64);
+			float pvy = _wtof(str);
+			Vector2 pivot = { pvx, pvy };
+
+			wifs.getline(str, 64);
+			float duration = _wtof(str);
+
+			wifs.getline(str, 64);
 
 
-	while (feof(pFile) == 0)
-	{
+			if (wifs.eof())
+				break;
 
-		fread(&state, sizeof(state), 1, pFile);
-		fread(&body, sizeof(UINT), 1, pFile);
-
-		fread(&pt1.x, sizeof(LONG), 1, pFile);
-		fread(&pt1.y, sizeof(LONG), 1, pFile);
-		fread(&pt2.x, sizeof(LONG), 1, pFile);
-		fread(&pt2.y, sizeof(LONG), 1, pFile);
-		fread(&pivot.x, sizeof(pivot.x), 1, pFile);
-		fread(&pivot.y, sizeof(pivot.y), 1, pFile);
-		fread(&duration, sizeof(duration), 1, pFile);
-
-
-		if (feof(pFile) != 0)
-		{
-			fclose(pFile);
-			break;
+			Frm* temp = new Frm{ state, body, pt1, pt2, pivot, duration };
+			m_vecFrm.push_back(temp);
 		}
-	
-
-
-		Frm* temp = new Frm{ state, body, pt1, pt2, pivot, duration };
-		m_vecFrm.push_back(temp);
+		wifs.close();
 	}
-
-	//fclose(pFile);
 }
 
 void CAnimator2D::SetTexture(const wstring& _strKeyName, const wstring& _strFilePath)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(_strKeyName, _strFilePath);
-
+	
+	int k = 0;
 }
 
-void CAnimator2D::CreateAnimation_Test()
+void CAnimator2D::CreateAnimation()
 {
 	// Animation을 만들기 위해 인자로 용이하게 전달하기 위한 map 생성
 	map<wstring, vector<Frm*>> mapTemp;
@@ -181,13 +170,11 @@ void CAnimator2D::CreateAnimation_Test()
 		}
 	}
 
-
-
 	for (iterT = mapTemp.begin(); iterT != mapTemp.end(); ++iterT)
 	{
-		CAnimation2D* pAni = new CAnimation2D();
-
-		pAni->Create_Test((*iterT).first, &(*iterT).second); // 애니메이션을 생성해라!
+		CAnimation2D* pAni = new CAnimation2D;
+		pAni->SetTexture(m_pTex);
+		pAni->Create((iterT->first), &(iterT->second)); // 애니메이션을 생성해라!
 
 		m_mapAnim.insert(make_pair((*iterT).first, pAni)); // 최종 애니메이션 맵 (얘가 모든 애니메이션을 들고 있음)
 	}

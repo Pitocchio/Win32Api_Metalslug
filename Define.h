@@ -45,4 +45,4 @@
 
 
 
-#define BSIZE 256
+#define BSIZE 512
