@@ -37,32 +37,25 @@ public: // Methods
 
 
 
+public:	
+	void SetData(const wstring& _strRelativePath);
+	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);
+	void CreateAnimation();
+	CAnimation2D* GetCurAni() { return m_pCurAni; }
+
+
 
 private: // Variables
 	CObject*						m_pOwnerObj;
 	map<wstring, CAnimation2D*>		m_mapAni;	// 모든 애니메이션
 	CAnimation2D*					m_pCurAni;	// 현재 재생 중인 애니메이션 
-	bool							m_bRepeat;	// 반복재생 여부
+	//bool							m_bRepeat;	// 반복재생 여부
 
-	// 497(35.5) X 43
-	// 가로, 세로
-
-
-
-	// ====================== Test ====================== // 
-
-private:
 	vector<Frm*>									m_vecFrm;
 	vector<wstring>								m_vecStateName;
 	map<wstring, CAnimation2D*>					m_mapAnim;
 
-private:
+
 	CTexture*									m_pTex;
-
-public:	
-	void SetData(const wstring& _strRelativePath);
-	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);
-	void CreateAnimation();
-
 };
 

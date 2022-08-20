@@ -30,11 +30,13 @@ void CAniToolScene2::Update()
 	m_ptMousePos = CInputMgr::GetInst()->GetMousePos();
 
 	if (m_pAnimator != nullptr)
+		EditFrm();
+
+	if (m_pAnimator != nullptr)
 		m_pAnimator->Update();
 
 	if (CheckSceneChange()) // Check Scene Change
 		return;
-
 }
 
 
@@ -90,15 +92,111 @@ void CAniToolScene2::Exit()
 
 bool CAniToolScene2::CheckSceneChange()
 {
+	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::DOWN)
+	//{
+	//	CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::MAPTOOL);
+	//	return true;
+	//}
+	//else
+	//{
+	//	return false;
+	//}
+
+	return false;
+}
+
+void CAniToolScene2::EditFrm()
+{
+	CAnimation2D* pCurAni = m_pAnimator->GetCurAni();
+
+	if (pCurAni == nullptr)
+		return;
+
+	int k = 0;
+
+
+	Vector2 vPivot (0,0);
+
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::NUM2) == KEY_STATE::HOLD)
+	{
+		/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::CTRL) == KEY_STATE::HOLD)
+			vPivot.y = 1;
+		else
+			vPivot.y = 5;*/
+		vPivot.y = 0.5;
+		pCurAni->SetPivot(vPivot);
+
+	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::NUM4) == KEY_STATE::HOLD)
+	{
+		/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::CTRL) == KEY_STATE::HOLD)
+			vPivot.x = -1;
+		else
+			vPivot.x = -5;*/
+		vPivot.x = -0.5;
+		pCurAni->SetPivot(vPivot);
+
+	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::NUM6) == KEY_STATE::HOLD)
+	{
+		/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::CTRL) == KEY_STATE::HOLD)
+			vPivot.x = 1;
+		else
+			vPivot.x = 5;*/
+		vPivot.x = 0.5;
+		pCurAni->SetPivot(vPivot);
+
+	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::NUM8) == KEY_STATE::HOLD)
+	{
+		/*if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::CTRL) == KEY_STATE::HOLD)
+			vPivot.y = -1;
+		else
+			vPivot.y = -5;*/
+		vPivot.y = -0.5;
+		pCurAni->SetPivot(vPivot);
+	}
+
+
+
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::CTRL) == KEY_STATE::DOWN)
+	{
+		pCurAni->SetCurBody();
+	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SHIFT) == KEY_STATE::DOWN)
+	{
+		// 좌우 플립
+	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::DOWN)
 	{
-		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::MAPTOOL);
-		return true;
+		// 애니메이션 재생, 일시정지 토글 - 현재 프레임에서 Stop할 수 있는 기능 
+
+		pCurAni->PlayAniToggle();
 	}
-	else
+
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::DOWN)
 	{
-		return false;
+		// 이전 스테이트
+		pCurAni->PlusMinusFrm(-1);
 	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::DOWN)
+	{
+		// 다음 스테이트 
+		pCurAni->PlusMinusFrm(1);
+	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::DOWN)
+	{
+		float fTime = -0.1f;
+		pCurAni->SetFrmTime(fTime);
+	}
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::DOWN)
+	{
+		float fTime = 0.1f;
+		pCurAni->SetFrmTime(fTime);
+	}
+
+	
+
 }
 
 void CAniToolScene2::RenderText(HDC hdc)
@@ -125,60 +223,7 @@ void CAniToolScene2::RenderText(HDC hdc)
 	TextOut(hdc, 1, 80, tch, (int)_tcslen(tch));
 
 }
-//
-//void CAniToolScene2::SetData(const wstring& _strRelativePath)
-//{
-//
-//	// 상대경로를 현 함수의 인자로 받아 절대경로 세팅
-//	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
-//	strFilePath += _strRelativePath;
-//
-//	// 파일 포인터 생성 
-//	FILE* pFile = nullptr;
-//
-//	_wfopen_s(&pFile, strFilePath.c_str(), L"rb");
-//	if (pFile == nullptr)
-//		return;
-//
-//	POINT pt1 = {};
-//	POINT pt2 = {};
-//	wstring state;
-//	UINT body;
-//	Vector2 pivot;
-//	float duration;
-//
-//	while (feof(pFile) == 0)
-//	{
-//
-//		fread(&state, sizeof(state), 1, pFile);
-//		fread(&body, sizeof(UINT), 1, pFile);
-//
-//		fread(&pt1.x, sizeof(LONG), 1, pFile);
-//		fread(&pt1.y, sizeof(LONG), 1, pFile);
-//		fread(&pt2.x, sizeof(LONG), 1, pFile);
-//		fread(&pt2.y, sizeof(LONG), 1, pFile);
-//		fread(&pivot.x, sizeof(pivot.x), 1, pFile);
-//		fread(&pivot.y, sizeof(pivot.y), 1, pFile);
-//		fread(&duration, sizeof(duration), 1, pFile);
-//
-//
-//		if (feof(pFile) != 0)
-//		{
-//			break;
-//		}
-//
-//
-//		Frm* temp = new Frm{ state, body, pt1, pt2, pivot, duration };
-//		m_vecFrm.push_back(temp);
-//	}
-//
-//	fclose(pFile);
-//}
-//
-//void CAniToolScene2::SetTexture(const wstring& _strKeyName, const wstring& _strFilePath)
-//{
-//	m_pTex = CResMgr::GetInst()->LoadTexture(_strKeyName, _strFilePath);
-//}
+
 
 void CAniToolScene2::CreateAnimation(const wstring& _strKeyName, const wstring& _strTexPath, const wstring& _strDataPath)
 {

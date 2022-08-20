@@ -143,6 +143,9 @@ enum class KEY_STATE {
 };
 
 enum class KEY_TYPE {
+
+	NUM0, NUM1, NUM2, NUM3, NUM4, NUM5, NUM6, NUM7, NUM8, NUM9,
+
 	LEFT,
 	RIGHT,
 	UP,
@@ -150,6 +153,8 @@ enum class KEY_TYPE {
 	SPACE,
 	ESC,
 	ENTER,
+
+	CTRL, SHIFT,
 
 	Q,
 	W,

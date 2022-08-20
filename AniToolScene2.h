@@ -19,24 +19,19 @@ public: // Lifecycle
 private: // Methods
 	void ScrollMouse();
 	bool CheckSceneChange();
-
+	void EditFrm();
 	void RenderText(HDC hdc);
 
 private: // Variables
 	POINT m_ptMousePos;
 
-
-
-	// Test
 	CAnimator2D* m_pAnimator;
 	CTexture* m_pTex;
-
 
 	vector<Frm*> m_vecFrm; 
 
 public:
-	/*void SetData(const wstring& _strRelativePath);
-	void SetTexture(const wstring& _strKeyName, const wstring& _strFilePath);*/
+
 
 	void CreateAnimation(const wstring& _strKeyName, const wstring& _strTexPath, const wstring& _strDataPath);
 };

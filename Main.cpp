@@ -98,7 +98,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; 
 
  
-   HWND hWnd = CreateWindowW(szWindowClass, L"MetalSlug3", WS_OVERLAPPEDWINDOW,
+   HWND hWnd = CreateWindowW(szWindowClass, L"METALSLUG3", WS_OVERLAPPEDWINDOW,
        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    // for Core
@@ -225,12 +225,12 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     //wstring wstrKeyName(&tchKeyName[0]);
 
 
-                    // 자동 로드
-                    wstring wstrKeyName = L"texture\\Tarma.bmp";
-                    wstring wstrFile = L"Tarma";
+                    // 자동 로드 wstrFile
+                    wstring wstrFilepath = L"texture\\Tarma.bmp";
+                    wstring wstrKeyName = L"Tarma";
 
 
-                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrFile);
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrFilepath);
 
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();
@@ -239,11 +239,13 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 case IDC_BTN_ANITOOL1_SAVE:
                 {
-                    TCHAR tchTemp[BSIZE]{};
+                   /* TCHAR tchTemp[BSIZE]{};
                     GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_SAVE, tchTemp, BSIZE);
-                    wstring wstrTemp(&tchTemp[0]); 
+                    wstring wstrDatPath(&tchTemp[0]);*/
 
-                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapFrame(wstrTemp);
+                    wstring wstrDatPath = L"TARMA_PISTOL_BASIC_MOVE_ST.txt";
+
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapFrame(wstrDatPath);
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();
                     EndDialog(g_hDlg, 0);
@@ -295,7 +297,7 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                     // 자동 로드 설정 
                     wstring wstrTexPath = L"texture\\Tarma.bmp";
                     wstring wstrKeyName = L"Tarma";
-                    wstring wstrDatPath = L"sample2.txt";
+                    wstring wstrDatPath = L"TARMA_PISTOL_BASIC_MOVE_ST.txt";
                   
 
                     dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->CreateAnimation(wstrKeyName, wstrTexPath, wstrDatPath);

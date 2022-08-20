@@ -4,7 +4,7 @@
 CAnimator2D::CAnimator2D()
 	: m_pOwnerObj(nullptr)
 	, m_pCurAni(nullptr)
-	, m_bRepeat(false)
+	//, m_bRepeat(false)
 	, m_pTex(nullptr)
 {
 }
@@ -24,7 +24,7 @@ void CAnimator2D::Update() // 현재 애니메이션을 업데이트
 	{
 		m_pCurAni->Update();
 
-		if (m_bRepeat && m_pCurAni->IsFinish())
+		if (m_pCurAni->IsRepeat() && m_pCurAni->IsFinish())
 		{
 			m_pCurAni->SetFrame(0);
 		}
@@ -74,7 +74,7 @@ CAnimation2D* CAnimator2D::FindAnimation(const wstring& _strName)
 void CAnimator2D::PlayAnimation(const wstring& _strName, bool _bRepeat)
 {
 	m_pCurAni = FindAnimation(_strName);
-	m_bRepeat = _bRepeat;
+	//m_bRepeat = _bRepeat;
 }
 
 void CAnimator2D::SetOwnerObj(CObject* obj)
