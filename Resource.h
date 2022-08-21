@@ -20,6 +20,7 @@
 #define IDD_DIALOG_ANITOOL1_CHANGE_STATE 134
 #define IDD_DIALOG_ANITOOL1_CHANGE_BODY 135
 #define IDD_DIALOG_ANITOOL2_LOAD        136
+#define IDD_DIALOG_ANITOOL2_SAVE        137
 #define IDC_EDIT_LOAD                   1001
 #define IDC_EDIT_ANITOOL1_LOAD          1001
 #define IDC_EDIT_ANITOOL2_LOAD_DAT      1001
@@ -38,7 +39,10 @@
 #define IDC_RADIO_ANITOOL1_CHANGE_BODY_BOT 1012
 #define IDC_EDIT_ANITOOL2_LOAD_PATH     1013
 #define IDC_BTN_ANITOOL2_LOAD           1014
-#define IDC_EDIT_ANITOOL2_LOAD_NAME     1015
+#define IDC_BTN_ANITOOL2_SAVE           1015
+#define IDC_EDIT_ANITOOL2_LOAD_PATH2    1015
+#define IDC_EDIT_ANITOOL2_SAVE_PATH     1016
+#define IDC_EDIT_ANITOOL2_LOAD_NAME     1017
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_FILE_LOAD                    32773
@@ -52,6 +56,8 @@
 #define ID_ANITOOL1_SAVE                32781
 #define ID_ANIMATION_LOAD               32782
 #define ID_ANITOOL2_LOAD                32783
+#define ID_ANIMATION_SAVE               32784
+#define ID_ANITOOL2_SAVE                32785
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -60,8 +66,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        135
-#define _APS_NEXT_COMMAND_VALUE         32784
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_COMMAND_VALUE         32786
+#define _APS_NEXT_CONTROL_VALUE         1018
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

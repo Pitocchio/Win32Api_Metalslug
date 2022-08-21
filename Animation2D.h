@@ -18,24 +18,14 @@ public: // Methods
 	const wstring& GetName() { return m_strName; }
 	void SetOwnerObj(CAnimator2D* _pAni){ m_pAnimator = _pAni; }
 	void SetFrame(int _iFrameIdx);
-
 	void RenderText(HDC hdc);
 
-	//AniFrame& GetFrame(int _iFrameIdx) { return m_vecFrame[_iFrameIdx]; }
-	//void Create(CTexture* _pTex, Vector2 _vLT, Vector2 _vSliceSize, Vector2 _vStep, float fDuration, UINT _iFrameCount);
-	/*bool IsFinish() { return m_bFinish; }*/
 
-	//int GetMaxFrame() { return (int)m_vecFrame.size(); }
-
-
-public: 
 	void Create(wstring _strState, vector<Frm*>* _listFrm);
 	bool IsFinish() { return m_bTopFinish; }
 	void SetTexture(CTexture* _Tex) { m_pTex = _Tex; }
 
 
-
-	// for Edit Scene
 	void SetCurBody()
 	{
 		if (m_iCurBody == 1)
@@ -47,8 +37,14 @@ public:
 	void SetCurEditFrm();
 	void SetFrmTime(float _fTime);
 	void SetPivot(Vector2 _vec);
+	void FlipX();
 	void PlayAniToggle();
 	void PlusMinusFrm(int _ival);
+
+
+	// for Save
+	vector<Frm*> GetTop() { return m_vecTopFrm; }
+	vector<Frm*> GetBot() { return m_vecBotFrm; }
 
 private: // Variables
 
@@ -68,10 +64,11 @@ private: // Variables
 	float				m_fBotAccTime;
 	bool				m_bBotFinish;
 
+	bool				m_bRepeat; // 반복 여부 
+	bool				m_bFlipX;
 
 	// for Edit Scene
 	UINT				m_iCurBody; // Top과 Bot중에 어떤 것을 컨트롤 할 건지
-	bool				m_bRepeat; // 반복 여부 
 	Frm*				m_CurEditFrm; 
 	bool				m_bStopAni;
 	int					m_iSetStateValue;

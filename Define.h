@@ -34,12 +34,12 @@
 #define PROJECILE_POS_Y 500
 
 
-#define LIMIT_FPS 60.f
+#define LIMIT_FPS 30.f
 
 
 
 
-#define MOUSE_SPEED 100000
+#define MOUSE_SPEED 50000
 
 
 

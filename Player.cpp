@@ -14,7 +14,6 @@ CPlayer::~CPlayer()
 void CPlayer::Init()
 {
 	CObject::Init(); // 부모, 즉 CObject Init()먼저 호출해서 transform이랑 collider 넣어줌 
-	CMoveobj::Init();
 
 	// Component - Transform
 	m_pTransform->SetOwnerObj(this);
@@ -23,18 +22,13 @@ void CPlayer::Init()
 	m_pTransform->SetAngle(NULL);
 
 	// Component - Collider
-	m_pCollider->SetOwnerObj(this);
+	/*m_pCollider->SetOwnerObj(this);
 	m_pCollider->SetIsColliderType(COLLIDER_TYPE::BOX2D);
 	m_pCollider->SetOffset(Vector2(PLAYER_POS_X, PLAYER_POS_Y));
 	dynamic_cast<CBoxCollider2D*>(m_pCollider)->SetSize(Vector2(PLAYER_SIZE_STAND_X - int(PLAYER_SIZE_STAND_X * 0.2f), PLAYER_SIZE_STAND_Y - int(PLAYER_SIZE_STAND_Y * 0.2f)));
-	m_pCollider->SetIsActive(true);
+	m_pCollider->SetIsActive(true);*/
 
-	// Component - Rigidbody
-	m_pRigidbody->SetMass(1.f);
-	m_pRigidbody->SetGround(false);
 
-	m_iPrevDir = 1;
-	m_iCurDir = 1;
 	m_fSpeed = MOVEOBJ_SPEED;
 
 	m_ObjectState = OBJECT_STATE::IDLE; // 이거 안쓴다
@@ -43,13 +37,7 @@ void CPlayer::Init()
 	m_eCurState = OBJECT_STATE::IDLE; // 이거 두개 쓴다
 	m_ePrevState = OBJECT_STATE::IDLE;
 
-	m_curWeapon = ATTACKOBJ_WEAPON_TYPE::BASICGUN;
-	m_iLife = 3;
-
-	m_iBulletCount = 1000;
-	m_iGrenadeCount = 10;
-
-
+	
 
 
 	// =========================================================== //
@@ -58,16 +46,17 @@ void CPlayer::Init()
 
 
 	// temp (텍스처 로딩)
-	//m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp"); // 플레이어 원본 
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Marco.bmp"); // 플레이어 원본 
 
 
 
-	// Animator
+	// Animator (완료)
 	m_pAnimator->SetOwnerObj(this);
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\MarcoAniSample.bmp"); // 애니메이션 테스트 (애니메이션 파일 불러옴)
-	//GetAnimator()->CreateAnimation(L"WALK_DOWN", m_pTex, Vector2(0.f, 0.f), Vector2(35.5f, 43.f), Vector2(35.5f, 0.f), 0.1f, 14); 
-	//GetAnimator()->PlayAnimation(L"WALK_DOWN", true);
-	//GetAnimator()->FindAnimation(L"WALK_DOWN")
+	m_pAnimator->SetTexture(L"Tarma", L"texture\\Tarma.bmp");
+	m_pAnimator->SetData(L"animation\\edit2\\Tarma.txt");
+	m_pAnimator->CreateAnimation();
+	m_pAnimator->PlayFirstAnimation();
+
 	
 
 
@@ -107,9 +96,6 @@ void CPlayer::Init()
 
 	// 용하형 라인 충돌 
 	m_fSpeed = 0.f;
-	m_bIsDead = false;
-	m_fAngle = 0.f;
-	m_bInit = false;
 	m_iCheckLine = 0;
 	m_fSlope = 0.f;
 	m_tInfo.fX = 100.f;
@@ -118,22 +104,10 @@ void CPlayer::Init()
 	m_tInfo.fCY = 100.f;
 	m_fSpeed = 20.f;
 	m_fFall = 0.f;
-	m_fGrav = 100.f;
-	CheckSpeed = 0.f;
+	m_fGrav = 70.f;
 	m_fJumpSpeed = 10.f;
 	fJumpStart = 0.f;
 	m_bJump = false;
-
-
-
-
-	// ============= Animation ============== //
-
-
-
-
-
-
 }
 
 void CPlayer::LateInit()
@@ -169,7 +143,9 @@ void CPlayer::Update()
 	else if (GetAsyncKeyState(VK_RIGHT) == 0 && GetAsyncKeyState(VK_LEFT) == 0)
 		m_fSpeed = 10.f;
 
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::DOWN)
+
+	// 점프
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SPACE) == KEY_STATE::DOWN) // 스페이스 누르면 점프 시작
 	{
 		m_fJumpSpeed = 20.f;
 		fJumpStart = m_tInfo.fY;
@@ -181,6 +157,7 @@ void CPlayer::Update()
 		m_fJumpSpeed -= (m_fJumpSpeed - 0.f) / m_fGrav;
 		m_tInfo.fY -= m_fJumpSpeed;
 	}
+	
 
 	//for (auto& iter : CMapLineMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
 	for (auto& iter : CMapObjMgr::GetInst()->GetVecLine()) // 라인 벡터 순회
@@ -196,92 +173,68 @@ void CPlayer::Update()
 
 	GetAnimator()->Update();
 
-	//Move();
-
-	//Update_state();
-	//Update_animation();
-
-
-
-	//// 어떤 어택인지 어택 타입 값 받아서 그에 맞는 어택 구현 ex 칼, 총, 수류탄
-	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::Z) == KEY_STATE::HOLD)
-	//	Attack();
+	
 }
 
 void CPlayer::LateUpdate()
 {
-	if (m_pCollider->IsCollision())
-	{
-		// 충돌한 상대 오브젝트의 오브젝트 타입을 가져온다
-		switch (m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetObjectType())
-		{
+	//if (m_pCollider->IsCollision())
+	//{
+	//	// 충돌한 상대 오브젝트의 오브젝트 타입을 가져온다
+	//	switch (m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetObjectType())
+	//	{
 
-			// LineCollider
-		case OBJECT_TYPE::C_CAMERACOLLIDER:
-		{
-			m_pRigidbody->SetGround(true);
+	//		// LineCollider
+	//	case OBJECT_TYPE::C_CAMERACOLLIDER:
+	//	{
+	//		//m_pRigidbody->SetGround(true);
 
-			Vector2 vVel = m_pRigidbody->GetVelocity();
-			m_pRigidbody->InitForce();
+	//		Vector2 vVel = m_pRigidbody->GetVelocity();
+	//		m_pRigidbody->InitForce();
 
-			Vector2 vObjPos = m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetPos();
-			Vector2 vObjSize = m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetSize();
+	//		Vector2 vObjPos = m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetPos();
+	//		Vector2 vObjSize = m_pCollider->GetOtherObjCol()->GetOwnerObj()->GetSize();
 
-			Vector2 vPos = m_pTransform->GetPos();
-			Vector2 vSize = m_pTransform->GetSize();
+	//		Vector2 vPos = m_pTransform->GetPos();
+	//		Vector2 vSize = m_pTransform->GetSize();
 
-			float fLen = abs(vObjPos.y - vPos.y);
-			float fValue = (vObjSize.y * 0.5f + vSize.y * 0.5f) - fLen;
+	//		float fLen = abs(vObjPos.y - vPos.y);
+	//		float fValue = (vObjSize.y * 0.5f + vSize.y * 0.5f) - fLen;
 
-			Vector2 vOffset = m_pCollider->GetOffset();
+	//		Vector2 vOffset = m_pCollider->GetOffset();
 
-			m_pTransform->SetPos(Vector2(vPos.x, vPos.y - fValue));
-			m_pCollider->SetOffset(Vector2(vOffset.x, vOffset.y - fValue));
-
-
-		}
-		break;
+	//		m_pTransform->SetPos(Vector2(vPos.x, vPos.y - fValue));
+	//		m_pCollider->SetOffset(Vector2(vOffset.x, vOffset.y - fValue));
 
 
-		// MoveObj
-		case OBJECT_TYPE::M_ZOMBIE_LIQUID:
-			CEventMgr::GetInst()->DeleteObject(this);
-			break;
-		case OBJECT_TYPE::M_REBEL_GRENADE:
-			CEventMgr::GetInst()->DeleteObject(this);
-			break;
+	//	}
+	//	break;
 
 
-		}
-	}
+	//	// MoveObj
+	//	case OBJECT_TYPE::M_ZOMBIE_LIQUID:
+	//		CEventMgr::GetInst()->DeleteObject(this);
+	//		break;
+	//	case OBJECT_TYPE::M_REBEL_GRENADE:
+	//		CEventMgr::GetInst()->DeleteObject(this);
+	//		break;
 
-	m_pRigidbody->InitForce();
-	m_pRigidbody->InitAccelAlpha();
-	m_pRigidbody->InitAccel();
-	m_ePrevState = m_eCurState;
-	m_iPrevDir = m_iCurDir;
+
+	//	}
+	//}
+
+	////m_pRigidbody->InitForce();
+	//m_pRigidbody->InitAccelAlpha();
+	//m_pRigidbody->InitAccel();
+	//m_ePrevState = m_eCurState;
+	////m_iPrevDir = m_iCurDir;
 }
 
 void CPlayer::Render(HDC hdc)
 {
-	UpdateRect();
+	
 
 
-
-
-	// None Animation
-	int iWidth = (int)m_pTex->Width() - 500;
-	int iHeight = (int)m_pTex->Height();
-
-	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(Vector2(m_tInfo.fX, m_tInfo.fY));
-
-	//TransparentBlt(hdc,
-	//	int(vRenderPos.x - (float)(iWidth * 0.5f)),
-	//	int(vRenderPos.y - (float)(iHeight * 0.5f)),
-	//	iWidth, iHeight,
-	//	m_pTex->GetDC(),
-	//	0, 0, iWidth, iHeight,
-	//	RGB(255, 255, 255));
 
 
 
@@ -293,6 +246,11 @@ void CPlayer::Render(HDC hdc)
 
 
 
+	int iWidth = (int)m_pTex->Width() - 500;
+	int iHeight = (int)m_pTex->Height();
+
+	Vector2 vRenderPos = CCamera::GetInst()->GetRenderPos(Vector2(m_tInfo.fX, m_tInfo.fY));
+
 
 
 
@@ -303,18 +261,18 @@ void CPlayer::Render(HDC hdc)
 	// Player Local Pos
 	TCHAR tch3[128] = {};
 	swprintf_s(tch3, L"Local Pos : %f, %f",
-		CCamera::GetInst()->GetRenderPos(GetPOS_Test()).x,
-		CCamera::GetInst()->GetRenderPos(GetPOS_Test()).y);
+		CCamera::GetInst()->GetRenderPos(GetPos()).x,
+		CCamera::GetInst()->GetRenderPos(GetPos()).y);
 	//SetBkMode(hdc, TRANSPARENT);
-	Vector2 tPos3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetPOS_Test());
+	Vector2 tPos3 = CCamera::GetInst()->GetInst()->GetRenderPos(GetPos());
 	SetTextAlign(hdc, TA_LEFT);
 	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight), tch3, _tcslen(tch3));
 
 	// Player World Pos
 	TCHAR tch4[128] = {};
 	swprintf_s(tch4, L"World Pos : %f, %f",
-		GetPOS_Test().x,
-		GetPOS_Test().y);
+		GetPos().x,
+		GetPos().y);
 	//SetBkMode(hdc, TRANSPARENT);
 	SetTextAlign(hdc, TA_LEFT);
 	TextOut(hdc, int(tPos3.x + iWidth), int(tPos3.y + iHeight + 15), tch4, _tcslen(tch4));
@@ -372,402 +330,21 @@ void CPlayer::Render(HDC hdc)
 
 }
 
-void CPlayer::Move()
-{
-	// 키 입력에 따른 힘이나 속도 부여
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::HOLD)
-	{
-		//m_pRigidbody->AddForce(MyVector2(-200.f, 0.f));
-
-		m_vLook = { -1, 0 };
-		SetPos(Vector2(GetPos().x + (m_vLook.x * MOVESPEED * fDT), GetPos().y));
-	}
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::HOLD)
-	{
-		//m_pRigidbody->AddForce(MyVector2(200.f, 0.f));
-		m_vLook = { 1, 0 };
-		SetPos(Vector2(GetPos().x + (m_vLook.x * MOVESPEED * fDT), GetPos().y));
-	}
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::DOWN)
-	{
-		//m_pRigidbody->AddVelocity(MyVector2(-200.f, 0.f));
-	}
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::DOWN)
-	{
-		//m_pRigidbody->AddVelocity(MyVector2(200.f, 0.f));
-	}
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::UP)
-	{
-		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
-	}
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::UP)
-	{
-		//m_pRigidbody->SetVelocity(MyVector2(0.f, 0.f));
-	}
-
-
-
-	//// Temp Up Down
-	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::HOLD)
-	//{
-	//	m_pRigidbody->AddForce(MyVector2(0.f, -200.f));
-	//}
-	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::HOLD)
-	//{
-	//	m_pRigidbody->AddForce(MyVector2(0.f, 200.f));
-	//}
-	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::DOWN)
-	//{
-	//	m_pRigidbody->AddVelocity(MyVector2(0.f, -200.f));
-	//}
-	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::DOWN)
-	//{
-	//	m_pRigidbody->AddVelocity(MyVector2(0.f, 200.f));
-	//}
-
-
-	// 중력 반영 
-	//if (m_bGravity)
-	//{
-	//	m_pRigidbody->ApplyGravity();
-	//}
-	////m_pRigidbody->ApplyGravity();
-
-
-	//// 현재 속도 계산 (물리적 이동에 있어 핵심적인 부분)
-	//m_pRigidbody->CalVelocity();
-
-
-
-	//// 이동 속력
-	//float fSpeed = m_pRigidbody->GetVelocity().Length();
-
-	//if (fSpeed != 0.f)
-	//{
-	//	// 이동 방향
-	//	Vector2 vDir = m_pRigidbody->GetVelocity();
-	//	vDir.Normalize();
-
-	//	// 컴포넌트 적용 (현재 플레이어 위치 = 이동방향 * 이동속력 * DT)
-	//	Vector2 vPos = m_pTransform->GetPos();
-	//	vPos += vDir * fSpeed * DT;
-
-	//	m_pTransform->SetPos(vPos);
-	//	m_pCollider->SetOffset(vPos);
-	//}
-
-
-
-
-	// 중력 적용
-	if (!m_bGround)
-	{
-		m_fGravitytime += fDT;
-		float m_Temp = GRAVITY * m_fGravitytime * fDT;
-		SetPos(Vector2(GetPos().x, GetPos().y + m_Temp));
-	}
-
-	// 충돌 판정
-	m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
-
-	Vector2 TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
-	COLORREF PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
-
-	BYTE r = GetRValue(PixRGB);
-	BYTE g = GetGValue(PixRGB);
-	BYTE b = GetBValue(PixRGB);
-
-	if (r == 0 && g == 255 && b == 0)
-		m_bCurCollision = true;
-	else
-		m_bCurCollision = false;
-
-
-
-	// 땅으로 내려 끌기
-
-	/*if (!m_bJump && !m_bGround && m_bTest)
-	{
-		while (1)
-		{
-			SetPos(Vector2(GetPos().x, GetPos().y + 1.f));
-			m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
-
-			TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
-			PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
-
-			r = GetRValue(PixRGB);
-			g = GetGValue(PixRGB);
-			b = GetBValue(PixRGB);
-
-			if ((r == 0 && g == 255 && b == 0))
-			{
-				SetPos(Vector2(GetPos().x, GetPos().y + 1.f));
-				break;
-			}
-
-			cout << m_CurPointCollider.y << endl;
-		}
-	}*/
-
-
-	// 충돌 판정 후 처리 (위로 밀어주기)
-	if (m_bCurCollision)
-	{
-		m_bGround = true;
-		m_fGravitytime = 0.f;
-		m_bTest = true;
-
-		if (!m_bPrevCollision) // OnCollision_Enter
-		{
-			if (m_CurPointCollider.y != m_PrevPointCollider.y)
-				printf("OnCollision_Enter\n\n");
-
-			//float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y) * fDT;   // 이전 Pixel Collider의 y값과 현재 Pixel Collider의 y값의 차
-			//SetPos(Vector2(GetPos().x, GetPos().y - fYgap));
-
-			while (1)
-			{
-				SetPos(Vector2(GetPos().x, GetPos().y - 1.f));
-				m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
-
-				TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
-				PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
-
-				r = GetRValue(PixRGB);
-				g = GetGValue(PixRGB);
-				b = GetBValue(PixRGB);
-
-
-				if ((r != 0 || g != 255 || b != 0))
-				{
-					SetPos(Vector2(GetPos().x, GetPos().y + 1));
-					break;
-				}
-			}
-
-		}
-		else if (m_bPrevCollision) // OnCollision_Stay
-		{
-			if (m_CurPointCollider.y != m_PrevPointCollider.y)
-				printf("OnCollision_Stay\n\n");
-
-			/*	float fYgap = abs(m_CurPointCollider.y - m_PrevPointCollider.y ) * fDT;
-				SetPos(Vector2(GetPos().x, GetPos().y - fYgap));*/
-
-			while (1)
-			{
-				SetPos(Vector2(GetPos().x, GetPos().y - 1.f));
-				m_CurPointCollider = Vector2(GetPos().x, GetPos().y + (GetSize().y * 0.5f));
-
-				TempColliderPos = CCamera::GetInst()->GetRenderPos(m_CurPointCollider);
-				PixRGB = GetPixel(CCore::GetInst()->GetMainDC(), int(TempColliderPos.x), int(TempColliderPos.y));
-
-				r = GetRValue(PixRGB);
-				g = GetGValue(PixRGB);
-				b = GetBValue(PixRGB);
-
-				//cout << "K\n";
-				if ((r != 0 || g != 255 || b != 0))
-				{
-					SetPos(Vector2(GetPos().x, GetPos().y + 1));
-					break;
-				}
-			}
-
-		}
-	}
-	else if (!m_bCurCollision)
-	{
-		m_bGround = false;
-
-		if (!m_bPrevCollision) // No Collision
-		{
-			if (m_CurPointCollider.y != m_PrevPointCollider.y)
-				printf("NoCollision\n\n");
-		}
-		else if (m_bPrevCollision) // OnCollision_Exit
-		{
-			if (m_CurPointCollider.y != m_PrevPointCollider.y)
-				printf("OnCollision_Exit\n\n");
-		}
-	}
-
-	m_PrevPointCollider = m_CurPointCollider;
-	m_bPrevCollision = m_bCurCollision;
-
-	//if (m_PointCollider.y != m_PrevColliderPos.y)
-	//{
-	//	printf("===============================================\n");
-	//	printf("Prev OBJ Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
-	//}
-
-	//if (m_bCurCollision) 
-	//{
-	//	if (!m_bPrevCollision) // OnCollision_Enter
-	//	{
-	//		if (m_PointCollider.y != m_PrevColliderPos.y)
-	//		{
-	//			printf("\n[OnCollision_Enter]\n");
-	//		}
-	//		m_fGravitytime = 0.f;
-
-	//		//float Ygap = abs(m_PointCollider.y - m_PrevColliderPos.y);
-	//		SetPos(Vector2(GetPos().x, GetPos().y  - m_Temp)); // + 3
-	//	}
-	//	else if (m_bPrevCollision) // OnCollision_Stay
-	//	{
-	//		if (m_PointCollider.y != m_PrevColliderPos.y)
-	//		{
-	//			printf("\n[OnCollision_Stay]\n");
-	//		}
-	//		m_fGravitytime = 0.f;
-
-	//		//float Ygap = abs(m_PointCollider.y - m_PrevColliderPos.y);
-	//		SetPos(Vector2(GetPos().x, GetPos().y - m_Temp)); // + 3
-
-	//	}
-	//}
-	//else
-	//{
-	//	if (!m_bPrevCollision)
-	//	{
-	//		if (m_PointCollider.y != m_PrevColliderPos.y)
-	//		{
-	//			printf("\n[NO_COLLISION]\n");
-	//		}
-	//	}
-	//	else if (m_bPrevCollision) // OnCollision_Exit
-	//	{
-	//		if (m_PointCollider.y != m_PrevColliderPos.y)
-	//		{
-	//			printf("\n[OnCollision_Exit]\n");
-	//		}
-	//	}
-
-	//	m_fGravitytime += fDT;
-	//	m_Temp = GRAVITY * m_fGravitytime * fDT;
-	//	SetPos(Vector2(GetPos().x, GetPos().y + m_Temp));
-	//	
-	//	if (m_PointCollider.y != m_PrevColliderPos.y)
-	//	{
-	//		printf("\n%f\n",m_Temp);
-	//	}
-	//	
-	//}
-
-	//if (m_PointCollider.y != m_PrevColliderPos.y)
-	//{
-	//	
-	//	printf("\nCur OBJ Pos           - X : %f, Y : %f\n\n", GetPos().x, GetPos().y);
-	//}
-
-
-
-	//m_bPrevCollision = m_bCurCollision;
-
-	//m_PrevColliderPos = m_PointCollider;
-
-
-	//if (GetRValue(PixRGB) == 0 && GetGValue(PixRGB) == 255 && GetBValue(PixRGB) == 0)
-	//{
-
-	//	if (m_PrevColliderPos.y < m_PointCollider.y)
-	//	{
-	//		cout << "========================================\n";
-	//		printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
-	//		printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
-	//		float Ygap = abs(m_PrevColliderPos.y - m_PointCollider.y);
-	//		printf("Gap               - %f\n", Ygap);
-	//		SetPos(Vector2(GetPos().x, GetPos().y - Ygap));
-	//		printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
-	//		printf("평지 충돌!\n\n");
-
-	//		m_bGravity = false;
-	//		m_pRigidbody->InitForce();
-	//		m_pRigidbody->InitVelocity();
-	//		m_pRigidbody->InitAccel();
-	//		m_pRigidbody->InitAccelAlpha();
-
-	//	}
-	//	/*else if (m_PrevColliderPos.x < m_PointCollider.x)
-	//	{
-	//		cout << "========================================\n";
-	//		printf("PointCollider Pos - X : %f, Y : %f\n", m_PointCollider.x, m_PointCollider.y);
-	//		printf("Obj Pos           - X : %f, Y : %f\n", GetPos().x, GetPos().y);
-	//		float Xgap = abs(m_PrevColliderPos.x - m_PointCollider.x);
-	//		printf("Gap               - %f\n", Xgap);
-	//		SetPos(Vector2(GetPos().x, GetPos().y - Xgap));
-	//		printf("Obj Pos           - X : %f, Y : %f\n\n", GetPos().x, GetPos().y);
-	//		printf("오르막 충돌!\n\n");
-	//		m_bGravity = false;
-
-
-	//	}*/
-	//	
-	//}
-	//else
-	//{
-	//	m_bGravity = true;
-	//}
-	//m_PrevColliderPos = m_PointCollider;
-
-
-	//cout << GetPos().x << endl;
-}
 
 void CPlayer::Update_state() // for Animaion change
 {
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::DOWN)
 	{
-		m_iCurDir = -1;
+		//m_iCurDir = -1;
 		m_eCurState = OBJECT_STATE::WALK;
 	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::DOWN)
 	{
-		m_iCurDir = 1;
+		//m_iCurDir = 1;
 		m_eCurState = OBJECT_STATE::WALK;
 	}
-	if (m_pRigidbody->GetSpeed() == 0.f)
-	{
-		m_eCurState = OBJECT_STATE::IDLE;
-	}
-}
-
-void CPlayer::Update_animation()
-{
-	// 어소트락 68화
-	if (m_ePrevState == m_eCurState && m_iPrevDir == m_iCurDir)
-		return;
-
-	switch (m_eCurState)
-	{
-	case OBJECT_STATE::IDLE:
-	{
-		// 방향에 따라 애니메이션 실행
-		//if(m_iDir == -1)
-		//	//
-		//else if (m_iDIr == 1)
-		//	//
-	}
-	break;
-	case OBJECT_STATE::WALK:
-
-		break;
-	case OBJECT_STATE::ATTACK:
-
-		break;
-	case OBJECT_STATE::DEAD:
-
-		break;
-	default:
-		break;
-
-	}
-
-}
-
-void CPlayer::Attack()
-{
-	// 총알 발사
+	//if (//m_pRigidbody->GetSpeed() == 0.f)
+	//{
+	//	m_eCurState = OBJECT_STATE::IDLE;
+	//}
 }

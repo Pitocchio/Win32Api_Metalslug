@@ -12,6 +12,7 @@ CAnimation2D::CAnimation2D()
 	, m_bRepeat(true)
 	, m_iCurBody(0)
 	, m_bStopAni(false)
+	, m_bFlipX(false)
 {
 }
 
@@ -30,9 +31,6 @@ void CAnimation2D::Update()
 	// 상체 기준
 	if (m_bTopFinish)
 		return;
-
-
-	 
 
 	// Edit Scene에서 애니메이션을 Stop할 경우 아래 프레임 업데이트를 타지 않고 바로 리턴 하게끔 구현 
 	if (m_bStopAni)
@@ -66,51 +64,130 @@ void CAnimation2D::Update()
 
 void CAnimation2D::Render(HDC hdc)
 {
-	// 상체 기준
-
 	if (m_bTopFinish)
 		return;
 
-	int k = 0;
-
 	if (m_pTex != nullptr)
 	{
-		Vector2 vRenPos = CCamera::GetInst()->GetRenderPos(Vector2(0.f, 0.f));
+		// Set RenderPosition
+		Vector2 vRenPos;
 
-		// Bottom
-		Vector2 vBotRenPos = vRenPos + m_vecBotFrm[m_iCurBotFrm]->Pivot;
+		if (m_pAnimator->GetOwnerObj() == nullptr)
+			vRenPos = CCamera::GetInst()->GetRenderPos(Vector2(0.f, 0.f));
+		else
+			vRenPos = CCamera::GetInst()->GetRenderPos(dynamic_cast<CPlayer*>(m_pAnimator->GetOwnerObj())->GetPos()); // 오브젝트 재설계 필요
 
-		float fBotWitdh = m_vecBotFrm[m_iCurBotFrm]->point2.x - m_vecBotFrm[m_iCurBotFrm]->point1.x;
-		float fBotHeight = m_vecBotFrm[m_iCurBotFrm]->point2.y - m_vecBotFrm[m_iCurBotFrm]->point1.y;
+		// Set for Stretch
+		HDC StretchDC = CreateCompatibleDC(m_pTex->GetDC());
+		HBITMAP StretchBit = CreateCompatibleBitmap(hdc, WINDOW_WIDTH, WINDOW_HEIGHT);
+		DeleteObject(SelectObject(StretchDC, StretchBit));
+		float iExtend = 1.5; // Stretch Size
 
-		TransparentBlt(hdc,
-			int(vBotRenPos.x - fBotWitdh * 0.5f),
-			int(vBotRenPos.y - fBotHeight * 0.5f),
-			int(fBotWitdh), int(fBotHeight),
-			m_pTex->GetDC(),
-			int(m_vecBotFrm[m_iCurBotFrm]->point1.x),
-			int(m_vecBotFrm[m_iCurBotFrm]->point1.y),
-			fBotWitdh, fBotHeight,
-			RGB(86, 177, 222));
 
-		// Top
-		Vector2 vTopRenPos = vRenPos + m_vecTopFrm[m_iCurTopFrm]->Pivot;
+		if (m_bFlipX) // On Flip X
+		{
+			// Render the Bottom
+			Vector2 vBotRenPos = vRenPos + m_vecBotFrm[m_iCurBotFrm]->Pivot;
+			float fBotWitdh = m_vecBotFrm[m_iCurBotFrm]->point2.x - m_vecBotFrm[m_iCurBotFrm]->point1.x;
+			float fBotHeight = m_vecBotFrm[m_iCurBotFrm]->point2.y - m_vecBotFrm[m_iCurBotFrm]->point1.y;
+			StretchBlt(StretchDC,
+				int(vBotRenPos.x - (fBotWitdh * iExtend) * -0.5f) -1,
+				int(vBotRenPos.y - (fBotHeight * iExtend) * 0.5f),
+				-int(fBotWitdh * iExtend), int(fBotHeight * iExtend),
+				m_pTex->GetDC(),
+				int(m_vecBotFrm[m_iCurBotFrm]->point1.x),
+				int(m_vecBotFrm[m_iCurBotFrm]->point1.y),
+				fBotWitdh, fBotHeight,
+				SRCCOPY);
 
-		float fTopWitdh = m_vecTopFrm[m_iCurTopFrm]->point2.x - m_vecTopFrm[m_iCurTopFrm]->point1.x;
-		float fTopHeight = m_vecTopFrm[m_iCurTopFrm]->point2.y - m_vecTopFrm[m_iCurTopFrm]->point1.y;
+			TransparentBlt(hdc,
+				int(vBotRenPos.x - (fBotWitdh * iExtend) * 0.5f),
+				int(vBotRenPos.y - (fBotHeight * iExtend) * 0.5f),
+				int(fBotWitdh * iExtend), int(fBotHeight * iExtend),
+				StretchDC,
+				int(vBotRenPos.x - (fBotWitdh * iExtend) * 0.5f),
+				int(vBotRenPos.y - (fBotHeight * iExtend) * 0.5f),
+				int(fBotWitdh * iExtend), int(fBotHeight * iExtend),
+				RGB(86, 177, 222));
 
-		TransparentBlt(hdc,
-			int(vTopRenPos.x - fTopWitdh * 0.5f),
-			int(vTopRenPos.y - fTopHeight * 0.5f),
-			int(fTopWitdh), int(fTopHeight),
-			m_pTex->GetDC(),
-			int(m_vecTopFrm[m_iCurTopFrm]->point1.x),
-			int(m_vecTopFrm[m_iCurTopFrm]->point1.y),
-			fTopWitdh, fTopHeight,
-			RGB(86, 177, 222));
+			// Render the Top
+			Vector2 vTopRenPos = vRenPos + m_vecTopFrm[m_iCurTopFrm]->Pivot;
+			float fTopWitdh = m_vecTopFrm[m_iCurTopFrm]->point2.x - m_vecTopFrm[m_iCurTopFrm]->point1.x;
+			float fTopHeight = m_vecTopFrm[m_iCurTopFrm]->point2.y - m_vecTopFrm[m_iCurTopFrm]->point1.y;
+			StretchBlt(StretchDC,
+				int(vTopRenPos.x - (fTopWitdh * iExtend) * -0.5f) -1,
+				int(vTopRenPos.y - (fTopHeight * iExtend) * 0.5f),
+				-int(fTopWitdh * iExtend), int(fTopWitdh * iExtend),
+				m_pTex->GetDC(),
+				int(m_vecTopFrm[m_iCurTopFrm]->point1.x),
+				int(m_vecTopFrm[m_iCurTopFrm]->point1.y),
+				fTopWitdh, fTopHeight,
+				SRCCOPY);
+			TransparentBlt(hdc,
+				int(vTopRenPos.x - (fTopWitdh * iExtend) * 0.5f),
+				int(vTopRenPos.y - (fTopHeight * iExtend) * 0.5f),
+				int(fTopWitdh * iExtend), int(fTopHeight * iExtend),
+				StretchDC,
+				int(vTopRenPos.x - (fTopWitdh * iExtend) * 0.5f),
+				int(vTopRenPos.y - (fTopHeight * iExtend) * 0.5f),
+				int(fTopWitdh * iExtend), int(fTopHeight * iExtend),
+				RGB(86, 177, 222));
+		}
+		else // None Flip X
+		{
+			// Render the Bottom
+			Vector2 vBotRenPos = vRenPos + m_vecBotFrm[m_iCurBotFrm]->Pivot;
+			float fBotWitdh = m_vecBotFrm[m_iCurBotFrm]->point2.x - m_vecBotFrm[m_iCurBotFrm]->point1.x;
+			float fBotHeight = m_vecBotFrm[m_iCurBotFrm]->point2.y - m_vecBotFrm[m_iCurBotFrm]->point1.y;
+			StretchBlt(StretchDC,
+				int(vBotRenPos.x - (fBotWitdh * iExtend) * 0.5f),
+				int(vBotRenPos.y - (fBotHeight * iExtend) * 0.5f),
+				int(fBotWitdh * iExtend), int(fBotHeight * iExtend),
+				m_pTex->GetDC(),
+				int(m_vecBotFrm[m_iCurBotFrm]->point1.x),
+				int(m_vecBotFrm[m_iCurBotFrm]->point1.y),
+				fBotWitdh, fBotHeight,
+				SRCCOPY);
+			TransparentBlt(hdc,
+				int(vBotRenPos.x - (fBotWitdh * iExtend) * 0.5f),
+				int(vBotRenPos.y - (fBotHeight * iExtend) * 0.5f),
+				int(fBotWitdh * iExtend), int(fBotHeight * iExtend),
+				StretchDC,
+				int(vBotRenPos.x - (fBotWitdh * iExtend) * 0.5f),
+				int(vBotRenPos.y - (fBotHeight * iExtend) * 0.5f),
+				int(fBotWitdh * iExtend), int(fBotHeight * iExtend),
+				RGB(86, 177, 222));
+
+			// Render the Top
+			Vector2 vTopRenPos = vRenPos + m_vecTopFrm[m_iCurTopFrm]->Pivot;
+			float fTopWitdh = m_vecTopFrm[m_iCurTopFrm]->point2.x - m_vecTopFrm[m_iCurTopFrm]->point1.x;
+			float fTopHeight = m_vecTopFrm[m_iCurTopFrm]->point2.y - m_vecTopFrm[m_iCurTopFrm]->point1.y;
+			StretchBlt(StretchDC,
+				int(vTopRenPos.x - (fTopWitdh * iExtend) * 0.5f),
+				int(vTopRenPos.y - (fTopHeight * iExtend) * 0.5f),
+				int(fTopWitdh * iExtend), int(fTopWitdh * iExtend),
+				m_pTex->GetDC(),
+				int(m_vecTopFrm[m_iCurTopFrm]->point1.x),
+				int(m_vecTopFrm[m_iCurTopFrm]->point1.y),
+				fTopWitdh, fTopHeight,
+				SRCCOPY);
+			TransparentBlt(hdc,
+				int(vTopRenPos.x - (fTopWitdh * iExtend) * 0.5f),
+				int(vTopRenPos.y - (fTopHeight * iExtend) * 0.5f),
+				int(fTopWitdh * iExtend), int(fTopHeight * iExtend),
+				StretchDC,
+				int(vTopRenPos.x - (fTopWitdh * iExtend) * 0.5f),
+				int(vTopRenPos.y - (fTopHeight * iExtend) * 0.5f),
+				int(fTopWitdh * iExtend), int(fTopHeight * iExtend),
+				RGB(86, 177, 222));
+		}
+
+		DeleteObject(StretchDC);
+		DeleteObject(StretchBit);
 	}
 
-	RenderText(hdc);
+	if(CSceneMgr::GetInst()->GetCurScene()->GetSceneType() == SCENE_TYPE::ANITOOL2)
+		RenderText(hdc);
 }
 
 void CAnimation2D::Release()
@@ -175,36 +252,19 @@ void CAnimation2D::RenderText(HDC hdc)
 		swprintf_s(tch, L"Repeat : False");
 	TextOut(hdc, 1, 300, tch, (int)_tcslen(tch));
 
+	// 플레이 or 스탑
+	if(m_bStopAni)
+		swprintf_s(tch, L"Animation : Stop");
+	else
+		swprintf_s(tch, L"Animation : Play");
+	TextOut(hdc, 1, 320, tch, (int)_tcslen(tch));
 
-
-
-	swprintf_s(tch, L"Num 2, 4, 6, 8 : Animation Move (5px)");
-	TextOut(hdc, 1, 400, tch, (int)_tcslen(tch));
-
-	/*swprintf_s(tch, L"Num 2, 4, 6, 8 + Ctrl: Animation Move (1px)");
-	TextOut(hdc, 1, 420, tch, (int)_tcslen(tch));*/
-
-	swprintf_s(tch, L"Ctrl : Choice Top or Bottom");
-	TextOut(hdc, 1, 440, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"Shift : LR Flip");
-	TextOut(hdc, 1, 460, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"Enter : Play Toggle(On/Off)");
-	TextOut(hdc, 1, 480, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"LEFT_KEY : Prev Frame");
-	TextOut(hdc, 1, 500, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"RIGHT_KEY : Next Frame");
-	TextOut(hdc, 1, 520, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"UP_KEY : Frame Time 0.01second + ");
-	TextOut(hdc, 1, 540, tch, (int)_tcslen(tch));
-
-	swprintf_s(tch, L"DOWN_KEY : Frame Time 0.01second - ");
-	TextOut(hdc, 1, 560, tch, (int)_tcslen(tch));
-
+	// 플립 여부
+	if (m_bFlipX)
+		swprintf_s(tch, L"Flip : true");
+	else
+		swprintf_s(tch, L"Flip : false");
+	TextOut(hdc, 1, 340, tch, (int)_tcslen(tch));
 }
 
 
@@ -215,9 +275,15 @@ void CAnimation2D::Create(wstring _strState, vector<Frm*>* _listFrm)
 	for (vector<Frm*>::iterator iter = _listFrm->begin(); iter != _listFrm->end(); ++iter)
 	{
 		if ((*iter)->Body == UINT(BODY_TYPE::TOP))
+		{
+			(*iter)->Pivot = Vector2(0, -60);
 			m_vecTopFrm.push_back(*iter);
+		}
 		else
+		{
+			(*iter)->Pivot = Vector2(0, -15);
 			m_vecBotFrm.push_back(*iter);
+		}
 	}
 }
 
@@ -243,6 +309,14 @@ void CAnimation2D::SetPivot(Vector2 _vec)
 	m_CurEditFrm->Pivot += _vec;
 }
 
+void CAnimation2D::FlipX()
+{
+	if (m_bFlipX)
+		m_bFlipX = false;
+	else
+		m_bFlipX = true;
+}
+
 void CAnimation2D::PlayAniToggle()
 {
 	if (m_bStopAni)
@@ -261,12 +335,12 @@ void CAnimation2D::PlusMinusFrm(int _ival)
 	{
 		// 상체
 		m_iCurTopFrm = m_vecTopFrm.size()-1;
-		m_bTopFinish = true;
+		m_bTopFinish = false;
 		m_fTopAccTime = 0.f;
 
 		// 하체
 		m_iCurBotFrm = m_vecBotFrm.size()-1;
-		m_bBotFinish = true;
+		m_bBotFinish = false;
 		m_fBotAccTime = 0.f;
 
 		return;

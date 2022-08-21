@@ -30,9 +30,7 @@ public:
 
 private: // Variables
 	POINT m_ptMousePos;
-	wstring m_strFilePath;
 
-	vector <Box*> m_vecBox;
 
 	POINT* m_ptTemp1;
 	POINT* m_ptTemp2;

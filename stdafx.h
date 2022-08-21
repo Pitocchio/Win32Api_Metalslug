@@ -30,7 +30,6 @@
 // 04.Object
 #include "Object.h"
 #include "Moveobj.h"
-#include "Attackobj.h"
 #include "Player.h"
 #include "MapCollider.h"
 #include "Stage.h"

@@ -177,6 +177,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 ShowWindow(g_hDlg, SW_SHOW);
                 break;
             }
+            case ID_ANITOOL2_SAVE:
+            {
+                CInputMgr::GetInst()->BlockInput();
+                CCamera::GetInst()->BlockUpdate();
+                g_hDlg = CreateDialog(hInst, MAKEINTRESOURCE(IDD_DIALOG_ANITOOL2_SAVE), hWnd, DigProc);
+                ShowWindow(g_hDlg, SW_SHOW);
+                break;
+            }
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -215,22 +223,19 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 // =========== ANITOOL 1 ========== //
                 case IDC_BTN_ANITOOL1_LOAD:
                 {
-                    //TCHAR tchFile[BSIZE]{};
-                    //GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_FILE, tchFile, BSIZE);
-                    //wstring wstrFile(&tchFile[0]); // texture\Tarma.bmp 입력
+                    // File path
+                    TCHAR chFilename[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_FILE, chFilename, BSIZE);
+                    wstring wstrFilename(&chFilename[0]); // texture\Tarma.bmp 입력
+                    wstring wstrTexturePath = L"texture\\" + wstrFilename;
+                    wstrTexturePath += L".bmp";
 
+                    // Key Name
+                    TCHAR tchKeyName[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_KEYNAME, tchKeyName, BSIZE);
+                    wstring wstrKeyName(&tchKeyName[0]);
 
-                    //TCHAR tchKeyName[BSIZE]{};
-                    //GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_LOAD_KEYNAME, tchKeyName, BSIZE);
-                    //wstring wstrKeyName(&tchKeyName[0]);
-
-
-                    // 자동 로드 wstrFile
-                    wstring wstrFilepath = L"texture\\Tarma.bmp";
-                    wstring wstrKeyName = L"Tarma";
-
-
-                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrFilepath);
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SetTexture(wstrKeyName, wstrTexturePath);
 
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();
@@ -239,13 +244,15 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 }
                 case IDC_BTN_ANITOOL1_SAVE:
                 {
-                   /* TCHAR tchTemp[BSIZE]{};
-                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_SAVE, tchTemp, BSIZE);
-                    wstring wstrDatPath(&tchTemp[0]);*/
+                    // File path
+                    TCHAR chFilename[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL1_SAVE, chFilename, BSIZE);
+                    wstring wstrFilename(&chFilename[0]);
+                    wstring wstrFilePath = L"animation\\edit1\\" + wstrFilename;
+                    wstrFilePath += L".txt";
 
-                    wstring wstrDatPath = L"TARMA_PISTOL_BASIC_MOVE_ST.txt";
+                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapFrame(wstrFilePath);
 
-                    dynamic_cast<CAniToolScene1*>(CSceneMgr::GetInst()->GetCurScene())->SaveMapFrame(wstrDatPath);
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();
                     EndDialog(g_hDlg, 0);
@@ -283,25 +290,42 @@ LRESULT CALLBACK DigProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
                 // =========== ANITOOL 2 ========== //
                 case IDC_BTN_ANITOOL2_LOAD:
                 {
-                   /* TCHAR tchPath[BSIZE]{};
-                    TCHAR tchKeyName[BSIZE]{};
-                    TCHAR tchDat[BSIZE]{};
+                    // Data File path
+                    TCHAR chDataFilename[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_DAT, chDataFilename, BSIZE);
+                    wstring wstrDataFilename(&chDataFilename[0]);
+                    wstring wstrDataFilePath = L"animation\\edit1\\" + wstrDataFilename;
+                    wstrDataFilePath += L".txt";
 
-                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_PATH, tchPath, BSIZE);
-                    wstring wstrTexPath(&tchPath[0]);
+                    // Tex File path
+                    TCHAR chTexFilename[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_PATH, chTexFilename, BSIZE);
+                    wstring wstrTexFilename(&chTexFilename[0]);
+                    wstring wstrTexFilePath = L"texture\\" + wstrTexFilename;
+                    wstrTexFilePath += L".bmp";
+
+                    // Key Name
+                    TCHAR tchKeyName[BSIZE]{};
                     GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_NAME, tchKeyName, BSIZE);
                     wstring wstrKeyName(&tchKeyName[0]);
-                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_LOAD_DAT, tchDat, BSIZE);
-                    wstring wstrDatPath(&tchDat[0]);*/
+                    
+                    dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->CreateAnimation(wstrKeyName, wstrTexFilePath, wstrDataFilePath);
 
-                    // 자동 로드 설정 
-                    wstring wstrTexPath = L"texture\\Tarma.bmp";
-                    wstring wstrKeyName = L"Tarma";
-                    wstring wstrDatPath = L"TARMA_PISTOL_BASIC_MOVE_ST.txt";
-                  
+                    CCamera::GetInst()->UnblockUpdate();
+                    CInputMgr::GetInst()->UnblockInput();
+                    EndDialog(g_hDlg, 0);
+                    break;
+                }
+                case IDC_BTN_ANITOOL2_SAVE:
+                {
+                    // Data File path
+                    TCHAR chDataFilename[BSIZE]{};
+                    GetDlgItemText(hDlg, IDC_EDIT_ANITOOL2_SAVE_PATH, chDataFilename, BSIZE);
+                    wstring wstrDataFilename(&chDataFilename[0]);
+                    wstring wstrDataFilePath = L"animation\\edit2\\" + wstrDataFilename;
+                    wstrDataFilePath += L".txt";
 
-                    dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->CreateAnimation(wstrKeyName, wstrTexPath, wstrDatPath);
-                    // 여기서 애니메이션 생성 호출 
+                    dynamic_cast<CAniToolScene2*>(CSceneMgr::GetInst()->GetCurScene())->SaveAnimation(wstrDataFilePath);
 
                     CCamera::GetInst()->UnblockUpdate();
                     CInputMgr::GetInst()->UnblockInput();

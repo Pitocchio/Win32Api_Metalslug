@@ -104,17 +104,6 @@ typedef struct MyMapObj
 }MAPOBJ;
 
 
-//
-//// Animation
-//typedef struct MyAniFrame
-//{
-//	Vector2 vLT;
-//	Vector2 vSlice;
-//	Vector2 vOffset = Vector2(0.f, 0.f);
-//
-//	float fDuration; // 해당 프레임에 머무를 시간 
-//
-//}AniFrame;
 
 
 

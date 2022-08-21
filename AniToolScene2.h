@@ -34,5 +34,6 @@ public:
 
 
 	void CreateAnimation(const wstring& _strKeyName, const wstring& _strTexPath, const wstring& _strDataPath);
+	void SaveAnimation(const wstring& _strFilePath);
 };
 

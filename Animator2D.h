@@ -19,22 +19,24 @@ public: // Lifecycle
 
 public: // Methods
 
-	// Animation
-	//void CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, 
-	//					Vector2 _vSliceSize, Vector2 _vStep, float fDuration, UINT _iFrameCount);  // 텍스쳐, LeftTop, SliceSize, 간격, 애니메이션 수
+
 	CAnimation2D* FindAnimation(const wstring& _strName);
-	void PlayAnimation(const wstring& _strName, bool _bRepeat); // 이름, 반복재생 여부
 
-	// with Variables
+	void SetCurAnimation(const wstring& _strName);
+	void PlayFirstAnimation()
+	{
+		m_pCurAni = m_mapAnim.begin()->second;
+	}
+
 	void SetOwnerObj(CObject* obj);
-	CObject* GetOwnerObj() { return m_pOwnerObj; }
 
-
-
-
-
-
-
+	CObject* GetOwnerObj() 
+	{
+		if (m_pOwnerObj != nullptr)
+			return m_pOwnerObj;
+		else
+			return nullptr; 
+	}
 
 
 public:	
@@ -43,19 +45,15 @@ public:
 	void CreateAnimation();
 	CAnimation2D* GetCurAni() { return m_pCurAni; }
 
+	void Save(const wstring& _strRelativePath); // for ANITOOL SCENE 2
 
 
 private: // Variables
 	CObject*						m_pOwnerObj;
-	map<wstring, CAnimation2D*>		m_mapAni;	// 모든 애니메이션
-	CAnimation2D*					m_pCurAni;	// 현재 재생 중인 애니메이션 
-	//bool							m_bRepeat;	// 반복재생 여부
-
-	vector<Frm*>									m_vecFrm;
-	vector<wstring>								m_vecStateName;
-	map<wstring, CAnimation2D*>					m_mapAnim;
-
-
+	CAnimation2D*					m_pCurAni;	
+	vector<Frm*>					m_vecFrm;
+	vector<wstring>					m_vecStateName;
+	map<wstring, CAnimation2D*>		m_mapAnim;
 	CTexture*									m_pTex;
 };
 

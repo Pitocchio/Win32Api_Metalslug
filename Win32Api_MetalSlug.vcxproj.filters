@@ -40,9 +40,6 @@
     <Filter Include="소스 파일\07.Component\03.Rigidbody2D">
       <UniqueIdentifier>{91385d4e-13cd-4aa5-a132-94d92618bd92}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\07.Component\04.Raycast2D">
-      <UniqueIdentifier>{13a265bd-e664-4d65-a38d-9e209d8edee9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\07.Component\02.Collider2D\00.Collider2D">
       <UniqueIdentifier>{82bd6f71-be7f-48ef-91de-4171a87ae656}</UniqueIdentifier>
     </Filter>
@@ -94,90 +91,6 @@
     <Filter Include="소스 파일\06.GameObject\00.Object">
       <UniqueIdentifier>{f5f924de-9023-4cc7-8845-ddb3529218f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj">
-      <UniqueIdentifier>{623a3612-ede1-4d1e-8938-d2aed0073876}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\00.Moveobj">
-      <UniqueIdentifier>{20419819-6df8-4707-8d06-1d87f92243a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\00.Moveobj\00.Moveobj">
-      <UniqueIdentifier>{d3988f77-78d3-497b-a0f3-fe9bad47426c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj">
-      <UniqueIdentifier>{79538615-77b4-4162-8458-a0a52c872098}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\02.Enemy">
-      <UniqueIdentifier>{6d814f0f-0747-433d-b138-2c0a1876246b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\02.Enemy\00.Enemy">
-      <UniqueIdentifier>{a0697f5b-b473-418f-8de6-51996d4a33ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\02.Enemy\01.Zombie">
-      <UniqueIdentifier>{c24d9017-c74d-4b57-99fe-2a2b6f689962}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\02.Enemy\02.Rebel">
-      <UniqueIdentifier>{3e0d402a-3776-4eff-a385-686017905c84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\02.Enemy\03.Middleboss">
-      <UniqueIdentifier>{84a746c8-e011-4b48-adb1-e0bb84c1004c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\02.Enemy\04.Finalboss">
-      <UniqueIdentifier>{b665c758-64e5-4790-a411-86a9e5ce3816}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\00.Attackobj">
-      <UniqueIdentifier>{36f5dae0-0eec-4fca-b54e-8948eabce0b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\01.Attackobj\01.Player">
-      <UniqueIdentifier>{336675bf-f7a0-4ec6-b420-4e8d210bcde0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\03.Npc">
-      <UniqueIdentifier>{aba21a77-e10e-467c-8e03-9f2b1cc1fd01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\03.Npc\00.Npc">
-      <UniqueIdentifier>{14525dfb-ccf7-4912-a938-2c0e3d1f6125}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\03.Npc\01.Prisoner">
-      <UniqueIdentifier>{8dcb2fd8-3360-4e3f-b7ba-3f81e994c167}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\02.Projectile">
-      <UniqueIdentifier>{6447c866-c66f-45be-b192-2b9c254e3c33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\02.Projectile\00.Projectile">
-      <UniqueIdentifier>{28286f06-d1cd-43f3-8676-419011ab79f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\02.Projectile\01.Bullet">
-      <UniqueIdentifier>{8d82e605-e7aa-4bcc-83d1-af5db44f6d5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\02.Projectile\02.Grenade">
-      <UniqueIdentifier>{638eaff1-4bc8-477c-8162-17a388fc61cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\01.Moveobj\02.Projectile\03.Liquid">
-      <UniqueIdentifier>{93584123-1936-42bf-92e8-6eabdb987c27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item">
-      <UniqueIdentifier>{1a501a5d-13df-463b-9ef0-187fcaaee525}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item\00.Item">
-      <UniqueIdentifier>{06013653-fbea-44ad-b2d1-88d4ed0d0512}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item\01.Weapon">
-      <UniqueIdentifier>{5eba315e-0d0c-4763-a876-d6b0c0285558}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item\01.Weapon\00.Weapon">
-      <UniqueIdentifier>{399c8979-0ec5-4111-9972-90d27c1ef824}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item\01.Weapon\02.Grenade">
-      <UniqueIdentifier>{cda1acf5-e6a1-4e87-81fe-d1240c79f09a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item\01.Weapon\01.Heavymachinegun">
-      <UniqueIdentifier>{c610b3fa-117f-4a0a-8625-dcfa64c05fc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\02.Item\02.Food">
-      <UniqueIdentifier>{9f8095df-9a5b-4b86-86ed-f87b6e398947}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\06.GameObject\04.Ui">
-      <UniqueIdentifier>{8081d6b8-3a33-4746-bf74-198f683f2899}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\06.GameObject\05.Stage">
       <UniqueIdentifier>{c0ebb142-f109-49db-b8ae-4352d0e6ae97}</UniqueIdentifier>
     </Filter>
@@ -216,6 +129,9 @@
     </Filter>
     <Filter Include="소스 파일\04.Scene\01.AniToolScene1">
       <UniqueIdentifier>{0f450cf7-dd24-4f35-b6a9-b446c1402198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\06.GameObject\01.Player">
+      <UniqueIdentifier>{336675bf-f7a0-4ec6-b420-4e8d210bcde0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,11 +180,8 @@
     <ClInclude Include="Object.h">
       <Filter>소스 파일\06.GameObject\00.Object</Filter>
     </ClInclude>
-    <ClInclude Include="Attackobj.h">
-      <Filter>소스 파일\06.GameObject\01.Moveobj\01.Attackobj\00.Attackobj</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>소스 파일\06.GameObject\01.Moveobj\01.Attackobj\01.Player</Filter>
+      <Filter>소스 파일\06.GameObject\01.Player</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>소스 파일\07.Component\00.Component</Filter>
@@ -296,9 +209,6 @@
     </ClInclude>
     <ClInclude Include="SelectGDI.h">
       <Filter>소스 파일\09.Module</Filter>
-    </ClInclude>
-    <ClInclude Include="Moveobj.h">
-      <Filter>소스 파일\06.GameObject\01.Moveobj\00.Moveobj\00.Moveobj</Filter>
     </ClInclude>
     <ClInclude Include="Rigidbody2D.h">
       <Filter>소스 파일\07.Component\03.Rigidbody2D</Filter>
@@ -381,11 +291,8 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\06.GameObject\00.Object</Filter>
     </ClCompile>
-    <ClCompile Include="Attackobj.cpp">
-      <Filter>소스 파일\06.GameObject\01.Moveobj\01.Attackobj\00.Attackobj</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>소스 파일\06.GameObject\01.Moveobj\01.Attackobj\01.Player</Filter>
+      <Filter>소스 파일\06.GameObject\01.Player</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\07.Component\00.Component</Filter>
@@ -413,9 +320,6 @@
     </ClCompile>
     <ClCompile Include="SelectGDI.cpp">
       <Filter>소스 파일\09.Module</Filter>
-    </ClCompile>
-    <ClCompile Include="Moveobj.cpp">
-      <Filter>소스 파일\06.GameObject\01.Moveobj\00.Moveobj\00.Moveobj</Filter>
     </ClCompile>
     <ClCompile Include="Rigidbody2D.cpp">
       <Filter>소스 파일\07.Component\03.Rigidbody2D</Filter>

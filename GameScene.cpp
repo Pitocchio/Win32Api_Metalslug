@@ -81,9 +81,10 @@ void CGameScene::Exit()
 void CGameScene::Render(HDC hdc)
 {
 	CObjectMgr::GetInst()->Render(hdc);
+	CMapObjMgr::GetInst()->Render(hdc);
+
 	//CMapLineMgr::GetInst()->Render(hdc);
 
-	CMapObjMgr::GetInst()->Render(hdc);
 }
 
 void CGameScene::LoadMapObj(const wstring& _strRelativePath)

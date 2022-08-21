@@ -3,15 +3,14 @@
 
 CAnimator2D::CAnimator2D()
 	: m_pOwnerObj(nullptr)
-	, m_pCurAni(nullptr)
-	//, m_bRepeat(false)
+	, m_pCurAni(nullptr)	
 	, m_pTex(nullptr)
 {
 }
 
 CAnimator2D::~CAnimator2D()
 {
-	Safe_Delete_Map(m_mapAni);
+	Safe_Delete_Map(m_mapAnim);
 }
 
 void CAnimator2D::Init()
@@ -43,22 +42,6 @@ void CAnimator2D::Render(HDC hdc) // 현재 애니메이션을 렌더
 	}
 }
 
-//void CAnimator2D::CreateAnimation(const wstring& _strName, CTexture* _pTex, Vector2 _vLT, Vector2 _vSliceSize, 
-//									Vector2 _vStep, float fDuration, UINT _iFrameCount)
-//{
-//	CAnimation2D* pAni = FindAnimation(_strName);
-//	assert(pAni == nullptr);
-//
-//	pAni = new CAnimation2D;
-//
-//	pAni->SetName(_strName);
-//	pAni->SetOwnerObj(this);  // 만들어진 애니메이션들도 애니메이터를 알아야 함
-//	pAni->Create(_pTex, _vLT, _vSliceSize, _vStep, fDuration, _iFrameCount);
-//
-//	m_mapAni.insert(make_pair(_strName, pAni));
-//}
-
-
 
 
 CAnimation2D* CAnimator2D::FindAnimation(const wstring& _strName)
@@ -71,10 +54,9 @@ CAnimation2D* CAnimator2D::FindAnimation(const wstring& _strName)
 	return iter->second;
 }
 
-void CAnimator2D::PlayAnimation(const wstring& _strName, bool _bRepeat)
+void CAnimator2D::SetCurAnimation(const wstring& _strName)
 {
 	m_pCurAni = FindAnimation(_strName);
-	//m_bRepeat = _bRepeat;
 }
 
 void CAnimator2D::SetOwnerObj(CObject* obj)
@@ -128,7 +110,7 @@ void CAnimator2D::SetData(const wstring& _strRelativePath)
 			wifs.getline(str, 64);
 			float duration = _wtof(str);
 
-			wifs.getline(str, 64);
+			wifs.getline(str, 64); // 줄바꿈에 대한처리
 
 
 			if (wifs.eof())
@@ -150,11 +132,16 @@ void CAnimator2D::SetTexture(const wstring& _strKeyName, const wstring& _strFile
 
 void CAnimator2D::CreateAnimation()
 {
-	// Animation을 만들기 위해 인자로 용이하게 전달하기 위한 map 생성
+	/*
+	// =================== PARSING =====================//
+		
+	m_vecFrm에는 모든 State가 뒤죽박죽으로 섞여 있는 상태
+	*/
+
 	map<wstring, vector<Frm*>> mapTemp;
 	map<wstring, vector<Frm*>>::iterator iterT;
 
-	for (vector<Frm*>::iterator iterF = m_vecFrm.begin(); iterF != m_vecFrm.end(); ++iterF) // Frm 구조체 (벡터) - 모든 스테이트가 섞여있음 
+	for (vector<Frm*>::iterator iterF = m_vecFrm.begin(); iterF != m_vecFrm.end(); ++iterF) 
 	{
 		iterT = mapTemp.find((*iterF)->State);
 
@@ -170,12 +157,71 @@ void CAnimator2D::CreateAnimation()
 		}
 	}
 
+	/*
+	
+	// =================== PARSING된 데이터를 바탕으로 애니메이션 생성  =====================//
+
+	*/
 	for (iterT = mapTemp.begin(); iterT != mapTemp.end(); ++iterT)
 	{
 		CAnimation2D* pAni = new CAnimation2D;
+		pAni->SetOwnerObj(this);
 		pAni->SetTexture(m_pTex);
-		pAni->Create((iterT->first), &(iterT->second)); // 애니메이션을 생성해라!
+		pAni->Create((iterT->first), &(iterT->second)); // State 별로 애니메이션 생성
 
-		m_mapAnim.insert(make_pair((*iterT).first, pAni)); // 최종 애니메이션 맵 (얘가 모든 애니메이션을 들고 있음)
+		m_mapAnim.insert(make_pair((*iterT).first, pAni)); // State를 Key로 그에 해당하는 애니메이션을 Value로 갖는 최종 애니메이션 맵에 pushback
 	}
+}
+
+void CAnimator2D::Save(const wstring& _strRelativePath)
+{
+	/*
+	
+	m_mapAnim의 모든 데이터(피벗, 프레임 타임 등 모든 편집이 완료된 최종 애니메이션)을 파일로 저장한다.
+
+	이 파일은 GameScene에서 Load할 파일이다.
+	
+	*/
+
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	wofstream ofs(strFilePath, ios::out | ios::trunc);
+
+	for (map<wstring, CAnimation2D*>::iterator iter = m_mapAnim.begin(); iter != m_mapAnim.end(); ++iter) // Key값인 스테이트 별로 map을 순회한다
+	{
+		vector<Frm*> vecTop = (*iter).second->GetTop();
+		vector<Frm*> vecBot = (*iter).second->GetBot();
+
+		for (vector <Frm*>::iterator Topiter = vecTop.begin(); Topiter != vecTop.end(); ++Topiter)
+		{
+			ofs << (*Topiter)->State << endl
+				<< (*Topiter)->Body << endl
+				<< (*Topiter)->point1.x << endl
+				<< (*Topiter)->point1.y << endl
+				<< (*Topiter)->point2.x << endl
+				<< (*Topiter)->point2.y << endl
+				<< (*Topiter)->Pivot.x << endl
+				<< (*Topiter)->Pivot.y << endl
+				<< (*Topiter)->Duration << endl << endl;
+		}
+
+		for (vector <Frm*>::iterator Botiter = vecBot.begin(); Botiter != vecBot.end(); ++Botiter)
+		{
+			ofs << (*Botiter)->State << endl
+				<< (*Botiter)->Body << endl
+				<< (*Botiter)->point1.x << endl
+				<< (*Botiter)->point1.y << endl
+				<< (*Botiter)->point2.x << endl
+				<< (*Botiter)->point2.y << endl
+				<< (*Botiter)->Pivot.x << endl
+				<< (*Botiter)->Pivot.y << endl
+				<< (*Botiter)->Duration << endl << endl;
+		}
+
+
+	}
+
+
+	ofs.close();
 }

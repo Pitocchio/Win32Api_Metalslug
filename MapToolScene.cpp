@@ -109,15 +109,28 @@ void CMapToolScene::ScrollMouse()
 
 bool CMapToolScene::CheckSceneChange()
 {
-	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::DOWN)
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F1) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::ANITOOL1);
+		return true;
+	}
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F2) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::ANITOOL2);
+		return true;
+	}
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F3) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::MAPTOOL);
+		return true;
+	}
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F4) == KEY_STATE::DOWN)
 	{
 		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
 		return true;
 	}
 	else
-	{
 		return false;
-	}
 }
 
 void CMapToolScene::CreateMapObject()

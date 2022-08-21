@@ -27,7 +27,7 @@ void CAniToolScene2::Enter()
 
 void CAniToolScene2::Update()
 {
-	m_ptMousePos = CInputMgr::GetInst()->GetMousePos();
+	//m_ptMousePos = CInputMgr::GetInst()->GetMousePos();
 
 	if (m_pAnimator != nullptr)
 		EditFrm();
@@ -92,17 +92,28 @@ void CAniToolScene2::Exit()
 
 bool CAniToolScene2::CheckSceneChange()
 {
-	//if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::DOWN)
-	//{
-	//	CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::MAPTOOL);
-	//	return true;
-	//}
-	//else
-	//{
-	//	return false;
-	//}
-
-	return false;
+	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F1) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::ANITOOL1);
+		return true;
+	}
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F2) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::ANITOOL2);
+		return true;
+	}
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F3) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::MAPTOOL);
+		return true;
+	}
+	else if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::F4) == KEY_STATE::DOWN)
+	{
+		CEventMgr::GetInst()->ChangeScene(SCENE_TYPE::GAME);
+		return true;
+	}
+	else
+		return false;
 }
 
 void CAniToolScene2::EditFrm()
@@ -165,33 +176,29 @@ void CAniToolScene2::EditFrm()
 	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::SHIFT) == KEY_STATE::DOWN)
 	{
-		// 좌우 플립
+		pCurAni->FlipX();
 	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::ENTER) == KEY_STATE::DOWN)
 	{
-		// 애니메이션 재생, 일시정지 토글 - 현재 프레임에서 Stop할 수 있는 기능 
 
 		pCurAni->PlayAniToggle();
 	}
-
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::LEFT) == KEY_STATE::DOWN)
 	{
-		// 이전 스테이트
 		pCurAni->PlusMinusFrm(-1);
 	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::RIGHT) == KEY_STATE::DOWN)
 	{
-		// 다음 스테이트 
 		pCurAni->PlusMinusFrm(1);
 	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::DOWN) == KEY_STATE::DOWN)
 	{
-		float fTime = -0.1f;
+		float fTime = -0.05f;
 		pCurAni->SetFrmTime(fTime);
 	}
 	if (CInputMgr::GetInst()->GetKeyState(KEY_TYPE::UP) == KEY_STATE::DOWN)
 	{
-		float fTime = 0.1f;
+		float fTime = 0.05f;
 		pCurAni->SetFrmTime(fTime);
 	}
 
@@ -212,15 +219,44 @@ void CAniToolScene2::RenderText(HDC hdc)
 	swprintf_s(tch, L"DT : %f ", DT);
 	TextOut(hdc, 1, 20, tch, (int)_tcslen(tch));
 	// CAMERA LOOK AT
-	swprintf_s(tch, L"CAMERA LOOK AT : %.4f, %.4f ", CCamera::GetInst()->GetLookAt().x, CCamera::GetInst()->GetLookAt().y);
-	TextOut(hdc, 1, 40, tch, (int)_tcslen(tch));
+	//swprintf_s(tch, L"CAMERA LOOK AT : %.4f, %.4f ", CCamera::GetInst()->GetLookAt().x, CCamera::GetInst()->GetLookAt().y);
+	//TextOut(hdc, 1, 40, tch, (int)_tcslen(tch));
 	// Text - World Cursor
 	Vector2 temp1 = CCamera::GetInst()->GetRealPos(Vector2(m_ptMousePos.x, m_ptMousePos.y));
-	swprintf_s(tch, L"World Cursor Pos : %d, %d ", int(temp1.x), int(temp1.y));
-	TextOut(hdc, 1, 60, tch, (int)_tcslen(tch));
+	//swprintf_s(tch, L"World Cursor Pos : %d, %d ", int(temp1.x), int(temp1.y));
+	//TextOut(hdc, 1, 60, tch, (int)_tcslen(tch));
 	// Text - Local Cursor
-	swprintf_s(tch, L"Local Cursor Pos : %d, %d ", m_ptMousePos.x, m_ptMousePos.y);
-	TextOut(hdc, 1, 80, tch, (int)_tcslen(tch));
+	//swprintf_s(tch, L"Local Cursor Pos : %d, %d ", m_ptMousePos.x, m_ptMousePos.y);
+	//TextOut(hdc, 1, 80, tch, (int)_tcslen(tch));
+
+
+
+	swprintf_s(tch, L"Num 2, 4, 6, 8 : Animation Move (5px)");
+	TextOut(hdc, 1, 420, tch, (int)_tcslen(tch));
+
+	/*swprintf_s(tch, L"Num 2, 4, 6, 8 + Ctrl: Animation Move (1px)");
+	TextOut(hdc, 1, 420, tch, (int)_tcslen(tch));*/
+
+	swprintf_s(tch, L"Ctrl : Choice Top or Bottom");
+	TextOut(hdc, 1, 440, tch, (int)_tcslen(tch));
+
+	swprintf_s(tch, L"Shift : LR Flip");
+	TextOut(hdc, 1, 460, tch, (int)_tcslen(tch));
+
+	swprintf_s(tch, L"Enter : Play Toggle(On/Off)");
+	TextOut(hdc, 1, 480, tch, (int)_tcslen(tch));
+
+	swprintf_s(tch, L"LEFT_KEY : Prev Frame");
+	TextOut(hdc, 1, 500, tch, (int)_tcslen(tch));
+
+	swprintf_s(tch, L"RIGHT_KEY : Next Frame");
+	TextOut(hdc, 1, 520, tch, (int)_tcslen(tch));
+
+	swprintf_s(tch, L"UP_KEY : Frame Time 0.01second + ");
+	TextOut(hdc, 1, 540, tch, (int)_tcslen(tch));
+
+	swprintf_s(tch, L"DOWN_KEY : Frame Time 0.01second - ");
+	TextOut(hdc, 1, 560, tch, (int)_tcslen(tch));
 
 }
 
@@ -230,7 +266,13 @@ void CAniToolScene2::CreateAnimation(const wstring& _strKeyName, const wstring& 
 	m_pAnimator->SetTexture(_strKeyName, _strTexPath);
 	m_pAnimator->SetData(_strDataPath);
 	m_pAnimator->CreateAnimation();
-	m_pAnimator->PlayAnimation(L"TARMA_PISTOL_BASIC_MOVE_ST", true);
+	m_pAnimator->PlayFirstAnimation();
+	//m_pAnimator->SetCurAnimation(L"TARMA_PISTOL_BASIC_MOVE_ST");
+}
+
+void CAniToolScene2::SaveAnimation(const wstring& _strFilePath)
+{
+	m_pAnimator->Save(_strFilePath);
 }
 
 
